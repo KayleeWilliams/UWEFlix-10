@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: uweflix
+      MYSQL_TCP_PORT: 3307 
+    volumes:
+      - ./db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3307"
+    expose:
+      - "3307"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-p12345678"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
