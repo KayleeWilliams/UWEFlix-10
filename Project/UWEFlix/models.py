@@ -10,3 +10,10 @@ class Showing(models.Model):
         time = models.TimeField()
         tickets_sold = models.IntegerField()
         screen = models.ForeignKey(Screen, on_delete=models.CASCADE)
+
+
+class ClubRep(models.Model):
+        fist_name = models.CharField(max_length=100)
+        last_name = models.CharField(max_length=100)
+        date_of_birth = models.DateField()
+        club = models.ForeignKey(Club, on_delete=models.CASCADE)
