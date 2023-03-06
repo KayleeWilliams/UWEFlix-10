@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -6,7 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
       MYSQL_DATABASE: uweflix
-      MYSQL_TCP_PORT: 3307 
+      MYSQL_TCP_PORT: 3307
     volumes:
       - ./db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
       - ./mysql-data:/var/lib/mysql
@@ -15,10 +15,10 @@ services:
     expose:
       - "3307"
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-p12345678"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3307", "-uroot", "-p12345678"]
       interval: 5s
       timeout: 5s
-      retries: 20
+      retries: 60
 
   web:
     build: .
@@ -28,5 +28,17 @@ services:
     ports:
       - "8000:8000"
     depends_on:
+      db:
+        condition: service_healthy
+
+  # Load default data (Needs DB up and running)
+  loaddata:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py loaddata initial_data.json"
+    volumes:
+      - .:/app
+    depends_on:
+      web:
+        condition: service_started
       db:
         condition: service_healthy

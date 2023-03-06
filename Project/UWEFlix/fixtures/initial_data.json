@@ -1,0 +1,12 @@
+[
+  {
+    "model": "auth.user",
+    "fields": {
+      "username": "Cinema Manager",
+      "email": "cm@uwe.ac.uk",
+      "password": "hello",
+      "is_staff": true,
+      "is_superuser": false
+    }
+  }
+]
