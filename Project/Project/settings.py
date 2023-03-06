@@ -128,3 +128,21 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Password Hasher
+# https://docs.djangoproject.com/en/4.1/topics/auth/passwords/
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.ScryptPasswordHasher',
+]
+
+# SESSION CONFIGURATION
+# Age is in seconds, (How long till the cookie expires)
+# Save every request, (If true, the session will be saved every request, else it will only be saved when the session is modified)
+
+SESSION_COOKIE_AGE = 600
+SESSION_SAVE_EVERY_REQUEST = False

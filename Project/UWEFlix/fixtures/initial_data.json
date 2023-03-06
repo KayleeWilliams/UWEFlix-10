@@ -2,9 +2,9 @@
   {
     "model": "auth.user",
     "fields": {
-      "username": "Cinema Manager",
+      "username": "CM",
       "email": "cm@uwe.ac.uk",
-      "password": "hello",
+      "password": "pbkdf2_sha256$390000$xHRU5uS6UMoCNIHczsf5SC$4sWyNPzF0wWCNE4kDXsi5Aeqocd/U4JcVeaMssVcMJ0=",
       "is_staff": true,
       "is_superuser": false
     }
