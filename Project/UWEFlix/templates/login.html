@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Login - UWEFlix
+{% endblock %}
+{% block content %}
+  <div>
+    <image class="login-logo" src="{% static 'images/logo.png' %}" alt="UWEFlix" />
+    <image class="bg-login" src="{% static 'images/films.png' %}"/>
+    
+    <div class="bg-overlay">
+      <div class="login-modal">
+        <h1> Sign In </h1>
+        <form method="post" class="login-form">
+          {% csrf_token %} <!-- Prevent CSRF attacks -->
+          
+          <!-- Display errors -->
+          {% if form.errors %}
+            <div class="login-error">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error|escape }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+          {% endif %}
+
+          <!-- <input class="login-form-input" type="email" name="{{ form.email.name }}" placeholder="Email" value="" required> -->
+          <input class="login-form-input" type="text" name="{{ form.username.name }}" placeholder="Username" value="" required>
+          <input class="login-form-input" type="password" name="{{ form.password.name }}" placeholder="Password" value="" required>
+
+          <div class="btn-login">
+            <input type="submit" value="Sign In">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

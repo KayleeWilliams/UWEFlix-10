@@ -1,0 +1,15 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Temp - UWEFlix
+{% endblock %}
+{% block content %}
+  <div>
+    {% if user.is_authenticated %}
+      <p> This is a temporary page </p>
+      <h1> Welcome {{ user.get_username }} </h1>
+      <a href="/logout"> LOGOUT </a>
+    {% endif %}
+  </div>
+{% endblock %}

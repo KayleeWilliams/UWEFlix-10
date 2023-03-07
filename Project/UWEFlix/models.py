@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 class Film(models.Model):
     title = models.CharField(max_length = 250)
     ageRating = models.CharField(max_length = 3)
-    duration = models.IntegerField(max_length = 3) # e.g. instead of 2 hours 20 mins, just 140 mins
-    descrition = models.CharField(max_length = 500)
+    duration = models.IntegerField() # 'max_length' is ignored when used with IntegerField
+    description = models.CharField(max_length = 500)
     imdb = models.TextField()
-    image_url = models.URLfield(blank=True, null=True)
-    backdrop_url = models.URLfield(blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
+    backdrop_url = models.URLField(blank=True, null=True)
 
 #Screen Model
 class Screen(models.Model):
@@ -17,7 +17,7 @@ class Screen(models.Model):
 
 #Film Showings Model
 class Showing(models.Model):
-        film = models.ForeignObject(Film, on_delete=models.CASCADE)
+        film = models.ForeignKey(Film, on_delete=models.CASCADE)
         date = models.DateField()
         time = models.TimeField()
         tickets_sold = models.IntegerField()
@@ -42,13 +42,6 @@ class Booking(models.Model):
         # User can select multiple ticket types and quantities
         ticket_type_quantities = models.ManyToManyField(TicketTypeQuantity)
 
-#Club Representative Model
-class ClubRep(models.Model):
-        fist_name = models.CharField(max_length=100)
-        last_name = models.CharField(max_length=100)
-        date_of_birth = models.DateField()
-        club = models.ForeignKey(Club, on_delete=models.CASCADE)
-
 #Club Model
 class Club(models.Model):
         name = models.CharField(max_length=20)
@@ -56,3 +49,9 @@ class Club(models.Model):
         contacts = models.IntegerField() #Landline, mobile and e-Mail
         representative = models.CharField(max_length=150) #First name, last name and date of birth.   
 
+#Club Representative Model
+class ClubRep(models.Model):
+        fist_name = models.CharField(max_length=100)
+        last_name = models.CharField(max_length=100)
+        date_of_birth = models.DateField()
+        club = models.ForeignKey(Club, on_delete=models.CASCADE)
