@@ -6,6 +6,6 @@ urlpatterns = [
     path('login', views.login),
     path('logout', views.logout),
     path('temp', views.temp),
-
+    path('add_club/', views.add_club),
 
 ]

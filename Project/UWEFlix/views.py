@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import HttpResponse
 from .forms import LoginForm
-
+from .models import Club
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 
 
@@ -40,7 +41,23 @@ def login(request):
     else:
       form = LoginForm()
       return render(request, 'login.html', {'form': form})
-    
+
+  #The system will handle the table of club details and film details in a similar way.
+#Only the data will be different.
+@csrf_exempt 
+def add_club(request):
+    if 'name' in request.POST and request.POST['name']:
+        c1 = request.POST['name']
+    if 'address' in request.POST and request.POST['address']:
+        c2 = request.POST['address']
+    if 'contacts' in request.POST and request.POST['contacts']:
+        c3 = request.POST['contacts']
+    if 'representative' in request.POST and request.POST['representative']:
+        c4 = request.POST['representative']
+    club = Club(name=c1, address=c2, contacts=c3, representative=c4)
+    club.save()
+    return HttpResponse("Success!")      
+    #pass
 
 # If the user is logged in, log them out and redirect them to login 
 def logout(request):
