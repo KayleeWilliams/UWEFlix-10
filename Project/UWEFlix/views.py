@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import HttpResponse
 from .forms import LoginForm
-
+from .models import Film
 from django.contrib.auth.hashers import make_password
-
+import requests
 
 # Create your views here.
 def temp(request):
@@ -50,6 +50,52 @@ def logout(request):
     return redirect('/login')
 
 
+# Showings
 def index(request):
-    print(make_password("password"), flush=True)
-    return HttpResponse("Index")
+    # If the user is not logged in, redirect them to the login page
+    if not request.user.is_authenticated:
+      return redirect('/login')
+    
+    # Get all films and showings
+    films = Film.objects.all().prefetch_related('showings')
+
+    # Get film posters by IMDB ID using an API
+    for film in films:
+      response = requests.get(f'https://api.themoviedb.org/3/find/{film.imdb}?api_key=d4c4c2d25e196ead918fc7080850a0d7&language=en-US&external_source=imdb_id')
+      data = response.json()
+      for category in data.keys():
+        if len(data[category]) > 0:
+          # If poster or backdrop has changed since last time, update it
+          if film.image_url != f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}":
+            film.image_url = f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}"
+            film.save()
+
+          elif film.backdrop_url != f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}":
+            film.backdrop_url = f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}"
+            film.save()
+
+    # Serialise films
+    serialized_films = [film_serialisable(film) for film in films]
+
+    return render(request, 'showings.html', {'films': serialized_films})
+
+# Serialise Film & Showings
+def film_serialisable(film):
+  serialised_showings = [showing_serialisable(showing) for showing in film.showings.all()]
+
+  return {
+      'title': film.title,
+      'description': film.description,
+      'duration': film.duration,
+      'age_rating': film.age_rating,
+      'image_url': film.image_url,
+      'showings': serialised_showings,
+  }
+
+def showing_serialisable(showing):
+  return {
+      'id': showing.id,
+      'date': showing.date.strftime('%Y-%m-%d'),
+      'time': showing.time.strftime('%H:%M'),
+      'tickets_sold': showing.tickets_sold,
+  }
