@@ -8,5 +8,52 @@
       "is_staff": true,
       "is_superuser": false
     }
+  },
+  {
+    "model": "auth.user",
+    "fields": {
+      "username": "k82-williams",
+      "email": "Kaylee2.Williams@live.uwe.ac.uk",
+      "password": "pbkdf2_sha256$390000$xHRU5uS6UMoCNIHczsf5SC$4sWyNPzF0wWCNE4kDXsi5Aeqocd/U4JcVeaMssVcMJ0=",
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "UWEFlix.ticket",
+    "fields": {
+      "name": "Student",
+      "price": 5.00
+    }
+  },
+  {
+    "model": "UWEFlix.screen",
+    "pk": 1,
+    "fields": {
+      "capacity": 100
+    }
+  },
+  {
+    "model": "UWEFlix.film",
+    "pk": 1,
+    "fields": {
+      "title": "Spider-Man: No Way Home",
+      "age_rating": "12A",
+      "duration": 148,
+      "description": "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
+      "imdb": "tt10872600",
+      "image_url": "",
+      "backdrop_url": ""
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "fields": {
+      "film": 1,
+      "date": "2023-04-01",
+      "time": "16:00:00",
+      "screen": 1,
+      "tickets_sold": 0 
+    }
   }
 ]
