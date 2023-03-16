@@ -59,20 +59,24 @@ def index(request):
     films = Film.objects.all().prefetch_related('showings')
 
     # Get film posters by IMDB ID using an API
-    for film in films:
-      response = requests.get(f'https://api.themoviedb.org/3/find/{film.imdb}?api_key=d4c4c2d25e196ead918fc7080850a0d7&language=en-US&external_source=imdb_id')
-      data = response.json()
+    try: 
+      for film in films:
+        response = requests.get(f'https://api.themoviedb.org/3/find/{film.imdb}?api_key=d4c4c2d25e196ead918fc7080850a0d7&language=en-US&external_source=imdb_id')
+        data = response.json()
 
-      for category in data.keys():
-        if len(data[category]) > 0:
-          # If poster or backdrop has changed since last time, update it
-          if film.image_url != f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}":
-            film.image_url = f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}"
-            film.save()
+        for category in data.keys():
+          if len(data[category]) > 0:
+            # If poster or backdrop has changed since last time, update it
+            if film.image_url != f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}":
+              film.image_url = f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}"
+              film.save()
 
-          elif film.backdrop_url != f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}":
-            film.backdrop_url = f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}"
-            film.save()
+            elif film.backdrop_url != f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}":
+              film.backdrop_url = f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}"
+              film.save()
+    except:
+      print("An error occurred while trying to get film posters from the API.", flush=True)
+      pass
 
     # Serialise films
     serialized_films = [film_serialisable(film) for film in films]
