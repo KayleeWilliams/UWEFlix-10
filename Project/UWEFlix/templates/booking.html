@@ -1,0 +1,70 @@
+{% extends "template.html" %}
+
+{% block title %}
+  {{ showing.film.title }} - UWEFlix
+{% endblock %}
+
+{% block content %}
+<div class="booking">
+  <image src="{{ showing.film.backdrop_url }}" class="film-poster" />
+  <div class="background">
+    <form method="post" class="form">
+      <h1 style="text-align: center;"> {{ showing.film.title }}</h1>
+      <p style="margin-bottom: 2em; text-align: center;"> {{ showing.date }} @ {{ showing.time }} </p>
+      {% csrf_token %}
+        {% for field in form %}
+          {% if field.name|slice:":6" == "ticket" %}  
+            <h2 id="ticket_header"> Tickets </h2>
+            <div class="ticket-row"> 
+              <p> {{ field.label }} Ticket </p>
+              {{ field }}
+            </div>
+          {% else %} 
+            {{ field.label }} <br/>
+            {{ field }}
+            <br />
+          {% endif %}
+        {% endfor %}
+
+      {% if form.non_field_errors %}
+        <div class="errors">
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="checkout"> 
+        <input type="submit" value="Book Tickets">
+        <div id="total_cost">Total: £0.00</div>
+      </div>
+    </form>
+    
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('[data-price]').forEach(function(el) {
+    el.addEventListener('change', function() {
+        var total_cost = 0;
+        document.querySelectorAll('[data-price]').forEach(function(el) {
+            // Get the ticket price and quantity
+            var ticket_price = parseFloat(el.getAttribute('data-price'));
+            var ticket_quantity = parseInt(el.value);
+            
+            // Add the cost of this ticket to the total cost
+            total_cost += ticket_price * ticket_quantity;
+        });
+        // Update the total cost element with the new total
+        document.querySelector('#total_cost').textContent = 'Total cost: £' + total_cost.toFixed(2);
+    });
+});
+
+// Remove all ticket headers except the first one
+var ticket_headers = document.querySelectorAll('#ticket_header');
+for (var i = 1; i < ticket_headers.length; i++) {
+    ticket_headers[i].remove();
+}
+</script>
+
+{% endblock %}
