@@ -48,6 +48,7 @@
   },
   {
     "model": "UWEFlix.showing",
+    "pk": 1,
     "fields": {
       "film": 1,
       "date": "2023-04-01",
