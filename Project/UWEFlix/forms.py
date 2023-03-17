@@ -10,6 +10,14 @@ class LoginForm(forms.Form):
 
 class BookingForm(forms.Form):
 
+    # Card info
+    card_name = forms.CharField()
+    card_number = forms.CharField()
+    card_expiry = forms.CharField()
+    card_cvv = forms.CharField()
+
+
+
     # Create a field for each available ticket type
     
     def __init__(self, *args, **kwargs):

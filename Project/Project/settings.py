@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-5al0jg@jclv2w74d)mewn+%jnauyt1948ol#8$2thzu)+==sq6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -145,4 +145,4 @@ PASSWORD_HASHERS = [
 # Save every request, (If true, the session will be saved every request, else it will only be saved when the session is modified)
 
 SESSION_COOKIE_AGE = 600
-SESSION_SAVE_EVERY_REQUEST = False
+SESSION_SAVE_EVERY_REQUEST = True

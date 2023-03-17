@@ -75,7 +75,7 @@ def index(request):
               film.backdrop_url = f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}"
               film.save()
     except:
-      print("An error occurred while trying to get film posters from the API.", flush=True)
+      print("An error occurred while trying to fetch from the API.", flush=True)
       pass
 
     # Serialise films
@@ -150,8 +150,16 @@ def booking(request):
           form.add_error(None, 'Please select at least 1 ticket.')
           return render(request, 'booking.html', {'form': form, 'showing': showing})
 
-        # If payment fails
-        # ...
+        # Get payment details
+        payment_method = form.cleaned_data['card_name']
+        card_number = form.cleaned_data['card_number']
+        expiry_date = form.cleaned_data['expiry_date']
+        cvv = form.cleaned_data['cvv']
+        
+        # Verify Payment Details by External system
+        # If payment details are invalid
+        # form.add_error(None, 'Payment Unsuccessful.')
+        # return render(request, 'booking.html', {'form': form, 'showing': showing})
 
         # Create the booking
         booking = Booking.objects.create(

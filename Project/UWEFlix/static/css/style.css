@@ -306,7 +306,7 @@ h1, h2, h3, p {
 
 .booking .form {
   background-color: #222327;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 5% auto; /* 15% from the top and centered */
   width: 40%;
   padding: 2em 1em;
   border-radius: 8px;
@@ -317,8 +317,14 @@ h1, h2, h3, p {
 }
 
 /* Styling for Tickets */
+.booking .content {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 .booking .ticket-row {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -361,6 +367,36 @@ h1, h2, h3, p {
   align-items: center;
   font-size: 18px;
   justify-content: center;
+}
+
+.booking .card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.booking .card .detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.card .long input {
+  width: 80%;
+}
+
+.card .short input {
+  width: 10%;
+}
+
+.card .detail p {
+  margin-bottom: 4px;
+}
+
+.detail .helper {
+  font-size: 12px;
+  font-weight: normal;
+  color: #a0a0a0;
+  margin-bottom: 8px;
 }
 
 .booking .checkout input {
@@ -415,4 +451,20 @@ h1, h2, h3, p {
 
 .booking .confirmation a:hover {
   color: #e10e2e;
+}
+
+.booking .details {
+  display: grid;
+  grid-template-columns: 0.70fr 1fr;
+  width: 100%;
+  gap: 1em;
+  align-items: center;
+}
+
+.booking .details svg {
+  justify-self: end;
+}
+
+.booking .details p {
+  justify-self: start;
 }
