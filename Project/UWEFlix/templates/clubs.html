@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Club Database</title>
+    </head>
+    <body>
+        <ol>
+            {% for x in clubs %}
+                <li>{{x.name}} {{x.address}} {{x.contacts}} {{x.representative}}</li>
+            {% endfor %}
+        </ol>
+    </body>
+</html>
