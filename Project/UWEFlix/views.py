@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.http import HttpResponse
 from .forms import LoginForm
 from .models import Club
+from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 
@@ -58,6 +59,21 @@ def add_club(request):
     club.save()
     return HttpResponse("Success!")      
     #pass
+
+#Josh-This is the delete and display code. They are also from my cinema manager code.
+def delete_club(request, id):
+    club = Club.objects.get(id=id)
+    club.delete()
+    return HttpResponse("Delete Success!") 
+
+def display_club(request):
+    clubs_qs = Club.objects.all().values()
+    template = loader.get_template('clubs.html')
+    context = {
+        'clubs': clubs_qs,
+    }
+    return HttpResponse(template.render(context, request))
+
 
 # If the user is logged in, log them out and redirect them to login 
 def logout(request):
