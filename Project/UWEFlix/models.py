@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Film(models.Model):
     title = models.CharField(max_length = 250)
-    ageRating = models.CharField(max_length = 3)
+    age_rating = models.CharField(max_length = 3)
     duration = models.IntegerField() # 'max_length' is ignored when used with IntegerField
     description = models.CharField(max_length = 500)
     imdb = models.TextField()
@@ -17,10 +17,10 @@ class Screen(models.Model):
 
 #Film Showings Model
 class Showing(models.Model):
-        film = models.ForeignKey(Film, on_delete=models.CASCADE)
+        film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name="showings")
         date = models.DateField()
         time = models.TimeField()
-        tickets_sold = models.IntegerField()
+        seats = models.IntegerField()
         screen = models.ForeignKey(Screen, on_delete=models.CASCADE)
 
 # Available tickets

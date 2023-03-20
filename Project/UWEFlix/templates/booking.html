@@ -1,0 +1,106 @@
+{% extends "template.html" %}
+
+{% block title %}
+  {{ showing.film.title }} - UWEFlix
+{% endblock %}
+
+{% block content %}
+<div class="booking">
+  <image src="{{ showing.film.backdrop_url }}" class="film-poster" />
+  <div class="background">
+    <form method="post" class="form">
+      <h1 style="text-align: center;"> {{ showing.film.title }}</h1>
+      <div class="details">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
+        <p> {{ showing.date }} @ {{ showing.time }} </p>
+      </div>
+      <div class="details">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7 11v2h10v-2c0-1.86 1.28-3.41 3-3.86V6c0-1.65-1.35-3-3-3H7C5.35 3 4 4.35 4 6v1.14c1.72.45 3 2 3 3.86z"/><path fill="currentColor" d="M21 9c-1.1 0-2 .9-2 2v4H5v-4c0-1.1-.9-2-2-2s-2 .9-2 2v5c0 1.65 1.35 3 3 3v1c0 .55.45 1 1 1s1-.45 1-1v-1h12v1c0 .55.45 1 1 1s1-.45 1-1v-1c1.65 0 3-1.35 3-3v-5c0-1.1-.9-2-2-2z"/></svg>
+        <p id="total_seats" seats="{{ showing.seats }}"> {{ showing.seats }} Seats Available </p>
+      </div>
+
+      <!-- Form -->
+      {% csrf_token %}
+      <div class="content">
+        <h2> Card Details </h2>
+        <div class="card">
+          <div class="detail long">
+            <p> Name On Card </p>
+            <input type="text" name="{{ form.card_name.name }}" />
+          </div>
+          <div class="detail long">
+            <p> Card Number </p>
+            <input type="text" name="{{ form.card_number.name }}" />
+          </div>
+          <div class="detail short">
+            <p> Expiry Date <span class="helper">(MM/YY)</span></p>
+            <input type="text" name="{{ form.card_expiry.name }}" />
+          </div>
+          <div class="detail short">
+            <p> CVV </p>
+            <input type="password" name="{{ form.card_cvv.name }}" />
+          </div>
+        </div>
+      <div>
+        {% for field in form %}
+          {% if field.name|slice:":6" == "ticket" %}  
+            <h2 id="ticket_header"> Tickets </h2>
+            <div class="ticket-row"> 
+              <p> {{ field.label }} Ticket </p>
+              {{ field }}
+            </div>
+          {% endif %}
+        {% endfor %}
+        </div>
+      </div>
+
+      {% if form.non_field_errors %}
+        <div class="errors">
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="checkout"> 
+        <input type="submit" value="Book Tickets">
+        <div id="total_cost">Total: £0.00</div>
+      </div>
+    </form>
+    
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('[data-price]').forEach(function(el) {
+    el.addEventListener('change', function() {
+        var total_cost = 0;
+        var total_quantity = 0;
+        document.querySelectorAll('[data-price]').forEach(function(el) {
+            // Get the ticket price and quantity
+            var ticket_price = parseFloat(el.getAttribute('data-price'));
+            var ticket_quantity = parseInt(el.value);
+            
+            // Add the cost of this ticket to the total cost
+            total_cost += ticket_price * ticket_quantity;
+
+            // Add the quantity of this ticket to the total quantity
+            total_quantity += ticket_quantity;
+        });
+        // Update the total cost element with the new total
+        document.querySelector('#total_cost').textContent = 'Total cost: £' + total_cost.toFixed(2);
+
+        // Update the seats available element with the new total
+        var seats = document.querySelector('#total_seats').getAttribute('seats');
+        document.querySelector('#total_seats').textContent = seats - total_quantity + ' Seats Available';
+    });
+});
+
+// Remove all ticket headers except the first one
+var ticket_headers = document.querySelectorAll('#ticket_header');
+for (var i = 1; i < ticket_headers.length; i++) {
+    ticket_headers[i].remove();
+}
+</script>
+
+{% endblock %}

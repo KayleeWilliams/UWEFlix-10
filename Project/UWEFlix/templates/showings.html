@@ -1,0 +1,147 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Showings - UWEFlix
+{% endblock %}
+
+{% block content %}
+<div>
+
+  <!-- Modal for showings + film details -->
+  <div id="filmModal" class="film-modal">
+    <div class="content">
+      <span class="close">&times;</span>
+      <div class="details">
+        <h1 id="modalTitle"></h1>
+
+        <div class="modal-grid">
+          <p id="modalDescription" class="col-left"></p>
+          <div class="col-right">
+            <p> Age Rating <br /><span id="modalRating"> </span> </p>
+            <p> Duration <br /><span id="modalDuration"> </span> </p>
+          </div>
+        </div>
+
+        <div class="showings">
+          <h2>Showings</h3> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="film-list">
+    {% for film in films %}
+      <a class="film-container" data-film="{{ film }}"> 
+        {{ film|json_script:"film" }}
+        <img class="film-poster">
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // Get the modal element, buttons and closing button
+  var modal = document.getElementById("filmModal");
+  var films = document.getElementsByClassName("film-container");
+  var span = document.getElementsByClassName("close")[0];
+
+  // For each film add an event listener + add posters
+  for (var i = 0; i < films.length; i++) {
+
+    // Get the json from the script in the film[i] element
+    var film = JSON.parse(films[i].querySelector('script').innerHTML);    
+
+    // Get the image from the film object and the image element
+    var imageUrl = film.image_url;
+    var image = films[i].querySelector('img');
+
+    // Set the src attribute of the img element to the image url + alt text
+    image.src = film.image_url;
+    image.alt = film.title;
+    
+    // When the user clicks on the film open the modal
+    films[i].addEventListener("click", function(event) {
+      event.preventDefault();
+
+      // Get the the film
+      var film = JSON.parse(this.querySelector('script').innerHTML);
+       
+      // Set content to the data attributes
+      document.getElementById("modalTitle").innerHTML = film.title;
+      document.getElementById("modalDescription").innerHTML = film.description;
+      document.getElementById("modalRating").innerHTML = film.age_rating;
+      document.getElementById("modalDuration").innerHTML = film.duration + " mins";
+      
+      let modalShowings = document.querySelector(".showings");
+
+      // Clear the date divs
+      let dateDivs = modalShowings.querySelectorAll(".date");
+      for (let dateDiv of dateDivs) {
+        modalShowings.removeChild(dateDiv);
+      }
+
+      // Showings by date
+      let showingsByDate = {};
+      for (let showing of film.showings) {
+        let date = showing.date;
+        // Convert from YYYY-MM-DD to Weekday DD Month YYYY
+        let weekday = new Date(date).toLocaleString('en-GB', { weekday: 'short' });
+        let dateParts = date.split("-");
+        date = `${weekday} ${dateParts[2]} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][parseInt(dateParts[1]) - 1]} ${dateParts[0]}`;
+
+        if (!showingsByDate[date]) {
+          showingsByDate[date] = [];
+        }
+      
+        showingsByDate[date].push(showing);
+      }
+
+      // For each date create a div with the date and showings
+      for (let date in showingsByDate) {
+        let showingsForDate = showingsByDate[date];
+        let dateDiv = document.createElement("div");
+        let showingsDiv = document.createElement("div");
+        
+        // Set the date
+        dateDiv.innerHTML = `<p>${date}</p>`;
+
+        // For each showing create a div with the time
+        for (let showing of showingsForDate) {
+          let showingTime = document.createElement("a");
+          // Add href to the booking page
+          showingTime.href = `/booking?showing=${showing.id}`; 
+          
+          // Add the showing to the showingTime element
+          let showingTimeText = document.createElement("p");
+          showingTimeText.innerHTML = `${showing.time}`;
+          showingTime.appendChild(showingTimeText);
+          showingTime.classList.add("time");
+          showingsDiv.appendChild(showingTime);
+        }
+        showingsDiv.classList.add("times");
+        dateDiv.appendChild(showingsDiv);
+
+        dateDiv.classList.add("date");
+        modalShowings.appendChild(dateDiv);
+      }
+
+      // Display modal
+      modal.style.display = "block";
+    });
+  }
+  
+  // If the user clicks outside the modal close it 
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // When the user clicks on the span close modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+</script>
+
+{% endblock %}
