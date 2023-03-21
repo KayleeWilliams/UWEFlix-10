@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-2_y4ywd@$50wn$p&c2$q*5vm*eda05$m9z=1@&$d+@+^@@gq3l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "django_q",
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,13 @@ DATABASES = {
     }
 }
 
+
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 2,
+    'timeout': 30,
+    'orm': 'default'
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

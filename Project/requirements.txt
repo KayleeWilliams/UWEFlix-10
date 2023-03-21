@@ -1,3 +1,5 @@
 Django
 mysqlclient
 requests
+django-q
+djangorestframework
