@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers import FilmSerializer
 from .models import Film
 import requests
-
+from .tasks import *
 # Endpoint to get all films
 
 
