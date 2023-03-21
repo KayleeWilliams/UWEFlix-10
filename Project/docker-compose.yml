@@ -42,3 +42,15 @@ services:
         condition: service_started
       db:
         condition: service_healthy
+
+  # Service to update films
+  filmservice:
+    build: FilmService
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - ./filmservice:/fs
+    ports:
+      - "8001:8001"
+    depends_on:
+      db:
+        condition: service_healthy
