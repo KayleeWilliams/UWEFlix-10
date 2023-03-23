@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
   <div>
-    <image class="logo logo-large" src="{% static 'images/logo.png' %}" alt="UWEFlix" />
+    <a href="{% url 'index' %}"><image class="logo logo-large" src="{% static 'images/logo.png' %}" alt="UWEFlix" /></a>
     <image class="bg-login" src="{% static 'images/films.png' %}"/>
     
     <div class="bg-overlay">
@@ -32,6 +32,10 @@
 
           <div class="btn-login">
             <input type="submit" value="Sign In">
+          </div>
+
+          <div class="guest">
+            <a href="{% url 'index' %}">Continue as a Guest </a>
           </div>
         </form>
       </div>
