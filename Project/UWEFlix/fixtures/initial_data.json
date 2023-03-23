@@ -16,7 +16,19 @@
       "email": "Kaylee2.Williams@live.uwe.ac.uk",
       "password": "pbkdf2_sha256$390000$xHRU5uS6UMoCNIHczsf5SC$4sWyNPzF0wWCNE4kDXsi5Aeqocd/U4JcVeaMssVcMJ0=",
       "is_staff": false,
-      "is_superuser": false
+      "is_superuser": false,
+      "groups": [1] 
+    }
+  },
+  {
+    "model": "auth.user",
+    "fields": {
+      "username": "CR",
+      "email": "CR@gmail.com",
+      "password": "pbkdf2_sha256$390000$xHRU5uS6UMoCNIHczsf5SC$4sWyNPzF0wWCNE4kDXsi5Aeqocd/U4JcVeaMssVcMJ0=",
+      "is_staff": false,
+      "is_superuser": false,
+      "groups": [2]
     }
   },
   {
