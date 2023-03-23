@@ -10,11 +10,14 @@ class LoginForm(forms.Form):
 
 class BookingForm(forms.Form):
 
+    # contact info
+    email = forms.EmailField(required=False)
+
     # Card info
-    card_name = forms.CharField()
-    card_number = forms.CharField()
-    card_expiry = forms.CharField()
-    card_cvv = forms.CharField()
+    card_name = forms.CharField(required=False)
+    card_number = forms.CharField(required=False)
+    card_expiry = forms.CharField(required=False)
+    card_cvv = forms.CharField(required=False)
 
 
 

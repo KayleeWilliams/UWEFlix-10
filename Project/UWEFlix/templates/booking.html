@@ -24,6 +24,13 @@
       <div class="content">
         <!-- If account gets debited  -->
         {% if not perms.contenttypes.debit_account %} 
+          <h2> Account Details </h2>
+          <div class="">
+            <p> Email Address </p>
+            <input type="email" name="{{ form.email.name }}" />
+          </div>
+
+
           <h2> Card Details </h2>
           <div class="card">
             <div class="detail long">

@@ -119,11 +119,34 @@ def booking(request):
                 form.add_error(None, 'Please select at least 1 ticket.')
                 return render(request, 'booking.html', {'form': form, 'showing': showing})
 
-            # Get payment details
-            payment_method = form.cleaned_data['card_name']
-            card_number = form.cleaned_data['card_number']
-            expiry_date = form.cleaned_data['card_expiry']
-            cvv = form.cleaned_data['card_cvv']
+
+            # If the user can't debit account perm or the user is not authenticated
+            if not request.user.has_perm('contenttypes.debit_account') or not request.user.is_authenticated:
+                email = form.cleaned_data['email']
+                
+                # Get payment details
+                payment_method = form.cleaned_data['card_name']
+                card_number = form.cleaned_data['card_number']
+                expiry_date = form.cleaned_data['card_expiry']
+                cvv = form.cleaned_data['card_cvv']
+
+                for method in [email, payment_method, card_number, expiry_date, cvv]:
+                    if method == '':
+                        form.add_error(None, 'Please enter all contact and payment details.')
+                        return render(request, 'booking.html', {'form': form, 'showing': showing})
+
+                booking = Booking.objects.create(
+                    showing=showing,
+                    email=email,
+                    total_cost=total_cost,
+                )
+
+            else:
+                booking = Booking.objects.create(
+                    showing=showing,
+                    user=request.user,
+                    total_cost=total_cost,
+                )
 
             # Verify Payment Details by External system
             # If payment details are invalid
@@ -131,11 +154,6 @@ def booking(request):
             # return render(request, 'booking.html', {'form': form, 'showing': showing})
 
             # Create the booking
-            booking = Booking.objects.create(
-                showing=showing,
-                user=request.user,
-                total_cost=total_cost,
-            )
 
             # Create ticket type quantities for each ticket type the user booked
             for field_name, quantity in form.cleaned_data.items():
@@ -155,6 +173,9 @@ def booking(request):
 
             # Redirect to the booking confirmation page
             return render(request, 'booking-confirmation.html', {'booking': booking})
+        
+        if not form.is_valid():
+            print(form.errors, flush=True)
 
     # If the user has not submitted the form
     form = BookingForm(available_tickets=Ticket.objects.all())

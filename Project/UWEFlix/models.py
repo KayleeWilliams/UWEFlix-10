@@ -36,7 +36,8 @@ class TicketTypeQuantity(models.Model):
 # Booking Model
 class Booking(models.Model):
         showing = models.ForeignKey(Showing, on_delete=models.CASCADE)
-        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+        email = models.EmailField(null=True)  # For unregistered customers
         total_cost = models.DecimalField(max_digits=8, decimal_places=2)
 
         # User can select multiple ticket types and quantities
