@@ -7,13 +7,24 @@
 </head>
 <body>
   <div class="navbar">
-    {% if user.is_authenticated %}
+    {% if request.path != '/login' %}
     <a href="{% url 'index' %}"><img class="logo logo-mini" src="{% static 'images/logo.png' %}" alt="UWEFlix" /></a>
     <div class="items">
       <!-- If selected reflect in navbar -->
       <a href="{% url 'index' %}" {% if request.path == '/' %}class="selected"{% endif %}>Showings</a>
-      <a href="{% url 'temp' %}" {% if request.path == '/temp' %}class="selected"{% endif %}>Temp Page</a>
-      <a href="{% url 'logout' %}">Sign Out</a>
+     
+      <!-- Temp is only accessible to perm test -->
+      {% if perms.contenttypes.test %}
+        <a href="{% url 'temp' %}" {% if request.path == '/temp' %}class="selected"{% endif %}>Temp Page</a>
+      {% endif %}
+      
+
+      
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Sign Out</a>
+      {% else %}
+        <a href="{% url 'login' %}">Sign In</a>
+      {% endif %}
     </div>
     {% endif %}
   </div>

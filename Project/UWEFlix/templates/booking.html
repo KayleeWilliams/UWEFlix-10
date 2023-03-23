@@ -22,25 +22,28 @@
       <!-- Form -->
       {% csrf_token %}
       <div class="content">
-        <h2> Card Details </h2>
-        <div class="card">
-          <div class="detail long">
-            <p> Name On Card </p>
-            <input type="text" name="{{ form.card_name.name }}" />
+        <!-- If account gets debited  -->
+        {% if not perms.contenttypes.debit_account %} 
+          <h2> Card Details </h2>
+          <div class="card">
+            <div class="detail long">
+              <p> Name On Card </p>
+              <input type="text" name="{{ form.card_name.name }}" />
+            </div>
+            <div class="detail long">
+              <p> Card Number </p>
+              <input type="text" name="{{ form.card_number.name }}" />
+            </div>
+            <div class="detail short">
+              <p> Expiry Date <span class="helper">(MM/YY)</span></p>
+              <input type="text" name="{{ form.card_expiry.name }}" />
+            </div>
+            <div class="detail short">
+              <p> CVV </p>
+              <input type="password" name="{{ form.card_cvv.name }}" />
+            </div>
           </div>
-          <div class="detail long">
-            <p> Card Number </p>
-            <input type="text" name="{{ form.card_number.name }}" />
-          </div>
-          <div class="detail short">
-            <p> Expiry Date <span class="helper">(MM/YY)</span></p>
-            <input type="text" name="{{ form.card_expiry.name }}" />
-          </div>
-          <div class="detail short">
-            <p> CVV </p>
-            <input type="password" name="{{ form.card_cvv.name }}" />
-          </div>
-        </div>
+        {% endif %}
       <div>
         {% for field in form %}
           {% if field.name|slice:":6" == "ticket" %}  
