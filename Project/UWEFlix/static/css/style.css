@@ -93,6 +93,24 @@ h1, h2, h3, p {
   font-weight: 500;
 }
 
+.guest a:hover {
+  color: #fcfcfc;
+}
+
+.guest a {
+  color: #898989;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.1s ease-in-out 75ms;
+}
+
+.guest {
+  margin-top: 16px;
+  text-align: center;
+}
+
+
 .login-form {
   width: 100%;
   display: flex;
@@ -133,6 +151,11 @@ h1, h2, h3, p {
 	-moz-appearance: none;
 	appearance: none;
   cursor: pointer;
+  transition: all 0.2s ease-in-out 75ms;
+}
+
+.btn-login input:hover {
+  background-color: #900e21;
 }
 
 /* Login error */
