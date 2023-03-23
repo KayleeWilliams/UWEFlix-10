@@ -61,63 +61,15 @@ def logout(request):
 
 # Showings
 def index(request):
-    # If the user is not logged in, redirect them to the login page
-    # if not request.user.is_authenticated:
-    # return redirect('/login')
-
-    # Get all films and showings
-    films = Film.objects.all().prefetch_related('showings')
-
-    # Get film posters by IMDB ID using an API
+    # Get all films from the service
     try:
-        for film in films:
-            response = requests.get(
-                f'https://api.themoviedb.org/3/find/{film.imdb}?api_key=d4c4c2d25e196ead918fc7080850a0d7&language=en-US&external_source=imdb_id')
-            data = response.json()
+      response = requests.get('http://filmservice:8001/films')
+      films = response.json()
 
-            for category in data.keys():
-                if len(data[category]) > 0:
-                    # If poster or backdrop has changed since last time, update it
-                    if film.image_url != f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}":
-                        film.image_url = f"https://image.tmdb.org/t/p/original{data[category][0]['poster_path']}"
-                        film.save()
-
-                    elif film.backdrop_url != f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}":
-                        film.backdrop_url = f"https://image.tmdb.org/t/p/original{data[category][0]['backdrop_path']}"
-                        film.save()
+      return render(request, 'showings.html', {'films': films})
+    # If the service is down
     except:
-        print("An error occurred while trying to fetch from the API.", flush=True)
-        pass
-
-    # Serialise films
-    serialized_films = [film_serialisable(film) for film in films]
-
-    return render(request, 'showings.html', {'films': serialized_films})
-
-# Serialise Film & Showings
-
-
-def film_serialisable(film):
-    serialised_showings = [showing_serialisable(
-        showing) for showing in film.showings.all()]
-
-    return {
-        'title': film.title,
-        'description': film.description,
-        'duration': film.duration,
-        'age_rating': film.age_rating,
-        'image_url': film.image_url,
-        'showings': serialised_showings,
-    }
-
-
-def showing_serialisable(showing):
-    return {
-        'id': showing.id,
-        'date': showing.date.strftime('%Y-%m-%d'),
-        'time': showing.time.strftime('%H:%M'),
-        'seats': showing.seats,
-    }
+       return render(request, 'showings.html', {'films': []})
 
 # Booking View
 
@@ -170,8 +122,8 @@ def booking(request):
             # Get payment details
             payment_method = form.cleaned_data['card_name']
             card_number = form.cleaned_data['card_number']
-            expiry_date = form.cleaned_data['expiry_date']
-            cvv = form.cleaned_data['cvv']
+            expiry_date = form.cleaned_data['card_expiry']
+            cvv = form.cleaned_data['card_cvv']
 
             # Verify Payment Details by External system
             # If payment details are invalid

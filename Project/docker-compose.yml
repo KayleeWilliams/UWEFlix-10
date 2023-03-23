@@ -34,11 +34,26 @@ services:
   # Load default data (Needs DB up and running)
   loaddata:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py loaddata initial_data.json"
+    command: sh loaddata.sh
     volumes:
       - .:/app
+      - ./filmservice:/fs
     depends_on:
       web:
         condition: service_started
       db:
         condition: service_healthy
+
+  # Service to update films
+  filmservice:
+    build: FilmService
+    command: sh -c "python -u manage.py qcluster & python -u manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - ./filmservice:/fs
+    ports:
+      - "8001:8001"
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_started
