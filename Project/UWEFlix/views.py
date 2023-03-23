@@ -159,3 +159,12 @@ def booking(request):
     # If the user has not submitted the form
     form = BookingForm(available_tickets=Ticket.objects.all())
     return render(request, 'booking.html', {'form': form, 'showing': showing})
+
+def account(request):
+    if request.user.is_authenticated:
+        # Print user perms
+        # print(request.user.get_all_permissions(), flush=True)
+        return render(request, 'account.html')
+    else:
+        # Redirect to login page
+        return redirect('/login')
