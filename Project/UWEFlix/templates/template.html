@@ -17,9 +17,11 @@
       {% if perms.contenttypes.test %}
         <a href="{% url 'temp' %}" {% if request.path == '/temp' %}class="selected"{% endif %}>Temp Page</a>
       {% endif %}
-      
 
-      
+      {% if user.is_staff %}
+      <a href="{% url 'account' %}" {% if request.path == '/account' %}class="selected"{% endif %}>Account</a>
+      {% endif %}  
+          
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}">Sign Out</a>
       {% else %}
