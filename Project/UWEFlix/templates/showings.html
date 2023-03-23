@@ -7,7 +7,6 @@
 
 {% block content %}
 <div>
-
   <!-- Modal for showings + film details -->
   <div id="filmModal" class="film-modal">
     <div class="content">
@@ -30,6 +29,17 @@
     </div>
   </div>
 
+  <!-- Filter by date -->
+  <div class="filter" style="">
+    <h3>Showings By Date</h3>
+    <div class="buttons">
+
+    </div>
+  </div>
+
+  
+  <!-- Films -->
+
   <div class="film-list">
     {% for film in films %}
       <a class="film-container" data-film="{{ film }}"> 
@@ -45,6 +55,8 @@
   var modal = document.getElementById("filmModal");
   var films = document.getElementsByClassName("film-container");
   var span = document.getElementsByClassName("close")[0];
+  var showingDates = [];
+  var selectedDate = "All";
 
   // For each film add an event listener + add posters
   for (var i = 0; i < films.length; i++) {
@@ -59,7 +71,17 @@
     // Set the src attribute of the img element to the image url + alt text
     image.src = film.image_url;
     image.alt = film.title;
-    
+
+    // Get a list of all the showings for every film (no duplicates)
+    for (let showing of film.showings) {
+      if (!showingDates.includes(showing.date)) {
+        showingDates.push(showing.date);
+        sortShowingDates();
+      }
+    }
+
+    updateFilmDisplay();
+
     // When the user clicks on the film open the modal
     films[i].addEventListener("click", function(event) {
       event.preventDefault();
@@ -85,6 +107,7 @@
       let showingsByDate = {};
       for (let showing of film.showings) {
         let date = showing.date;
+
         // Convert from YYYY-MM-DD to Weekday DD Month YYYY
         let weekday = new Date(date).toLocaleString('en-GB', { weekday: 'short' });
         let dateParts = date.split("-");
@@ -130,7 +153,77 @@
       modal.style.display = "block";
     });
   }
-  
+
+  // Create a function to add the filter buttons for each date
+  function sortShowingDates() {
+    // Sort the array by date, earliest first
+    showingDates.sort(function(a, b) {
+      return new Date(a) - new Date(b);
+    });
+
+    // Get the filter buttons div
+    let filterButtons = document.querySelector(".buttons");
+
+    // Clear the filter buttons
+    let filterButtonsDivs = filterButtons.querySelectorAll(".filter-button");
+    for (let filterButtonDiv of filterButtonsDivs) {
+      filterButtons.removeChild(filterButtonDiv);
+    }
+
+    // Create a button for all dates
+    let allDatesButton = document.createElement("button");
+    allDatesButton.innerHTML = "All Showings";
+    allDatesButton.classList.add("filter-button");
+    allDatesButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      selectedDate = "All";
+      updateFilmDisplay();
+      console.log(selectedDate)
+    });
+    filterButtons.appendChild(allDatesButton);
+
+
+    // For each date create a button
+    for (let d in showingDates) {
+      let date = showingDates[d];
+      let filterButton = document.createElement("button");
+      
+      // Convert date to Weekday DD Month YYYY
+      let weekday = new Date(date).toLocaleString('en-GB', { weekday: 'short' });
+      let dateParts = date.split("-");
+      showDate = `${weekday} ${dateParts[2]} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][parseInt(dateParts[1]) - 1]} ${dateParts[0]}`;
+      filterButton.innerHTML = showDate;
+
+
+      filterButton.classList.add("filter-button");
+      filterButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        selectedDate = date;
+        updateFilmDisplay();
+      });
+      filterButtons.appendChild(filterButton);
+    }
+  }
+
+  function updateFilmDisplay() {
+    console.log(selectedDate)
+    for (var i = 0; i < films.length; i++) {
+      var film = JSON.parse(films[i].querySelector('script').innerHTML);
+
+      if (!film.showings.some(showing => showing.date == selectedDate)) {
+        films[i].style.display = "none"; 
+      } else {
+        films[i].style.display = "block";
+      }
+      
+      if (selectedDate == "All") {
+        films[i].style.display = "block";
+      }
+      
+    }  
+  }
+
+
   // If the user clicks outside the modal close it 
   window.onclick = function(event) {
     if (event.target == modal) {
