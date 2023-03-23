@@ -19,6 +19,6 @@ if not Schedule.objects.filter(func='api.tasks.update_all_films', schedule_type=
 
     next_run = datetime.now() + timedelta(seconds=5)
     # Create a new schedule if one doesn't already exist
-    schedule('api.tasks.update_all_films', schedule_type='I', minutes=10, next_run=next_run)
+    schedule('api.tasks.update_all_films', schedule_type='I', minutes=15, next_run=next_run)
 
 
