@@ -114,7 +114,7 @@
           
           // Add the showing to the showingTime element
           let showingTimeText = document.createElement("p");
-          showingTimeText.innerHTML = `${showing.time}`;
+          showingTimeText.innerHTML = `${showing.time.slice(0, -3)}`;
           showingTime.appendChild(showingTimeText);
           showingTime.classList.add("time");
           showingsDiv.appendChild(showingTime);
