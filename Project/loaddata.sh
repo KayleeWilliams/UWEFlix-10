@@ -8,6 +8,8 @@ python manage.py loaddata showings.json
 python manage.py loaddata groups.json
 python manage.py loaddata permissions.json
 python manage.py loaddata users.json
+python manage.py loaddata clubs.json
+
 
 # Migrate the FilmService 
 cd FilmService
