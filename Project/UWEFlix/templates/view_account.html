@@ -1,22 +1,25 @@
-{% extends "template.html" %}
-{% load static %}
+{% extends "template.html" %} 
+{% load static %} 
 
-{% block title %}
+{% block title %} 
   View Account
-{% endblock %}
+{% endblock %} 
 
 {% block content %}
 <div>
+  <div class="booking">
+    <div class="confirmation">
+      <h1>View Account</h1>
+      <p>Account Number: {{ account.id }}</p>
+      <p>Title: {{ account.title }}</p>
+      <p>Discount Rate: {{ account.discount_rate }}</p>
+      <p>Card Number: {{ account.card_number }}</p>
+      <p>Expiry Date: {{ account.expiry_date }}</p>
+      <p>Club: {{ account.club.name }}</p>
 
-<h1>View Account</h1>
-<p>Account Number: {{ account.id }}</p>
-<p>Title: {{ account.title }}</p>
-<p>Discount Rate: {{ account.discount_rate }}</p>
-<p>Card Number: {{ account.card_number }}</p>
-<p>Expiry Date: {{ account.expiry_date }}</p>
-<p>Club: {{ account.club.name }}</p>
-
+      <a href="/account_management">Back to Accounts</a>
+    </div>
+  </div>
 </div>
-<a href="/account_management">Back to Accounts</a>
 
 {% endblock %}
