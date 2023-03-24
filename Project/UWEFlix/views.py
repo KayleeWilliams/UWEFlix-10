@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 
 from .forms import BookingForm, LoginForm, AccountForm, ModifyAccountForm
 from .models import Booking, Film, Showing, Ticket, TicketTypeQuantity, Account, Club
-from .permissions import *
+
 
 # Create your views here.
 
@@ -189,6 +189,7 @@ def account(request):
     else:
         # Redirect to login page
         return redirect('/login')
+
   
     
 # ACCOUNT MANAGER - Select account to View/Edit/Delete
@@ -340,3 +341,4 @@ def modify_account(request):
         return redirect('/account_management')
         
     return render(request, 'modify_account.html', {'account' : account_details, 'form' : account_form, 'clubs' : clubs})
+
