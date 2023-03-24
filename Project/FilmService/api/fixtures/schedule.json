@@ -1,0 +1,15 @@
+[
+  {
+    "model": "django_q.schedule",
+    "pk": 1,
+    "fields": {
+      "func": "api.tasks.update_all_films",
+      "schedule_type": "I",
+      "next_run": "2023-01-01T00:00:00Z",
+      "repeats": -1,
+      "minutes": 15,
+      "hook": null,
+      "name": null
+    }
+  }
+]

@@ -6,12 +6,11 @@ from rest_framework.response import Response
 
 from .models import Film
 from .serializers import FilmSerializer
-from .tasks import *
 
 # Endpoint to get all films
 
 
-# Get all films
+# Get all films 
 @api_view(['GET'])
 def fetch_films(request):
     films = Film.objects.all()
