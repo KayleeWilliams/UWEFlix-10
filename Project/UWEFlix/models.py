@@ -56,3 +56,11 @@ class ClubRep(models.Model):
         last_name = models.CharField(max_length=100)
         date_of_birth = models.DateField()
         club = models.ForeignKey(Club, on_delete=models.CASCADE)
+
+#Account Model - For Account Manager
+class Account(models.Model):
+    title = models.CharField(max_length=100)
+    discount_rate = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    card_number = models.CharField(max_length=16)
+    expiry_date = models.CharField(max_length=10)
+    club = models.OneToOneField(Club, on_delete=models.CASCADE)

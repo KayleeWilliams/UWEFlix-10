@@ -535,3 +535,45 @@ h1, h2, h3, p {
 .filter button:hover {
   background-color: #e10e2e;
 }
+
+.account .form {
+  background-color: #222327;
+  margin: 5% auto; /* 15% from the top and centered */
+  width: 40%;
+  padding: 2em 1em;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 16px;
+}
+
+.account .confirmation {
+  background-color: #222327;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 2em 1em;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
+  text-align: center;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.account .confirmation a {
+  text-decoration: none;
+  color: #900e21;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.1s ease-in-out 75ms;
+  margin-top: 2em;
+}
+
+.account .confirmation a:hover {
+  color: #e10e2e;
+}

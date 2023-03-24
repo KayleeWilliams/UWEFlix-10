@@ -1,0 +1,38 @@
+{% extends "template.html" %} 
+{% load static %} 
+
+{% block title %} 
+    Modify Account
+{% endblock %} 
+
+{% block content %}
+<div>
+  <div class="booking">
+    <div class="confirmation">
+      <form method="POST">
+        {% csrf_token %}
+        <h1>Modify Account</h1>
+        <br />
+        {% for input in form %}
+        <div>
+            {{ input.label_tag }} 
+            {{ input }} 
+            {{ input.errors }}
+        </div>
+        <br />
+        {% endfor %}
+        <label for="select_club">Select Club:</label>
+        <select name="select_club">
+          {% for club in clubs %}
+          <option value="{{ club.id }}">{{ club.name }}</option>
+          {% endfor %}
+        </select>
+        <br />
+        <br />
+        <input type="submit" value="Modify Account" />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
