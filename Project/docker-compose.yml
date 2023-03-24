@@ -1,4 +1,5 @@
 version: "3"
+name: uweflix
 
 services:
   db:
@@ -16,9 +17,9 @@ services:
       - "3307"
     healthcheck:
       test: ["CMD", "mysql", "-h", "localhost", "-P", "3307", "-u", "root", "-p12345678", "-e", "SELECT 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      interval: 5s
+      timeout: 5s
+      retries: 60
  
 
   web:
@@ -35,7 +36,7 @@ services:
   # Load default data (Needs DB up and running)
   loaddata:
     build: .
-    command: sh loaddata.sh
+    command: bash loaddata.sh
     volumes:
       - .:/app
       - ./filmservice:/fs
