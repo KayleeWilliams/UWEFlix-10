@@ -10,5 +10,7 @@ urlpatterns = [
     path('account', views.account, name='account'),
     path('account_management', views.account_management),
     path('add_account', views.add_account),
+    path('view_account', views.view_account),
+    path('modify_account', views.modify_account),
 
 ]

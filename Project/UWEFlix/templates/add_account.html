@@ -1,0 +1,32 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Add an Account
+{% endblock %}
+
+{% block content %}
+<div>
+
+<form method="POST">
+    {% csrf_token %}
+    <h1>Add Account</h1>
+    {% for input in form %}
+    <div>
+        {{ input.label_tag }} {{ input }}
+        {{ input.errors }}
+    </div>
+    {% endfor %}
+    <label for="select_club">Select Club:</label>
+    <select name="select_club">
+        {% for club in clubs %}
+            <option value="{{ club.id }}">{{ club.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <input type="submit" value="Add Account">
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  View Account
+{% endblock %}
+
+{% block content %}
+<div>
+
+<h1>View Account</h1>
+<p>Account Number: {{ account.id }}</p>
+<p>Title: {{ account.title }}</p>
+<p>Discount Rate: {{ account.discount_rate }}</p>
+<p>Card Number: {{ account.card_number }}</p>
+<p>Expiry Date: {{ account.expiry_date }}</p>
+<p>Club: {{ account.club.name }}</p>
+
+</div>
+<a href="/account_management">Back to Accounts</a>
+
+{% endblock %}

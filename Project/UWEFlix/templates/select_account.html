@@ -8,25 +8,31 @@
 {% block content %}
 <div>
 {% if accounts %}
-<form>
+<form method="post">
     {% csrf_token %}
+    <br><br><br>
     <label for="select_account">Choose an Account:</label>
     <select name="select_account">
         {% for account in accounts %}
-            <option value="account.id">{{ account.title }}</option>
+            <option value="{{ account.id }}">{{ account.title }}</option>
         {% endfor %}
     </select>
+    <br>
     <label for="view_account">View</label>
     <input type="radio" name="account_action" id="view_account" value="view">
     <label for="modify_account">Modify</label>
     <input type="radio" name="account_action" id="modify_account" value="modify">
     <label for="delete_account">Delete</label>
     <input type="radio" name="account_action" id="delete_account" value="delete">
-
-    <input type="submit" value="">
-    <a href="">Add Account</a>
+    <br>
+    <input type="submit">
+    
 </form>
+{% else %}
+<h2>No Accounts Available</h2>
 {% endif %}
+<br>
+<a href="/add_account">Add Account</a>
 </div>
 
 {% endblock %}

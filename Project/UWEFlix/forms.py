@@ -35,10 +35,17 @@ class BookingForm(forms.Form):
               # Add price as data attribute to use in JavaScript
               widget=forms.NumberInput(attrs={'data-price': ticket.price})
           )
-
+    
 # Account form for account manager
 class AccountForm(forms.Form):
-    title = forms.CharField(max_length=100, required= True, label="Account Title")
-    card_number = forms.IntegerField(max_length=16, required=True, label="Card Number")
-    expiry_date = forms.DateField(required= True, label="Expiry Date")
+    title = forms.CharField(required=True, label="Account Title")
+    card_number = forms.IntegerField(required=True, label="Card Number")
+    expiry_date = forms.CharField(required=True, label="Expiry Date")
     discount_rate = forms.DecimalField(required=True, label="Discount Rate")
+    
+# Modify Account form for account manager
+class ModifyAccountForm(forms.Form):
+    title = forms.CharField(required=False, label="Account Title")
+    card_number = forms.IntegerField(required=False, label="Card Number")
+    expiry_date = forms.CharField(required=False, label="Expiry Date")
+    discount_rate = forms.DecimalField(required=False, label="Discount Rate")
