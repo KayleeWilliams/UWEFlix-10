@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Select an Account
+{% endblock %}
+
+{% block content %}
+<div>
+{% if accounts %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <label for="select_club">Select Club</label>
+    <select name="select_club">
+        {% for club in clubs %}
+            <option value="club.id">{{ club.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="">
+</form>
+{% endif %}
+</div>
+
+{% endblock %}
