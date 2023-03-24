@@ -1,0 +1,90 @@
+[
+  {
+    "model": "UWEFlix.showing",
+    "pk": 1,
+    "fields": {
+      "film": 1,
+      "date": "2023-04-04",
+      "time": "16:00:00",
+      "screen": 1,
+      "seats": 100
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 2,
+    "fields": {
+      "film": 1,
+      "date": "2023-04-04",
+      "time": "21:00:00",
+      "screen": 1,
+      "seats": 100
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 3,
+    "fields": {
+      "film": 2,
+      "date": "2023-04-05",
+      "time": "10:00:00",
+      "screen": 2,
+      "seats": 50
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 4,
+    "fields": {
+      "film": 3,
+      "date": "2023-04-05",
+      "time": "12:00:00",
+      "screen": 1,
+      "seats": 100
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 5,
+    "fields": {
+      "film": 5,
+      "date": "2023-04-06",
+      "time": "14:00:00",
+      "screen": 1,
+      "seats": 100
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 6,
+    "fields": {
+      "film": 5,
+      "date": "2023-04-06",
+      "time": "14:00:00",
+      "screen": 1,
+      "seats": 100
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 7,
+    "fields": {
+      "film": 5,
+      "date": "2023-04-07",
+      "time": "17:00:00",
+      "screen": 1,
+      "seats": 100
+    }
+  },
+  {
+    "model": "UWEFlix.showing",
+    "pk": 8,
+    "fields": {
+      "film": 4,
+      "date": "2023-04-07",
+      "time": "12:00:00",
+      "screen": 2,
+      "seats": 50
+    }
+  }
+]

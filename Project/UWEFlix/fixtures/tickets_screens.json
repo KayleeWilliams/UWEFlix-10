@@ -1,0 +1,40 @@
+[
+  {
+    "model": "UWEFlix.ticket",
+    "pk": 1,
+    "fields": {
+      "name": "Student",
+      "price": 5.00
+    }
+  },
+  {
+    "model": "UWEFlix.ticket",
+    "pk": 2,
+    "fields": {
+      "name": "Adult",
+      "price": 10.00
+    }
+  },
+  {
+    "model": "UWEFlix.ticket",
+    "pk": 3,
+    "fields": {
+      "name": "Child",
+      "price": 4.50
+    }
+  },
+  {
+    "model": "UWEFlix.screen",
+    "pk": 1,
+    "fields": {
+      "capacity": 100
+    }
+  },
+  {
+    "model": "UWEFlix.screen",
+    "pk": 2,
+    "fields": {
+      "capacity": 50
+    }
+  }
+]
