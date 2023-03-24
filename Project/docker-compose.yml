@@ -15,10 +15,11 @@ services:
     expose:
       - "3307"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3307", "-uroot", "-p12345678"]
-      interval: 5s
-      timeout: 5s
-      retries: 60
+      test: ["CMD", "mysql", "-h", "localhost", "-P", "3307", "-u", "root", "-p12345678", "-e", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+ 
 
   web:
     build: .
