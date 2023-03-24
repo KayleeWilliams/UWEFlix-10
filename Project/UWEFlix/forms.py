@@ -39,13 +39,13 @@ class BookingForm(forms.Form):
 # Account form for account manager
 class AccountForm(forms.Form):
     title = forms.CharField(required=True, label="Account Title")
-    card_number = forms.IntegerField(required=True, label="Card Number")
+    card_number = forms.CharField(required=True, label="Card Number")
     expiry_date = forms.CharField(required=True, label="Expiry Date")
     discount_rate = forms.DecimalField(required=True, label="Discount Rate")
     
 # Modify Account form for account manager
 class ModifyAccountForm(forms.Form):
     title = forms.CharField(required=False, label="Account Title")
-    card_number = forms.IntegerField(required=False, label="Card Number")
+    card_number = forms.CharField(required=False, label="Card Number")
     expiry_date = forms.CharField(required=False, label="Expiry Date")
     discount_rate = forms.DecimalField(required=False, label="Discount Rate")
