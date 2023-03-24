@@ -1,0 +1,27 @@
+[
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can Debit Account",
+      "content_type": 5,
+      "codename": "debit_account"
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 1,
+    "fields": {
+      "group": 1,
+      "permission": 1
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 2,
+    "fields": {
+      "group": 2,
+      "permission": 1
+    }
+  }
+]

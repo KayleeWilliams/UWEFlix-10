@@ -8,7 +8,6 @@ from django.shortcuts import redirect, render
 
 from .forms import BookingForm, LoginForm
 from .models import Booking, Film, Showing, Ticket, TicketTypeQuantity
-from .permissions import *
 
 # Create your views here.
 
@@ -189,3 +188,5 @@ def account(request):
     else:
         # Redirect to login page
         return redirect('/login')
+
+
