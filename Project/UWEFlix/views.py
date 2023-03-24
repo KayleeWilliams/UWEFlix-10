@@ -6,8 +6,8 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from .forms import BookingForm, LoginForm
-from .models import Booking, Film, Showing, Ticket, TicketTypeQuantity
+from .forms import BookingForm, LoginForm, AccountForm
+from .models import Booking, Film, Showing, Ticket, TicketTypeQuantity, Account, Club
 from .permissions import *
 
 # Create your views here.
@@ -189,3 +189,74 @@ def account(request):
     else:
         # Redirect to login page
         return redirect('/login')
+  
+    
+#ACCOUNT MANAGER - Select account to View/Edit/Delete
+def account_management(request):
+
+   # Check if the user is logged in
+  if not request.user.is_authenticated:
+    return redirect('/login')
+  
+  if request.method == 'POST':
+    # Get selected account
+    if request.POST.get('select_account'):
+      account = request.POST['select_account']
+    else:
+        print('No Account Selected')
+      
+    if request.POST.get('account_action'):
+        action = request.POST['account_action']
+    else:
+        print('No Action Selected')
+        
+    # Route the action (MAY NOT NEED VIEW)
+    if action == 'view':
+      pass
+    elif action == 'modify':
+      pass
+    elif action == 'delete':
+      #delete selected account
+      Account.objects.filter(id=account).delete()
+      return redirect('/account_management')
+      
+  #get sorted list of accounts to view in page
+  accounts = Account.objects.order_by('title')
+
+  return render(request, 'select_account.html', {'accounts' : accounts})
+
+
+# ACCOUNT MANAGER - Add new account
+def add_account(request):
+   # Check if the user is logged in
+  if not request.user.is_authenticated:
+    return redirect('/login')
+  
+  #get form inputs
+  account_form = AccountForm(request.POST)
+  #get club input
+  clubs = Club.objects.order_by('name')
+  
+  if request.method == 'POST':
+    form = LoginForm(request.POST)
+    
+    #if club selected
+    if request.POST.get('select_club'):
+        club = request.POST['select_club']
+    else:
+        print('No Club Selected')
+
+    # Check if form is valid
+    if form.is_valid():
+        title = form.cleaned_data['title']
+        card_number = form.cleaned_data['card_number']
+        expiry_date = form.cleaned_data['expiry_date']
+        discount_rate = form.cleaned_data['discount_rate']
+        
+    #save new account
+    new_account = Account(title=title,discount_rate=discount_rate,card_number=card_number,expiry_date=expiry_date,club=club)
+    new_account.save()
+    
+    return redirect('/account_management')
+    
+  return render(request, 'select_account.html', {'form' : account_form, 'clubs' : clubs})
