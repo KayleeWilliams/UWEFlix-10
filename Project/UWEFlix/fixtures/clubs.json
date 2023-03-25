@@ -1,0 +1,12 @@
+[
+  {
+    "model": "UWEFlix.club",
+    "pk": 1,
+    "fields": {
+      "name": "Archery Club",
+      "address": "Coldharbour Lane",
+      "contacts": 555, 
+      "representative": "Bill Gates"
+    }
+  }
+]

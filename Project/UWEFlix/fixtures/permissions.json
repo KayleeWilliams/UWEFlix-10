@@ -23,5 +23,23 @@
       "group": 2,
       "permission": 1
     }
+  },
+
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Is Account Manager",
+      "content_type": 5,
+      "codename": "account_manager"
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 2,
+    "fields": {
+      "group": 4,
+      "permission": 2
+    }
   }
 ]
