@@ -7,26 +7,44 @@
 
 {% block content %}
 <div>
-  <div class="booking">
-    <div class="confirmation">
-      <form method="POST">
+  <div class="booking am">
+      <form method="POST" class="content">
         {% csrf_token %}
         <h1>Add Account</h1>
-        <br />
-        {% for input in form %}
-        <div>{{ input.label_tag }} {{ input }} {{ input.errors }}</div>
-        {% endfor %}
-        <label for="select_club">Select Club:</label>
+
+        <div class="fields"> 
+          <div class="field">
+            <p> Account Title</p>
+            <input type="text" name="{{ form.title.name }}" value="" required/>
+          </div>
+
+          <div class="field">
+            <p> Card Number </p>
+            <input type="text" name="{{ form.card_number.name }}" value="" required/>
+        </div>
+          
+          <div class="field">
+            <p> Expiry Date </p>
+            <input type="text" name="{{ form.expiry_date.name }}" value="" required/>
+          </div>
+
+          <div class="field">
+            <p> Discount Rate (%) </p>
+            <input type="number" name="{{ form.discount_rate.name }}" min=0 max=100 value=0 required/>
+          </div>
+        </div>
+
+        <label for="select_club">Selected Club</label>
         <select name="select_club">
           {% for club in clubs %}
           <option value="{{ club.id }}">{{ club.name }}</option>
           {% endfor %}
         </select>
-        <br />
-        <br />
-        <input type="submit" value="Add Account" />
+
+        <input type="submit" value="Add Account" id="submit" />
+        <div class="separator" > </div>
+        <a href="/account_management" id="submit">Back to Accounts</a>
       </form>
-    </div>
   </div>
 </div>
 

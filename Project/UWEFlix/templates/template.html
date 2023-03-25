@@ -21,6 +21,12 @@
       {% if user.is_staff %}
       <a href="{% url 'account' %}" {% if request.path == '/account' %}class="selected"{% endif %}>Account</a>
       {% endif %}  
+
+      <!-- If user is account manager -->
+      {% if perms.contenttypes.account_manager %}
+        <a href="{% url 'account_management' %}" {% if request.path == '/account_management' %} class="selected" {% endif %}>Account Management</a>
+      {% endif %}
+
           
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}">Sign Out</a>

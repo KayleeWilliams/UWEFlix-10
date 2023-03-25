@@ -7,52 +7,61 @@
 
 {% block content %}
 <div>
-  <div class="account">
-    <div class="confirmation">
+  <div class="am">
+    <div class="content">
       {% if accounts %}
 
       <form method="post">
         <h1>Account Selection</h1>
-        <br />
         {% csrf_token %}
-        <label for="select_account">Choose an Account:</label>
-        <select name="select_account">
-          {% for account in accounts %}
-          <option value="{{ account.id }}">{{ account.title }}</option>
-          {% endfor %}
-        </select>
-        <br />
-        <br />
-        <label for="view_account">View</label>
-        <input
-          type="radio"
-          name="account_action"
-          id="view_account"
-          value="view"
-        />
-        <label for="modify_account">Modify</label>
-        <input
-          type="radio"
-          name="account_action"
-          id="modify_account"
-          value="modify"
-        />
-        <label for="delete_account">Delete</label>
-        <input
-          type="radio"
-          name="account_action"
-          id="delete_account"
-          value="delete"
-        />
-        <br />
-        <br />
-        <input type="submit" />
+        <div class="">
+          <div class="field" style="justify-self: center;">
+            <p>Select an Account</p>
+            <select name="select_account">
+              {% for account in accounts %}
+              <option value="{{ account.id }}">{{ account.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="actions"> 
+          <div class="action">
+            <label for="view_account">View</label>
+            <input
+              type="radio"
+              name="account_action"
+              id="view_account"
+              value="view"
+              checked
+            />
+          </div>
+          <div class="action">
+            <label for="modify_account">Modify</label>
+            <input
+              type="radio"
+              name="account_action"
+              id="modify_account"
+              value="modify"
+            />
+          </div>
+          <div class="action">
+            <label for="delete_account">Delete</label>
+            <input
+              type="radio"
+              name="account_action"
+              id="delete_account"
+              value="delete"
+            />
+          </div>
+        </div>
+        <input type="submit" id="submit" value="Submit" />
       </form>
+      <div class="separator" > </div>
       {% else %}
       <h1>No Accounts Available</h1>
       {% endif %}
-      <br />
-      <a href="/add_account">Add Account</a>
+      <a href="/add_account" id="submit">Add Account</a>
     </div>
   </div>
 </div>
