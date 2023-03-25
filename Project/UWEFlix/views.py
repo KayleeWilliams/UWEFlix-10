@@ -195,9 +195,13 @@ def account(request):
 # ACCOUNT MANAGER - Select account to View/Edit/Delete
 def account_management(request):
 
-    # Check if the user is logged in
+    # Check if the user is logged 
     if not request.user.is_authenticated:
         return redirect('/login')
+    
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
 
     if request.method == 'POST':
         # Get selected account
@@ -237,6 +241,10 @@ def add_account(request):
     if not request.user.is_authenticated:
         return redirect('/login')
 
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
+
     # Get form inputs
     account_form = AccountForm(request.POST)
     # Get clubs
@@ -249,7 +257,8 @@ def add_account(request):
         if request.POST.get('select_club'):
             club = request.POST['select_club']
         else:
-            print('No Club Selected')
+            account_form.add_error(None, 'Please select a club.')
+            return render(request, 'add_account.html', {'form': account_form, 'clubs': clubs})
 
         # Check if form is valid
         if form.is_valid():
@@ -260,9 +269,16 @@ def add_account(request):
             
         # Retrieve club instance
         club_instance = Club.objects.get(id=club)
-            
+        
+        # Check if club already has account
+        if Account.objects.filter(club=club_instance).exists():
+            account_form.add_error(None, 'Club already has an account.')
+            return render(request, 'add_account.html', {'form' : account_form, 'clubs' : clubs})
+
         #save new account
         new_account = Account(title=title,discount_rate=discount_rate,card_number=card_number,expiry_date=expiry_date,club=club_instance)
+
+        
         new_account.save()
 
         return redirect('/account_management')
@@ -276,6 +292,10 @@ def view_account(request):
     # Check if the user is logged in
     if not request.user.is_authenticated:
         return redirect('/login')
+    
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
     
     # Get account ID
     account = request.GET['account']
@@ -292,6 +312,10 @@ def modify_account(request):
     # Check if the user is logged in
     if not request.user.is_authenticated:
         return redirect('/login')
+    
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
     
     # Get account ID
     account = request.GET['account']

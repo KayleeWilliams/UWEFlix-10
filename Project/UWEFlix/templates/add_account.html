@@ -12,6 +12,16 @@
         {% csrf_token %}
         <h1>Add Account</h1>
 
+          {% if form.errors %}
+            <div class="login-error">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error|escape }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+          {% endif %}
+
         <div class="fields"> 
           <div class="field">
             <p> Account Title</p>
