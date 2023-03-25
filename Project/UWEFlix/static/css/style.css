@@ -649,3 +649,33 @@ h1, h2, h3, p {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+
+.btn {
+  background-color: #900e21;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out 75ms;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.btn a {
+  text-decoration: none;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #e10e2e;
+}
+.btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;;
+}

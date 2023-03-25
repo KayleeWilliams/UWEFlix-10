@@ -12,5 +12,6 @@ urlpatterns = [
     path('add_account', views.add_account),
     path('view_account', views.view_account),
     path('modify_account', views.modify_account),
+    path('cinema_management', views.cm_dash, name='cinema_management'),
 
 ]
