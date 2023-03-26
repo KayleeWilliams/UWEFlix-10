@@ -6,23 +6,23 @@
 {% endblock %}
 
 {% block content %}
-<div>
+<div class="showings">
   <!-- Modal for showings + film details -->
-  <div id="filmModal" class="film-modal">
+  <div id="filmModal" class="bg-overlay" style="display: none; z-index: 3;">
     <div class="content">
       <span class="close">&times;</span>
-      <div class="details">
+      <div class="inputs">
         <h1 id="modalTitle"></h1>
 
-        <div class="modal-grid">
-          <p id="modalDescription" class="col-left"></p>
-          <div class="col-right">
+        <div class="grid-cols-2">
+          <p id="modalDescription" class="left"></p>
+          <div class="right">
             <p> Age Rating <br /><span id="modalRating"> </span> </p>
             <p> Duration <br /><span id="modalDuration"> </span> </p>
           </div>
         </div>
 
-        <div class="showings">
+        <div id="showings">
           <h2>Showings</h3> 
         </div>
       </div>
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Filter by date -->
-  <div class="filter" style="">
+  <div class="filter" >
     <h3>Showings By Date</h3>
     <div class="buttons">
 
@@ -42,9 +42,9 @@
 
   <div class="film-list">
     {% for film in films %}
-      <a class="film-container" data-film="{{ film }}"> 
+      <a class="container" data-film="{{ film }}"> 
         {{ film|json_script:"film" }}
-        <img class="film-poster">
+        <img class="poster" src="{{film.image_url}}">
       </a>
     {% endfor %}
   </div>
@@ -53,7 +53,7 @@
 <script>
   // Get the modal element, buttons and closing button
   var modal = document.getElementById("filmModal");
-  var films = document.getElementsByClassName("film-container");
+  var films = document.getElementsByClassName("container");
   var span = document.getElementsByClassName("close")[0];
   var showingDates = [];
   var selectedDate = "All";
@@ -95,7 +95,7 @@
       document.getElementById("modalRating").innerHTML = film.age_rating;
       document.getElementById("modalDuration").innerHTML = film.duration + " mins";
       
-      let modalShowings = document.querySelector(".showings");
+      let modalShowings = document.getElementById("showings");
 
       // Clear the date divs
       let dateDivs = modalShowings.querySelectorAll(".date");
@@ -139,7 +139,7 @@
           let showingTimeText = document.createElement("p");
           showingTimeText.innerHTML = `${showing.time.slice(0, -3)}`;
           showingTime.appendChild(showingTimeText);
-          showingTime.classList.add("time");
+          showingTime.classList.add("btn");
           showingsDiv.appendChild(showingTime);
         }
         showingsDiv.classList.add("times");
@@ -165,7 +165,7 @@
     let filterButtons = document.querySelector(".buttons");
 
     // Clear the filter buttons
-    let filterButtonsDivs = filterButtons.querySelectorAll(".filter-button");
+    let filterButtonsDivs = filterButtons.querySelectorAll(".btn");
     for (let filterButtonDiv of filterButtonsDivs) {
       filterButtons.removeChild(filterButtonDiv);
     }
@@ -173,7 +173,7 @@
     // Create a button for all dates
     let allDatesButton = document.createElement("button");
     allDatesButton.innerHTML = "All Showings";
-    allDatesButton.classList.add("filter-button");
+    allDatesButton.classList.add("btn");
     allDatesButton.addEventListener("click", function(event) {
       event.preventDefault();
       selectedDate = "All";
@@ -195,7 +195,7 @@
       filterButton.innerHTML = showDate;
 
 
-      filterButton.classList.add("filter-button");
+      filterButton.classList.add("btn");
       filterButton.addEventListener("click", function(event) {
         event.preventDefault();
         selectedDate = date;

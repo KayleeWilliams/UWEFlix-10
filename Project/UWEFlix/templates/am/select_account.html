@@ -6,17 +6,17 @@
 {% endblock %} 
 
 {% block content %}
-<div>
-  <div class="am">
+<div class="am">
+  <div>
     <div class="content">
       {% if accounts %}
 
-      <form method="post">
+      <form method="post" class="">
         <h1>Account Selection</h1>
         {% csrf_token %}
         <div class="">
-          <div class="field" style="justify-self: center;">
-            <p>Select an Account</p>
+          <div style="justify-self: center;">
+            <p style="margin-bottom: 8px;">Select an Account</p>
             <select name="select_account">
               {% for account in accounts %}
               <option value="{{ account.id }}">{{ account.title }}</option>
@@ -55,13 +55,13 @@
             />
           </div>
         </div>
-        <input type="submit" id="submit" value="Submit" />
+        <input type="submit" class="btn" value="Submit" />
       </form>
       <div class="separator" > </div>
       {% else %}
       <h1>No Accounts Available</h1>
       {% endif %}
-      <a href="/add_account" id="submit">Add Account</a>
+      <a href="/add_account" id="submit" class="btn">Add Account</a>
     </div>
   </div>
 </div>

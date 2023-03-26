@@ -13,10 +13,10 @@ def index(request):
       response = requests.get('http://filmservice:8001/films')
       films = response.json()
 
-      return render(request, 'showings.html', {'films': films})
+      return render(request, 'booking/showings.html', {'films': films})
     # If the service is down
     except:
-       return render(request, 'showings.html', {'films': []})
+        return render(request, 'booking/showings.html', {'films': []})
 
 # Booking View
 
@@ -59,12 +59,12 @@ def booking(request):
             # If there aren't enough seats available
             if total_tickets > showing.seats:
                 form.add_error(None, 'Not enough seats available.')
-                return render(request, 'booking.html', {'form': form, 'showing': showing})
+                return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
 
             # If no seats selected
             if total_tickets == 0:
                 form.add_error(None, 'Please select at least 1 ticket.')
-                return render(request, 'booking.html', {'form': form, 'showing': showing})
+                return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
 
             # If the user can't debit account perm or the user is not authenticated
             if not request.user.has_perm('contenttypes.debit_account') or not request.user.is_authenticated:
@@ -80,7 +80,7 @@ def booking(request):
                     if method == '':
                         form.add_error(
                             None, 'Please enter all contact and payment details.')
-                        return render(request, 'booking.html', {'form': form, 'showing': showing})
+                        return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
 
                 booking = Booking.objects.create(
                     showing=showing,
@@ -119,63 +119,11 @@ def booking(request):
             booking.save()
 
             # Redirect to the booking confirmation page
-            return render(request, 'booking-confirmation.html', {'booking': booking})
+            return render(request, 'booking/booking-confirmation.html', {'booking': booking})
 
         if not form.is_valid():
             print(form.errors, flush=True)
 
     # If the user has not submitted the form
     form = BookingForm(available_tickets=Ticket.objects.all())
-    return render(request, 'booking.html', {'form': form, 'showing': showing})
-
-
-def account(request):
-    if request.user.is_authenticated:
-        # Print user perms
-        # print(request.user.get_all_permissions(), flush=True)
-        return render(request, 'account.html')
-    else:
-        # Redirect to login page
-        return redirect('/login')
-
-
-# ACCOUNT MANAGER - Select account to View/Edit/Delete
-def account_management(request):
-
-    # Check if the user is logged
-    if not request.user.is_authenticated:
-        return redirect('/login')
-
-    # Check if the user has the correct permissions
-    if not request.user.has_perm('contenttypes.account_manager'):
-        return redirect('/')
-
-    if request.method == 'POST':
-        # Get selected account
-        if request.POST.get('select_account'):
-            account = request.POST['select_account']
-        else:
-            print('No Account Selected')
-
-        # Get account action
-        if request.POST.get('account_action'):
-            action = request.POST['account_action']
-        else:
-            print('No Action Selected')
-
-        # Route the action
-        if action == 'view':
-            return redirect('/view_account?account=' + str(account))
-        elif action == 'modify':
-            return redirect('/modify_account?account=' + str(account))
-        elif action == 'delete':
-            # Delete selected account
-            Account.objects.filter(id=account).delete()
-            return redirect('/account_management')
-
-        return redirect('/account_management')
-
-    # Get sorted list of accounts to view in page
-    accounts = Account.objects.all().order_by('title')
-
-    return render(request, 'select_account.html', {'accounts': accounts})
+    return render(request, 'booking/booking.html', {'form': form, 'showing': showing})

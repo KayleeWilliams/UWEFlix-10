@@ -1,19 +1,28 @@
 /* Import Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 
-body { 
+body {
   background-color: rgb(23, 22, 22);
   color: white;
   font-family: "Open Sans", sans-serif;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-h1, h2, h3, p {
+h1,
+h2,
+h3,
+p {
   margin: 0;
 }
 
-.logo { 
+h1 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.logo {
   position: fixed;
   z-index: 2;
   top: 0;
@@ -54,8 +63,8 @@ h1, h2, h3, p {
 
 .navbar .items a {
   text-decoration: none;
-  color: #E5E5E5 ;
-  font-weight: 400
+  color: #e5e5e5;
+  font-weight: 400;
 }
 
 .navbar .items .selected {
@@ -63,16 +72,389 @@ h1, h2, h3, p {
   font-weight: 500;
 }
 
-/* CSS For login */
-.bg-login {
+/* Background Image */
+.bg-image {
   width: 100%;
   height: 100vh;
   object-fit: cover;
   margin: 0;
+  background-attachment: fixed;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+.bg-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-attachment: fixed;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  background-color: #222327;
+  z-index: 2;
+  padding: 16px 8em;
+  width: 50%;
+  margin: 5% auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
+  text-align: center;
+  border-radius: 16px;
+}
+
+/* Buttons */
+.btn {
+  background-color: #900e21;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out 75ms;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.btn:hover {
+  background-color: #e10e2e;
+}
+
+.btn a {
+  text-decoration: none;
+  /* color: white; */
+}
+
+.btn-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+  text-align: center;
+}
+
+.grid-cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.rows-2 {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+}
+
+.inputs,
+.col,
+.filter, .action {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputs p {
+  padding-bottom: 4px;
+}
+
+.inputs-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: medium;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.long input {
+  width: 100%;
+}
+
+.short input {
+  width: 100%;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: #333;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* Inputs */
+textarea {
+  height: 90%;
+  background-color: #333;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 100%;
+  background-color: #333;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type="radio"]:checked {
+  background-color: #e10e2e;
+}
+
+input {
+  background-color: #2c2e32;
+  padding: 4px;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select {
+  background-color: #333;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Forms General */
+.errors {
+  color: white;
+  font-size: 14px;
+  background-color: #e87c03;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+/* Film Management */
+.films {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.films .film {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 128px;
+  width: 100%;
+  text-align: left;
+}
+
+.film .content {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 85%;
+  padding-right: 8px;
+  margin: 0;
+  padding: 0;
+  text-align: start;
+  justify-content: start;
+}
+
+.film .content img {
+  height: 100%;
+}
+
+.film .info {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-content: center;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+  gap: 8px;
+}
+
+/* Showings Page */
+
+.showings .content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 32px;
+  gap: 16px;
+  font-size: 18px;
+  justify-content: start;
+  align-items: center;
+  padding-top: 1em;
+  text-align: start;
+  border-radius: 16px;
+}
+
+.close {
+  display: none;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Film List */
+.film-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 1em;
+  margin-top: 5%;
+  padding: 0 2em;
+}
+
+.film-list .container {
+  width: 100%;
+  color: white;
+}
+
+.poster {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out 150ms;
+}
+
+.poster:hover {
+  cursor: pointer;
+  transform: translateY(-1px) scale(1.05);
+}
+
+#showings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showings .grid-cols-2 {
+  grid-template-columns: 0.9fr 0.3fr;
+}
+
+.grid-cols-2 .left {
+  display: flex;
+  float: left;
+  width: 100%;
+}
+
+.grid-cols-2 .right {
+  float: right;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: end;
+  font-size: 14px;
+}
+
+.right span {
+  font-size: 18px;
+}
+
+.filter {
+  text-align: center;
+  margin-top: 5%;
+}
+
+/* Booking and forms  */
+.form .content {
+  width: 40%;
+  padding: 24px 32px;
+}
+
+.form h2 {
+  margin-bottom: 4px;
+}
+
+.content form {
+  justify-content: center;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+}
+
+.booking-details,
+.date {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 16px;
+  justify-content: space-between;
+}
+
+.date {
+  margin-top: 0;
+}
+
+.booking-details div,
+.times, .actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkout {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  font-size: 18px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* Login */
+.login .btn {
+  background-color: #e10e2e;
+}
+
+.login .btn:hover {
+  background-color: #900e21;
 }
 
 .login-modal {
-  background-color: #000000C2;
+  background-color: #000000c2;
   margin: 10% auto;
   padding: 6em 3em;
   width: 15%;
@@ -110,7 +492,6 @@ h1, h2, h3, p {
   text-align: center;
 }
 
-
 .login-form {
   width: 100%;
   display: flex;
@@ -125,557 +506,32 @@ h1, h2, h3, p {
   border: none;
   border-radius: 4px;
   -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .login-form input {
   outline: none;
   -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   padding-left: 8px;
 }
 
-.btn-login input {
-  background-color: #DA352E;
+/* AM */
+.am .content form {
   width: 100%;
-  height: 2em;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 18px;
-  margin-top: 1em;
-  outline: none;
-  -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out 75ms;
-}
-
-.btn-login input:hover {
-  background-color: #900e21;
-}
-
-/* Login error */
-.login-error {
-  color: white; 
-  font-size: 14px;
-  background-color: #e87c03;
-  padding: 1em 2em;
-  margin-bottom: 1em;
-  border-radius: 4px;
-}
-
-/* For login & booking */
-.bg-overlay {
-  width: 100%; 
-  height: 100%;
-  position: fixed; 
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  background-color: rgba(0,0,0,0.4);
-}
-
-/* Showings */
-
-/* Film List */
-.film-list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 1em;
-  margin-top: 5%;
-  padding: 0 2em;
-}
-
-.film-container {
-  width: 100%;
-  color: white;
-}
-
-.film-poster {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out 150ms;
-
-}
-
-.film-poster:hover {
-  cursor: pointer;
-  transform: translateY(-1px) scale(1.05);
-}
-
-/* Modal for details + showings */
-.film-modal {
-  width: 100%; 
-  height: 100%;
-  display: none;
-  position: fixed; /* Stay in place */
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.film-modal .content {
-  color: white;
-  background-color: #222327;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  width: 60%; /* Could be more or less, depending on screen size */
-}
-
-.film-modal .content p, .film-modal .content h1 {
-  margin: 0
-}
-
-.content h1 {
-  font-size: 32px;
-  font-weight: bold;
-  letter-spacing: 0.01em;
-}
-
-.film-modal .close {
-  font-size: 28px;
-  font-weight: bold;
-  float: right;
-}
-
-.col-left {
-  float: left;
-  width: 70%; 
-}
-
-.col-right {
-  float: right;
-  width: 25%;
-  display: flex;  
-  flex-direction: column;
-  gap: 1em;
-  text-align: end;
-  font-size: 12px;
-}
-
-.col-right span {
-  font-size: 18px;
-}
-
-.film-modal .details {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.film-modal .showings {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
-.showings .date {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  
-}
-
-.showings .times {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-}
-
-.showings .time {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2em;
-  width: 4em;
-  background-color: #900e21;
-  border-radius: 4px;
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out 75ms;
-}
-
-.showings .time:hover {
-  background-color: #e10e2e;
-}
-
-/* Booking */
-.booking .film-poster {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: fixed
-}
-
-.booking .background {
-  width: 100%; 
-  height: 100%;
-  position: fixed;
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  background-color: rgba(0,0,0,0.4);
-}
-
-.booking .film-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  padding: 0 2em;
-}
-
-.booking .form {
-  background-color: #222327;
-  margin: 5% auto; /* 15% from the top and centered */
-  width: 40%;
-  padding: 2em 1em;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  font-size: 16px;
-}
-
-/* Styling for Tickets */
-.booking .content {
-  padding-left: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.booking .ticket-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: medium;
-  margin-bottom: 8px;
-}
-
-.booking .ticket-row input {
-  width: 14%;
-  background-color: #2c2e32;
-	padding: 4px;
-  color: white;
-  font-size: 16px;
-	border: none;
-	border-radius: 2px;
-	outline: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
-
-/* Styling for booking inputs */
-.booking input {
-  background-color: #2c2e32;
-  padding: 4px;
-  color: white;
-	border-radius: 4px;
-  border: none;
-	outline: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
-
-.booking .checkout {
-  display: flex;
-  flex-direction: row;
-  gap: 2em;
-  align-items: center;
-  font-size: 18px;
-  justify-content: center;
-}
-
-.booking .card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1em;
-}
-
-.booking .card .detail {
-  display: flex;
-  flex-direction: column;
-}
-
-.card .long input {
-  width: 80%;
-}
-
-.card .short input {
-  width: 10%;
-}
-
-.card .detail p {
-  margin-bottom: 4px;
-}
-
-.detail .helper {
-  font-size: 12px;
-  font-weight: normal;
-  color: #a0a0a0;
-  margin-bottom: 8px;
-}
-
-.booking .checkout input {
-  height: 2em;
-  padding: 0 1em;
-  background-color: #900e21;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 4px;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-  transition: all 0.1s ease-in-out 75ms;
-}
-
-.booking .checkout input:hover {
-  background-color: #e10e2e;
-}
-
-.booking .errors {
-  text-align: center;
-}
-
-.booking .confirmation {
-  background-color: #222327;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 2em 1em;
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  font-size: 18px;
-  justify-content: center;
-  align-items: center;
-  padding-top: 1em;
-  text-align: center;
-  border-radius: 8px;
-  z-index: 2;
-}
-
-.booking .confirmation a {
-  text-decoration: none;
-  color: #900e21;
-  font-size: 18px;
-  font-weight: bold;
-  transition: all 0.1s ease-in-out 75ms;
-  margin-top: 2em;
-}
-
-.booking .confirmation a:hover {
-  color: #e10e2e;
-}
-
-.booking .details {
-  display: grid;
-  grid-template-columns: 0.70fr 1fr;
-  width: 100%;
-  gap: 1em;
-  align-items: center;
-}
-
-.booking .details svg {
-  justify-self: end;
-}
-
-.booking .details p {
-  justify-self: start;
-}
-
-.filter {
-  width: 100%;
-  margin-top: 4%;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   text-align: center;
-  gap: 8px;
-}
-
-.filter .buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 4px;
-}
-
-.filter button {
-  background-color: #900e21;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 4px;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  transition: all 0.1s ease-in-out 75ms;
-  padding: 0.5em 1em;
-}
-
-.filter button:hover {
-  background-color: #e10e2e;
-}
-
-
-.fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.am .content {
-  background-color: #222327;
-  margin: 10% auto; /* 15% from the top and centered */
-  padding: 2em 1em;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  font-size: 18px;
-  justify-content: center;
-  align-items: center;
-  padding-top: 1em;
-  text-align: center;
-  border-radius: 8px;
-  z-index: 2;
-}
-
-.am form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.am select {
-  background-color: #333;
-  padding: 8px 16px;
-  border-radius: 4px;
-  color: white;
-  border: none;
-	outline: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
-
-.field select {
-  width: 30%;
-  align-self: center;
-  text-align: center;
-}
-
-.am #submit {
-  background-color: #900e21;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out 75ms;
-  font-size: 18px;
-  border: none;
-	outline: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
-
-.am #submit:hover {
-  background-color: #e10e2e;
-}
-
-.am .actions {
-  display: flex;
-  flex-direction: row;
+.actions, .action {
   justify-content: center;
-  gap: 16px;
 }
 
-.am .action {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.action {
   align-items: center;
-}
-
-.action input[type="radio"] {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: none;
-  border-radius: 100%;
-  background-color: #333;
-  outline: none;
-  -webkit-appearance: none;
-	-moz-appearance: none;
-}
-
-
-/* Q: Why isnt radio buttons updating */
-.action input[type="radio"]:checked {
-  background-color: #e10e2e;
-}
-
-.am .separator {
-  width: 100%;
-  height: 1px;
-  background-color: #333;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.btn {
-  background-color: #900e21;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out 75ms;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.btn a {
-  text-decoration: none;
-  color: white;
-}
-
-.btn:hover {
-  background-color: #e10e2e;
-}
-.btn-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;;
 }

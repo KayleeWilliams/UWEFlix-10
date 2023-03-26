@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 
 from ..forms import AccountForm, ModifyAccountForm
 from ..models import Account, Club
+
 # ACCOUNT MANAGER - Select account to View/Edit/Delete
 def account_management(request):
 
@@ -41,7 +42,7 @@ def account_management(request):
     # Get sorted list of accounts to view in page
     accounts = Account.objects.all().order_by('title')
 
-    return render(request, 'select_account.html', {'accounts': accounts})
+    return render(request, 'am/select_account.html', {'accounts': accounts})
 
 
 # ACCOUNT MANAGER - Add new account
@@ -68,7 +69,7 @@ def add_account(request):
             club = request.POST['select_club']
         else:
             account_form.add_error(None, 'Please select a club.')
-            return render(request, 'add_account.html', {'form': account_form, 'clubs': clubs})
+            return render(request, 'am/add_account.html', {'form': account_form, 'clubs': clubs})
 
         # Check if form is valid
         if form.is_valid():
@@ -83,7 +84,7 @@ def add_account(request):
         # Check if club already has account
         if Account.objects.filter(club=club_instance).exists():
             account_form.add_error(None, 'Club already has an account.')
-            return render(request, 'add_account.html', {'form': account_form, 'clubs': clubs})
+            return render(request, 'am/add_account.html', {'form': account_form, 'clubs': clubs})
 
         # save new account
         new_account = Account(title=title, discount_rate=discount_rate,
@@ -93,7 +94,7 @@ def add_account(request):
 
         return redirect('/account_management')
 
-    return render(request, 'add_account.html', {'form': account_form, 'clubs': clubs})
+    return render(request, 'am/add_account.html', {'form': account_form, 'clubs': clubs})
 
 
 # ACCOUNT MANAGER - View account
@@ -113,7 +114,7 @@ def view_account(request):
     # Get account record
     account_details = Account.objects.get(id=account)
 
-    return render(request, 'view_account.html', {'account': account_details})
+    return render(request, 'am/view_account.html', {'account': account_details})
 
 
 # ACCOUNT MANAGER - Modify existing account
@@ -174,4 +175,4 @@ def modify_account(request):
 
         return redirect('/account_management')
 
-    return render(request, 'modify_account.html', {'account': account_details, 'form': account_form, 'clubs': clubs})
+    return render(request, 'am/modify_account.html', {'account': account_details, 'form': account_form, 'clubs': clubs})
