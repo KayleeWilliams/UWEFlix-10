@@ -1,0 +1,47 @@
+
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Film Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div>
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <form method="post">
+      {% csrf_token %}
+      <h1> {{ action }} Film </h1>
+
+      <div class="grid-cols-2">
+        <div class="inputs">
+          <p> Title </p>
+          <input type="text" name="{{ form.title.name }}" value="{{ form.title.value|default_if_none:'' }}" placeholder="{{ film.title }}"" required>
+          <div>
+            <p> Age Rating </p>
+            <input type="text" name="{{ form.age_rating.name }}" value="{{ form.age_rating.value|default_if_none:'' }}"required>
+          </div>
+          <div>
+            <p> Duration <span class="helper"> (Minutes) </span> </p>
+            <input type="number" name="{{ form.duration.name }}" value="{{ form.duration.value|default_if_none:'' }}"required>
+          </div>
+          <div>
+            <p> IMDB ID </p>
+            <input type="text" name="{{ form.imdb.name }}" value="{{ form.imdb.value|default_if_none:'' }}" required>
+          </div>
+        </div>
+
+        <div class="inputs">
+          <div style="height: 100%;">
+            <p> Description </p>
+            <textarea name="{{ form.description.name }}" required >{{ form.description.value|default_if_none:'' }}</textarea>
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn" value="{{ action }} Film">
+
+    </form>
+  </div>
+</div>
+{% endblock %}
