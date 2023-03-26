@@ -6,11 +6,11 @@
   Film Management - UWEFlix
 {% endblock %}
 {% block content %}
-<div>
+<div class="fm">
   <image class="bg-image" src="{% static 'images/films.png' %}"/>
   <div class="bg-overlay"> </div>
   <div class="content">
-    <form method="post">
+    <form method="post" class="">
       {% csrf_token %}
       <h1> {{ action }} Film </h1>
 
@@ -35,11 +35,11 @@
         <div class="inputs">
           <div style="height: 100%;">
             <p> Description </p>
-            <textarea name="{{ form.description.name }}" required >{{ form.description.value|default_if_none:'' }}</textarea>
+            <textarea name="{{ form.description.name }}" required style="width: 100%;">{{ form.description.value|default_if_none:'' }}</textarea>
           </div>
         </div>
       </div>
-      <input type="submit" class="btn" value="{{ action }} Film">
+      <input type="submit" class="btn" style="margin-top: 16px;" value="{{ action }} Film">
 
     </form>
   </div>

@@ -535,3 +535,8 @@ select {
 .action {
   align-items: center;
 }
+
+.fm .content {
+  width: 30%;
+  padding: 24px 32px;
+}
