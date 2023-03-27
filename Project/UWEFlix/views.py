@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
+
 from .forms import BookingForm, LoginForm, AccountForm, ModifyAccountForm
 from .models import Booking, Film, Showing, Ticket, TicketTypeQuantity, Account, Club
 
@@ -17,6 +18,7 @@ def temp(request):
     if request.user.is_authenticated:
         # Print user perms
         print(request.user.get_all_permissions(), flush=True)
+        print(Booking.objects.filter(user=request.user), flush=True)
         return render(request, 'temp.html')
     else:
         # Redirect to login page
@@ -181,10 +183,13 @@ def booking(request):
     form = BookingForm(available_tickets=Ticket.objects.all())
     return render(request, 'booking.html', {'form': form, 'showing': showing})
 
+
+# CLUB REP Account to view monthly statements
 def account(request):
     if request.user.is_authenticated:
         # Print user perms
         # print(request.user.get_all_permissions(), flush=True)
+        print(Booking.objects.filter(user=request.user), flush=True)
         return render(request, 'account.html')
     else:
         # Redirect to login page
@@ -366,3 +371,4 @@ def modify_account(request):
         
     return render(request, 'modify_account.html', {'account' : account_details, 'form' : account_form, 'clubs' : clubs})
 
+# ACCOUNT MANAGER - View List of End of Month Statements

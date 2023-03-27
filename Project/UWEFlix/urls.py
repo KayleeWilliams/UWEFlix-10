@@ -12,5 +12,4 @@ urlpatterns = [
     path('add_account', views.add_account),
     path('view_account', views.view_account),
     path('modify_account', views.modify_account),
-
 ]

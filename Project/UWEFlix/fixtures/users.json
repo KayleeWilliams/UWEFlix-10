@@ -32,7 +32,8 @@
       "is_superuser": false,
       "groups": [
         2
-      ]
+      ],
+      "clubs": [1]
     }
   },
   {
