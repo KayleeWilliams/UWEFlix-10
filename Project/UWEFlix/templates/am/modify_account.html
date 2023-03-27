@@ -2,27 +2,15 @@
 {% load static %} 
 
 {% block title %} 
-    Add an Account
+    Modify Account
 {% endblock %} 
 
 {% block content %}
-<div>
-  <div class="booking am">
+  <div class="am booking">
       <form method="POST" class="content">
         {% csrf_token %}
-        <h1>Add Account</h1>
-
-          {% if form.errors %}
-            <div class="login-error">
-                {% for field, errors in form.errors.items %}
-                    {% for error in errors %}
-                        <p>{{ error|escape }}</p>
-                    {% endfor %}
-                {% endfor %}
-            </div>
-          {% endif %}
-
-        <div class="fields"> 
+        <h1>Modify Account</h1>
+        <div class="inputs">
           <div class="field">
             <p> Account Title</p>
             <input type="text" name="{{ form.title.name }}" value="" required/>
@@ -31,7 +19,7 @@
           <div class="field">
             <p> Card Number </p>
             <input type="text" name="{{ form.card_number.name }}" value="" required/>
-        </div>
+          </div>
           
           <div class="field">
             <p> Expiry Date </p>
@@ -51,11 +39,9 @@
           {% endfor %}
         </select>
 
-        <input type="submit" value="Add Account" id="submit" />
+        <input type="submit" value="Modify Account" class="btn" id="submit"/> 
         <div class="separator" > </div>
-        <a href="/account_management" id="submit">Back to Accounts</a>
+        <a href="/account_management" class="btn" id="submit">Back to Accounts</a>
       </form>
   </div>
-</div>
-
 {% endblock %}

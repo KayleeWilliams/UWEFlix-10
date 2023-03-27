@@ -41,5 +41,23 @@
       "group": 4,
       "permission": 2
     }
+  },
+
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Is Cinemas Manager",
+      "content_type": 5,
+      "codename": "cinema_manager"
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 3,
+    "fields": {
+      "group": 3,
+      "permission": 3
+    }
   }
 ]

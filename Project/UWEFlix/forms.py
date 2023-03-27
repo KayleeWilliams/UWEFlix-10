@@ -49,3 +49,11 @@ class ModifyAccountForm(forms.Form):
     card_number = forms.CharField(required=False, label="Card Number")
     expiry_date = forms.CharField(required=False, label="Expiry Date")
     discount_rate = forms.DecimalField(required=False, label="Discount Rate")
+
+# Add film form for cinema manager
+class FilmForm(forms.Form):
+    title = forms.CharField(required=True)
+    description = forms.CharField(required=True)
+    age_rating = forms.CharField(required=True)
+    duration = forms.IntegerField(required=True)
+    imdb = forms.CharField(required=True)

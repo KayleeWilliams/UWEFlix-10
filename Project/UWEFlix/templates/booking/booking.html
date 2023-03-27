@@ -5,57 +5,61 @@
 {% endblock %}
 
 {% block content %}
-<div class="booking">
-  <image src="{{ showing.film.backdrop_url }}" class="film-poster" />
-  <div class="background">
-    <form method="post" class="form">
+<div class="form">
+  <image src="{{ showing.film.backdrop_url }}" class="bg-image" />
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <form method="post">
       <h1 style="text-align: center;"> {{ showing.film.title }}</h1>
-      <div class="details">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
-        <p> {{ showing.date }} @ {{ showing.time }} </p>
-      </div>
-      <div class="details">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7 11v2h10v-2c0-1.86 1.28-3.41 3-3.86V6c0-1.65-1.35-3-3-3H7C5.35 3 4 4.35 4 6v1.14c1.72.45 3 2 3 3.86z"/><path fill="currentColor" d="M21 9c-1.1 0-2 .9-2 2v4H5v-4c0-1.1-.9-2-2-2s-2 .9-2 2v5c0 1.65 1.35 3 3 3v1c0 .55.45 1 1 1s1-.45 1-1v-1h12v1c0 .55.45 1 1 1s1-.45 1-1v-1c1.65 0 3-1.35 3-3v-5c0-1.1-.9-2-2-2z"/></svg>
-        <p id="total_seats" seats="{{ showing.seats }}"> {{ showing.seats }} Seats Available </p>
+      <div class="booking-details">
+        <div>
+          <svg style="justify-self: end;" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
+          <p> {{ showing.date }} @ {{ showing.time }} </p>
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7 11v2h10v-2c0-1.86 1.28-3.41 3-3.86V6c0-1.65-1.35-3-3-3H7C5.35 3 4 4.35 4 6v1.14c1.72.45 3 2 3 3.86z"/><path fill="currentColor" d="M21 9c-1.1 0-2 .9-2 2v4H5v-4c0-1.1-.9-2-2-2s-2 .9-2 2v5c0 1.65 1.35 3 3 3v1c0 .55.45 1 1 1s1-.45 1-1v-1h12v1c0 .55.45 1 1 1s1-.45 1-1v-1c1.65 0 3-1.35 3-3v-5c0-1.1-.9-2-2-2z"/></svg>
+          <p id="total_seats" seats="{{ showing.seats }}"> {{ showing.seats }} Seats Available </p>
+        </div>
       </div>
 
       <!-- Form -->
       {% csrf_token %}
-      <div class="content">
+      <div>
         <!-- If account gets debited  -->
         {% if not perms.contenttypes.debit_account %} 
-          <h2> Account Details </h2>
-          <div class="">
+          <h2 style="margin-top: 16px;"> Account Details </h2>
+          <div class="inputs">
             <p> Email Address </p>
             <input type="email" name="{{ form.email.name }}" />
           </div>
 
-
-          <h2> Card Details </h2>
-          <div class="card">
-            <div class="detail long">
+          <h2 style="margin-top: 16px;"> Card Details </h2>
+          <div class="inputs">
+            <div class="long">
               <p> Name On Card </p>
               <input type="text" name="{{ form.card_name.name }}" />
             </div>
-            <div class="detail long">
+            <div class="long">
               <p> Card Number </p>
               <input type="text" name="{{ form.card_number.name }}" />
             </div>
-            <div class="detail short">
-              <p> Expiry Date <span class="helper">(MM/YY)</span></p>
-              <input type="text" name="{{ form.card_expiry.name }}" />
-            </div>
-            <div class="detail short">
-              <p> CVV </p>
-              <input type="password" name="{{ form.card_cvv.name }}" />
+            <div class="inputs-row">
+              <div class="short">
+                <p> Expiry Date <span class="helper">(MM/YY)</span></p>
+                <input type="text" name="{{ form.card_expiry.name }}" />
+              </div>
+              <div class="short">
+                <p> CVV </p>
+                <input type="password" name="{{ form.card_cvv.name }}" />
+              </div>
             </div>
           </div>
         {% endif %}
       <div>
         {% for field in form %}
           {% if field.name|slice:":6" == "ticket" %}  
-            <h2 id="ticket_header"> Tickets </h2>
-            <div class="ticket-row"> 
+            <h2 id="ticket_header" style="margin-top: 16px;"> Tickets </h2>
+            <div class="inputs-row"> 
               <p> {{ field.label }} Ticket </p>
               {{ field }}
             </div>
@@ -73,11 +77,10 @@
       {% endif %}
 
       <div class="checkout"> 
-        <input type="submit" value="Book Tickets">
+        <input type="submit" class="btn" value="Book Tickets">
         <div id="total_cost">Total: £0.00</div>
       </div>
     </form>
-    
   </div>
 </div>
 

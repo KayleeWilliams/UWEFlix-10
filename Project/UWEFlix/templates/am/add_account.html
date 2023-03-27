@@ -2,31 +2,43 @@
 {% load static %} 
 
 {% block title %} 
-    Modify Account
+    Add an Account
 {% endblock %} 
 
 {% block content %}
-  <div class="am booking">
+<div>
+  <div class="">
       <form method="POST" class="content">
         {% csrf_token %}
-        <h1>Modify Account</h1>
-        <div class="fields">
-          <div class="field">
+        <h1>Add Account</h1>
+
+          {% if form.errors %}
+            <div class="errors">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error|escape }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+          {% endif %}
+
+        <div class="inputs"> 
+          <div>
             <p> Account Title</p>
             <input type="text" name="{{ form.title.name }}" value="" required/>
           </div>
 
-          <div class="field">
+          <div>
             <p> Card Number </p>
             <input type="text" name="{{ form.card_number.name }}" value="" required/>
-          </div>
+        </div>
           
-          <div class="field">
+          <div>
             <p> Expiry Date </p>
             <input type="text" name="{{ form.expiry_date.name }}" value="" required/>
           </div>
 
-          <div class="field">
+          <div>
             <p> Discount Rate (%) </p>
             <input type="number" name="{{ form.discount_rate.name }}" min=0 max=100 value=0 required/>
           </div>
@@ -39,9 +51,11 @@
           {% endfor %}
         </select>
 
-        <input type="submit" value="Modify Account" id="submit"/> 
+        <input type="submit" value="Add Account" id="submit" class="btn" />
         <div class="separator" > </div>
-        <a href="/account_management" id="submit">Back to Accounts</a>
+        <a href="/account_management" id="submit" class="btn">Back to Accounts</a>
       </form>
   </div>
+</div>
+
 {% endblock %}

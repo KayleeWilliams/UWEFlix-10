@@ -27,6 +27,11 @@
         <a href="{% url 'account_management' %}" {% if request.path == '/account_management' %} class="selected" {% endif %}>Account Management</a>
       {% endif %}
 
+      <!-- If user is cinema manager -->
+      {% if perms.contenttypes.cinema_manager %}
+        <a href="{% url 'cinema_management' %}" {% if request.path == '/cinema_management' %} class="selected" {% endif %}>Cinema Management</a>
+      {% endif %}
+
           
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}">Sign Out</a>
