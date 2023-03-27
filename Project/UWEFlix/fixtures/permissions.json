@@ -34,11 +34,21 @@
       "codename": "account_manager"
     }
   },
+  
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Is Club Rep",
+      "content_type": 5,
+      "codename": "club_rep"
+    }
+  },
   {
     "model": "auth.group_permissions",
     "pk": 2,
     "fields": {
-      "group": 4,
+      "group": 2,
       "permission": 2
     }
   }
