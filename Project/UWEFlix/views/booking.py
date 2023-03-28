@@ -48,6 +48,10 @@ def booking(request):
             # Loop through each field in the form if ticket
             for field_name, quantity in form.cleaned_data.items():
                 if field_name.startswith('ticket_'):
+
+                    if not isinstance(quantity, int):
+                        quantity = 0
+
                     total_tickets += quantity
 
                     # Get ticket type
