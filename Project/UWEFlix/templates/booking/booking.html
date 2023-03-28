@@ -56,15 +56,26 @@
           </div>
         {% endif %}
       <div>
-        {% for field in form %}
-          {% if field.name|slice:":6" == "ticket" %}  
-            <h2 id="ticket_header" style="margin-top: 16px;"> Tickets </h2>
-            <div class="inputs-row"> 
-              <p> {{ field.label }} Ticket </p>
-              {{ field }}
-            </div>
-          {% endif %}
-        {% endfor %}
+          {% for field in form %}
+            {% if perms.contenttypes.club_rep %}
+              {% if field.label == "Student" %}
+                <h2 id="ticket_header"> Tickets </h2>
+                <div class="ticket-row"> 
+                <p> {{ field.label }} Ticket </p>
+                {{ field }}
+                </div>
+              {% endif %}
+            {% else %}
+              {% if field.name|slice:":6" == "ticket" %}  
+                <h2 id="ticket_header"> Tickets </h2>
+                <div class="ticket-row"> 
+                <p> {{ field.label }} Ticket </p>
+                {{ field }}
+                </div>
+              {% endif %}
+            {% endif %}
+            
+          {% endfor %}
         </div>
       </div>
 

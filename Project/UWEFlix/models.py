@@ -64,3 +64,4 @@ class Account(models.Model):
     card_number = models.CharField(max_length=16)
     expiry_date = models.CharField(max_length=10)
     club = models.OneToOneField(Club, on_delete=models.CASCADE)
+

@@ -30,7 +30,8 @@ class BookingForm(forms.Form):
           self.fields[f'ticket_{ticket.id}'] = forms.IntegerField(
               label=ticket.name,
               initial=0,
-              min_value=0,
+              min_value= 0,
+              max_value=10,
 
               # Add price as data attribute to use in JavaScript
               widget=forms.NumberInput(attrs={'data-price': ticket.price})
