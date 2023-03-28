@@ -35,7 +35,7 @@
   },
   {
     "model": "auth.group_permissions",
-    "pk": 2,
+    "pk": 3,
     "fields": {
       "group": 4,
       "permission": 2
@@ -51,6 +51,7 @@
     }
   },
   {
+    "model": "auth.permission",
     "pk": 4,
     "fields": {
       "name": "Is Club Rep",
@@ -60,7 +61,7 @@
   },
   {
     "model": "auth.group_permissions",
-    "pk": 3,
+    "pk": 4,
     "fields": {
       "group": 3,
       "permission": 3
@@ -68,7 +69,7 @@
   },
   {
     "model": "auth.group_permissions",
-    "pk": 4,
+    "pk": 5,
     "fields": {
       "group": 2,
       "permission": 4
