@@ -36,7 +36,7 @@
   },
   {
     "model": "auth.group_permissions",
-    "pk": 2,
+    "pk": 3,
     "fields": {
       "group": 4,
       "permission": 2
@@ -54,7 +54,7 @@
   },
   {
     "model": "auth.group_permissions",
-    "pk": 3,
+    "pk": 4,
     "fields": {
       "group": 3,
       "permission": 3
