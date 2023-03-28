@@ -29,12 +29,16 @@ class BookingForm(forms.Form):
         for ticket in available_tickets:
           self.fields[f'ticket_{ticket.id}'] = forms.IntegerField(
               label=ticket.name,
-              initial=0,
               min_value=0,
+              initial=0,
+              max_value=10,
+              required=False,
 
               # Add price as data attribute to use in JavaScript
               widget=forms.NumberInput(attrs={'data-price': ticket.price})
           )
+        
+        
     
 # Account form for account manager
 class AccountForm(forms.Form):
