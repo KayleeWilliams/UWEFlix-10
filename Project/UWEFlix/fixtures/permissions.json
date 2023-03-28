@@ -24,7 +24,6 @@
       "permission": 1
     }
   },
-
   {
     "model": "auth.permission",
     "pk": 2,
@@ -42,7 +41,6 @@
       "permission": 2
     }
   },
-
   {
     "model": "auth.permission",
     "pk": 3,
@@ -53,11 +51,28 @@
     }
   },
   {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Is Club Rep",
+      "content_type": 5,
+      "codename": "club_rep"
+    }
+  },
+  {
     "model": "auth.group_permissions",
     "pk": 4,
     "fields": {
       "group": 3,
       "permission": 3
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 5,
+    "fields": {
+      "group": 2,
+      "permission": 4
     }
   }
 ]
