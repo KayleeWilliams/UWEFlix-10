@@ -54,6 +54,7 @@ class ModifyAccountForm(forms.Form):
     expiry_date = forms.CharField(required=False, label="Expiry Date")
     discount_rate = forms.DecimalField(required=False, label="Discount Rate")
 
+
 # Add film form for cinema manager
 class FilmForm(forms.Form):
     title = forms.CharField(required=True)
@@ -61,3 +62,21 @@ class FilmForm(forms.Form):
     age_rating = forms.CharField(required=True)
     duration = forms.IntegerField(required=True)
     imdb = forms.CharField(required=True)
+
+
+class ClubForm(forms.Form):
+    name = forms.CharField()
+    address = forms.CharField()
+    contacts = forms.CharField()
+    representative = forms.CharField()
+
+
+class ScreenForm(forms.Form):
+    capacity = forms.CharField()
+    seat_number = forms.CharField()
+
+
+class ShowingForm(forms.Form):
+    title = forms.CharField()
+    date = forms.CharField()
+    time = forms.CharField()
