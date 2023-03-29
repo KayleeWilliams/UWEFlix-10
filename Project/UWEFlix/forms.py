@@ -21,7 +21,6 @@ class ClubForm(forms.Form):
 
 class ScreenForm(forms.Form):
     capacity = forms.CharField()
-    seat_number = forms.CharField()
 
 class ShowingForm(forms.Form):
     title = forms.CharField()
