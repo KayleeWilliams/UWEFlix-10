@@ -1,0 +1,44 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Showing Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div>
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+
+  <div class="content">
+    <div class="films">
+      <h1> Showing Management </h1>
+      <a href="{% url 'add_showing' %}" class="btn float">Create Showing</a>
+      <div class="separator"> </div>
+      
+      {% for showing in showings %}
+        <div class="film">
+          <div class="content">
+            <img src="{{ showing.film.image_url }}" alt="{{ film.title }}"/>
+            <div style="height: 100%;">
+              <div class="info">
+                <h3>{{ showing.film.title}}</h3>
+                <p>• {{ showing.date }} </p>
+                <p>• {{ showing.time }} </p>
+              </div>
+              <p> {{ showing.seats }} / {{ showing.screen.capacity }} Seats Booked </p>
+              <p> Playing on Screen {{ showing.screen.id }} </p>
+            </div>
+          </div>
+
+
+          <div class="btn-col">
+            <a class="btn" href="/modify_showing?showing={{ showing.id }}"> Modify </a>
+            <a class="btn" href="/delete_showing?showing={{ showing.id }}"> Delete </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div> 
+</div>
+{% endblock %}

@@ -76,6 +76,7 @@ class ScreenForm(forms.Form):
 
 
 class ShowingForm(forms.Form):
-    title = forms.CharField()
-    date = forms.CharField()
-    time = forms.CharField()
+    film_id = forms.IntegerField()
+    date = forms.DateField()
+    time = forms.TimeField()
+    screen_id = forms.IntegerField()

@@ -3,3 +3,4 @@ from .booking import *
 from .account import *
 from .account_manager import *
 from .cinema_manager import *
+from .showings_management import *

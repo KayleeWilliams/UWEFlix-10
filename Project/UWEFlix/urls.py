@@ -17,5 +17,9 @@ urlpatterns = [
     path('add_film', views.add_film, name='add_film'),
     path('modify_film', views.modify_film, name='modify_film'),
     path('delete_film', views.delete_film, name='delete_film'),
+    path('showings_management', views.showings_dash, name='showings_management'),
+    path('add_showing', views.add_showing, name='add_showing'),
+    path('modify_showing', views.modify_showing, name='modify_showing'),
+    path('delete_showing', views.delete_showing, name='delete_showing'),
 
 ]
