@@ -144,5 +144,5 @@ PASSWORD_HASHERS = [
 # Age is in seconds, (How long till the cookie expires)
 # Save every request, (If true, the session will be saved every request, else it will only be saved when the session is modified)
 
-SESSION_COOKIE_AGE = 600
+SESSION_COOKIE_AGE = 1200
 SESSION_SAVE_EVERY_REQUEST = True
