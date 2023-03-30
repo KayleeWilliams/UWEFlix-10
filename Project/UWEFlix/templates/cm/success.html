@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Success - UWEFlix
+{% endblock %}
+{% block content %}
+<div class="am">
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <div>
+      <h1> Success! </h1>
+      <p style="margin-bottom: 32px;"> {{ message }} </p>
+
+      <a href="/{{ redirect }}" class="btn">Return to {{ redirect_text }}</a>
+    </div> 
+</div>
+{% endblock %}

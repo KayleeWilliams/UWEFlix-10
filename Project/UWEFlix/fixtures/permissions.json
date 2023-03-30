@@ -1,0 +1,78 @@
+[
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can Debit Account",
+      "content_type": 5,
+      "codename": "debit_account"
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 1,
+    "fields": {
+      "group": 1,
+      "permission": 1
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 2,
+    "fields": {
+      "group": 2,
+      "permission": 1
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Is Account Manager",
+      "content_type": 5,
+      "codename": "account_manager"
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 3,
+    "fields": {
+      "group": 4,
+      "permission": 2
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Is Cinemas Manager",
+      "content_type": 5,
+      "codename": "cinema_manager"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Is Club Rep",
+      "content_type": 5,
+      "codename": "club_rep"
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 4,
+    "fields": {
+      "group": 3,
+      "permission": 3
+    }
+  },
+  {
+    "model": "auth.group_permissions",
+    "pk": 5,
+    "fields": {
+      "group": 2,
+      "permission": 4
+    }
+  }
+]

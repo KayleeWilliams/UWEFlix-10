@@ -6,6 +6,42 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+  <div class="navbar">
+    {% if request.path != '/login' %}
+    <a href="{% url 'index' %}"><img class="logo logo-mini" src="{% static 'images/logo.png' %}" alt="UWEFlix" /></a>
+    <div class="items">
+      <!-- If selected reflect in navbar -->
+      <a href="{% url 'index' %}" {% if request.path == '/' %}class="selected"{% endif %}>Showings</a>
+     
+      <!-- Temp is only accessible to perm test -->
+      {% if perms.contenttypes.test %}
+        <a href="{% url 'temp' %}" {% if request.path == '/temp' %}class="selected"{% endif %}>Temp Page</a>
+      {% endif %}
+
+      <!-- If the user is club rep-->
+      {% if perms.contenttypes.club_rep %}
+      <a href="{% url 'account' %}" {% if request.path == '/account' %}class="selected"{% endif %}>Account</a>
+      {% endif %}  
+
+      <!-- If user is account manager -->
+      {% if perms.contenttypes.account_manager %}
+        <a href="{% url 'account_management' %}" {% if request.path == '/account_management' %} class="selected" {% endif %}>Account Management</a>
+      {% endif %}
+
+      <!-- If user is cinema manager -->
+      {% if perms.contenttypes.cinema_manager %}
+        <a href="{% url 'cinema_management' %}" {% if request.path == '/cinema_management' %} class="selected" {% endif %}>Cinema Management</a>
+      {% endif %}
+
+          
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Sign Out</a>
+      {% else %}
+        <a href="{% url 'login' %}">Sign In</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
 {% block content %}
 
 

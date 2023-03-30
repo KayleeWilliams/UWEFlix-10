@@ -1,0 +1,43 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Film Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div>
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+
+  <div class="content">
+    <div class="films">
+      <h1> Film Management </h1>
+      <a href="{% url 'add_film' %}" class="btn float">Add Film</a>
+      <div class="separator"> </div>
+
+      {% for film in films %}
+        <div class="film">
+          <div class="content">
+            <img src="{{ film.image_url }}" alt="{{ film.title }}"/>
+            <div style="height: 100%;">
+              <div class="info">
+                <h3>{{film.title}}</h3>
+                <p>• {{ film.duration }} Mins </p>
+                <p>• {{ film.age_rating }} </p>
+              </div>
+              <p> {{ film.description }} </p>
+            </div>
+          </div>
+
+
+          <div class="btn-col">
+            <a class="btn" href="/modify_film?film={{ film.id }}"> Modify </a>
+            <a class="btn" href="/delete_film?film={{ film.id }}"> Delete </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div> 
+</div>
+{% endblock %}

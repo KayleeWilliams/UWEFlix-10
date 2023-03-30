@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Cinema Manager - UWEFlix
+{% endblock %}
+{% block content %}
+<div>
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <h1> Cinema Management </h1>
+    <div class="grid-cols-2"> 
+      <a href="{% url 'film_management' %}" class="btn">Film Management</a>
+      <a href="{% url 'index' %}" class="btn">Showings Management</a>
+      <a href="{% url 'index' %}" class="btn">Club Management</a>
+      <a href="{% url 'index' %}" class="btn">Screen Management</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

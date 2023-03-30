@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Club Rep Account - UWEFlix
+{% endblock %}
+{% block content %}
+  <div>
+    {% if user.is_authenticated %}
+
+      <table width="85%" style="margin-left:auto; margin-right:auto;">
+        <tr>
+          <td>
+            <h4 style="margin-top: 64px"> Monthly Statement</h4>
+            <p>Test Club Rep Name</p>
+            <p>Test Club Address</p>
+            <p>Test Club Email</p>
+          </td>
+        </tr>
+      </table>
+      <br/>
+      <br/>
+
+      <hr width="85%">
+      <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto;">
+        <tr>
+          <th>
+            <h3>Date</h3>
+          </th>
+          <th>
+            <h3>Description</h3>
+          </th>
+          <th>
+            <h3>Ticket Qty</h3>
+          </th>
+          <th>
+            <h3>Amount</h3>
+          </th>
+          <th>
+            <h3>Total</h3>
+          </th>
+        </tr>
+
+      </table>
+      <hr width="85%">
+      <hr width="85%">
+    
+      <br/>
+      <br/>
+
+        <table width="100%" cellspacing="0">
+          <tr>
+            <th>
+              <h3>Total Debt Remaining: 0.0</h3>
+            </th>
+          </tr>
+        </table>
+    {% endif %}
+  </div>
+{% endblock %}

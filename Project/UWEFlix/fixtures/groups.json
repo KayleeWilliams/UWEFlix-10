@@ -1,0 +1,30 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "Student"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "Club Representative"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+      "name": "Cinema Manager"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 4,
+    "fields": {
+      "name": "Account Manager"
+    }
+  }
+]
