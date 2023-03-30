@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
 
-from ..models import Showing, Film, Screen
+from ..models import Showing, Film, Screen, Ticket
 from .cm.film import *
 from .cm.showings import *
 from .cm.screens import *
+from .cm.tickets import *
 
 # Create your views here.
 
@@ -68,6 +69,20 @@ def screens_dash(request):
     return render(request, 'cm/screens/dash.html', {'screens': screens})
 
 
+def tickets_dash(request):
+
+    # Check if the user is logged in and cinema manager
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if not request.user.has_perm('contenttypes.cinema_manager'):
+        return redirect('/')
+
+    # Get all showings
+    tickets = Ticket.objects.all()
+
+    return render(request, 'cm/tickets/dash.html', {'tickets': tickets})
+
 
 # Add based on request
 
@@ -89,6 +104,9 @@ def add(request):
     
     if 'screen' in request.GET:
         return add_screen(request)
+    
+    if 'ticket' in request.GET:
+        return add_ticket(request)
 
     else:
         return redirect('/cinema_management')
@@ -113,6 +131,9 @@ def modify(request):
     
     if 'screen' in request.GET:
         return modify_screen(request)
+    
+    if 'ticket' in request.GET:
+        return modify_ticket(request)
 
     else:
         return redirect('/cinema_management')
@@ -137,6 +158,9 @@ def delete(request):
     
     if 'screen' in request.GET:
       return delete_screen(request)
+    
+    if 'ticket' in request.GET:
+        return delete_ticket(request)
 
     else:
         return redirect('/cinema_management')

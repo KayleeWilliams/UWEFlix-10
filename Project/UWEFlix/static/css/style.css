@@ -152,6 +152,7 @@ h1 {
 .btn-row {
   flex-direction: row;
   height: max-content;
+  gap: 16px;
 }
 
 .grid-cols-2 {

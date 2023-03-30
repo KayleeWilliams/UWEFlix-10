@@ -80,3 +80,7 @@ class ShowingForm(forms.Form):
     date = forms.DateField()
     time = forms.TimeField()
     screen_id = forms.IntegerField()
+
+class TicketForm(forms.Form):
+    name = forms.CharField()
+    price = forms.DecimalField()

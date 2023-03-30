@@ -23,8 +23,8 @@ def add_screen(request):
                     return render(request, 'cm/screens/form.html', {'form': form, 'action': 'Add'})
 
             # Create showing
-            showing = Screen.objects.create(capacity=capacity)
-            showing.save()
+            screen = Screen.objects.create(capacity=capacity)
+            screen.save()
 
             return render(request, 'cm/success.html', {'message': 'Screen modified successfully', 'redirect': 'screens_management', 'redirect_text': 'Screen Management'})
 
