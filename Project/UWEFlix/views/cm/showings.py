@@ -1,8 +1,7 @@
-import requests
-from django.shortcuts import HttpResponse, redirect, render
+from django.shortcuts import redirect, render
 
-from ..forms import ShowingForm
-from ..models import Club, Film, Screen, Showing, Ticket
+from ...forms import ShowingForm
+from ...models import Film, Screen, Showing
 
 # Create your views here.
 
@@ -23,13 +22,6 @@ def showings_dash(request):
 
 
 def add_showing(request):
-    # Check if the user is logged in and cinema manager
-    if not request.user.is_authenticated:
-        return redirect('/login')
-
-    if not request.user.has_perm('contenttypes.cinema_manager'):
-        return redirect('/')
-
     # Get films + screens
     films = Film.objects.all().order_by('title')
     screens = Screen.objects.all().order_by('capacity')
@@ -67,16 +59,6 @@ def add_showing(request):
 
 
 def modify_showing(request):
-    # Check if the user is logged in and cinema manager
-    if not request.user.is_authenticated:
-        return redirect('/login')
-
-    if not request.user.has_perm('contenttypes.cinema_manager'):
-        return redirect('/')
-
-    # Check if showing is in request
-    if 'showing' not in request.GET:
-        return redirect('/showings_management')
 
     # Get films + screens + showing
     films = Film.objects.all().order_by('title')
@@ -106,8 +88,8 @@ def modify_showing(request):
 
             # If the screen has changed then set new seats
             if showing.screen != screen:
-              # Calculate total seats booked
-              showing.seats = (screen.capacity - showing.seats)
+                # Calculate total seats booked
+                showing.seats = (screen.capacity - showing.seats)
 
             # Update showing
             showing.film = film
@@ -127,13 +109,13 @@ def modify_showing(request):
 def delete_showing(request):
     # Check if the user is logged in and cinema manager
     if not request.user.is_authenticated:
-      return redirect('/login')
+        return redirect('/login')
 
     if not request.user.has_perm('contenttypes.cinema_manager'):
-      return redirect('/')
+        return redirect('/')
 
     if 'showing' not in request.GET:
-      return redirect('/showings_management')
+        return redirect('/showings_management')
 
     # Get showing
     showing = Showing.objects.get(id=request.GET.get('showing'))

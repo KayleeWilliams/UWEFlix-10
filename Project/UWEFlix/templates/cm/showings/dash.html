@@ -12,7 +12,7 @@
   <div class="content">
     <div class="films">
       <h1> Showing Management </h1>
-      <a href="{% url 'add_showing' %}" class="btn float">Create Showing</a>
+      <a href="{% url 'add' %}?showing" class="btn float">Create Showing</a>
       <div class="separator"> </div>
       
       {% for showing in showings %}
@@ -32,8 +32,8 @@
 
 
           <div class="btn-col">
-            <a class="btn" href="/modify_showing?showing={{ showing.id }}"> Modify </a>
-            <a class="btn" href="/delete_showing?showing={{ showing.id }}"> Delete </a>
+            <a class="btn" href="/modify?showing={{ showing.id }}"> Modify </a>
+            <a class="btn" href="/delete?showing={{ showing.id }}"> Delete </a>
           </div>
         </div>
       {% endfor %}
