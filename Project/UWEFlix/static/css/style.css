@@ -141,12 +141,17 @@ h1 {
   /* color: white; */
 }
 
-.btn-col {
+.btn-col, .btn-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: max-content;
   text-align: center;
+}
+
+.btn-row {
+  flex-direction: row;
+  height: max-content;
 }
 
 .grid-cols-2 {

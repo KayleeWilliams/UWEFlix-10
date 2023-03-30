@@ -6,21 +6,6 @@ from ...models import Film, Screen, Showing
 # Create your views here.
 
 
-def showings_dash(request):
-
-    # Check if the user is logged in and cinema manager
-    if not request.user.is_authenticated:
-        return redirect('/login')
-
-    if not request.user.has_perm('contenttypes.cinema_manager'):
-        return redirect('/')
-
-    # Get all showings
-    showings = Showing.objects.all()
-
-    return render(request, 'cm/showings/dash.html', {'showings': showings})
-
-
 def add_showing(request):
     # Get films + screens
     films = Film.objects.all().order_by('title')

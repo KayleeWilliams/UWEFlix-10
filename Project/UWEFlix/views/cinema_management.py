@@ -1,7 +1,9 @@
 from django.shortcuts import redirect, render
 
+from ..models import Showing, Film, Screen
 from .cm.film import *
 from .cm.showings import *
+from .cm.screens import *
 
 # Create your views here.
 
@@ -31,6 +33,8 @@ def film_dash(request):
 
     return render(request, 'cm/film/dash.html', {'films': films})
 
+# Showings Management Dashboard
+
 
 def showings_dash(request):
 
@@ -46,8 +50,28 @@ def showings_dash(request):
 
     return render(request, 'cm/showings/dash.html', {'showings': showings})
 
+# Screen Management Dashboard
+
+
+def screens_dash(request):
+
+    # Check if the user is logged in and cinema manager
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if not request.user.has_perm('contenttypes.cinema_manager'):
+        return redirect('/')
+
+    # Get all showings
+    screens = Screen.objects.all()
+
+    return render(request, 'cm/screens/dash.html', {'screens': screens})
+
+
 
 # Add based on request
+
+
 def add(request):
     # Check if the user is logged in and cinema manager
     if not request.user.is_authenticated:
@@ -62,6 +86,9 @@ def add(request):
 
     if 'showing' in request.GET:
         return add_showing(request)
+    
+    if 'screen' in request.GET:
+        return add_screen(request)
 
     else:
         return redirect('/cinema_management')
@@ -83,6 +110,9 @@ def modify(request):
 
     if 'showing' in request.GET:
         return modify_showing(request)
+    
+    if 'screen' in request.GET:
+        return modify_screen(request)
 
     else:
         return redirect('/cinema_management')
@@ -104,6 +134,9 @@ def delete(request):
 
     if 'showing' in request.GET:
         return delete_showing(request)
+    
+    if 'screen' in request.GET:
+      return delete_screen(request)
 
     else:
         return redirect('/cinema_management')

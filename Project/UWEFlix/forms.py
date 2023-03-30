@@ -72,7 +72,7 @@ class ClubForm(forms.Form):
 
 
 class ScreenForm(forms.Form):
-    capacity = forms.CharField()
+    capacity = forms.IntegerField()
 
 
 class ShowingForm(forms.Form):
