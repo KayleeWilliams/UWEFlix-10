@@ -1,0 +1,36 @@
+
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Screen Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div class="fm">
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <form method="post" class="">
+      {% csrf_token %}
+      <h1 style="margin-bottom: 16px;"> {{ action }} Screen </h1>
+      
+      {% if form.errors %}
+        <div class="errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error|escape }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="inputs">
+        <p> Screen Capacity </p>
+        <input type="number" min=0 name="{{ form.capacity.name }}" value="{{ form.capacity.value|default_if_none:'' }}" required>
+      </div>
+      <input type="submit" class="btn" style="margin-top: 16px;" value="{{ action }} Screen">
+
+    </form>
+  </div>
+</div>
+{% endblock %}

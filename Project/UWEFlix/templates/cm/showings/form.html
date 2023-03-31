@@ -1,0 +1,59 @@
+
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Film Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div class="fm">
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <form method="post" class="">
+      {% csrf_token %}
+      <h1 style="margin-bottom: 16px;"> {{ action }} Showing </h1>
+      
+      {% if form.errors %}
+        <div class="errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error|escape }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="grid-cols-2">
+        <div class="inputs">
+          <p> Film </p>
+          <select name="{{ form.film_id.name }}" value="{{ form.film_id.value|default_if_none:'' }}" required>
+            {% for film in films %}
+              <option value="{{ film.id }}" {% if film.id == form.film_id.value %} selected {% endif %}> {{ film.title }} </option>
+            {% endfor %}
+          </select>
+          <div>
+            <p> Date </p>
+            <input type="date" name="{{ form.date.name }}" value="{{ form.date.value|date:'Y-m-d' }}" required>
+          </div>
+        </div>
+
+        <div class="inputs">
+          <p> Screen </p>
+          <select name="{{ form.screen_id.name }}" required>
+            {% for screen in screens %}
+              <option value="{{ screen.id }}" {% if screen.id == form.screen_id.value %} selected {% endif %}> {{ screen.id }} </option>
+            {% endfor %}
+          </select>
+          <div>
+            <p> Time </p>
+            <input type="time" name="{{ form.time.name }}" value="{{ form.time.value|time:'h:i:s' }}"required>
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn" style="margin-top: 16px;" value="{{ action }} Showing">
+
+    </form>
+  </div>
+</div>
+{% endblock %}

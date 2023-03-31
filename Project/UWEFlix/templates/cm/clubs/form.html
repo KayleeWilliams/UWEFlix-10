@@ -1,0 +1,43 @@
+
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Club Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div class="fm">
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <form method="post" class="">
+      {% csrf_token %}
+      <h1> {{ action }} Club </h1>
+
+      <div class="grid-cols-2">
+        <div class="inputs">
+          <p> Club Name </p>
+          <input type="text" name="{{ form.name.name }}" value="{{ form.name.value|default_if_none:'' }}" required>
+          <p> Email </p>
+          <input type="email" name="{{ form.email.name }}" value="{{ form.email.value|default_if_none:'' }}"required>
+          <p> Representative </p>
+          <select name="{{ form.representative.name }}" required>
+            {% for user in users %}
+              <option value="{{ user.id }}" {% if user.id == form.representative.value %} selected {% endif %}> {{ user.username }} </option>
+            {% endfor %}
+          </select>
+       </div>
+
+        <div class="inputs">
+         <p> Phone Number </p>
+          <input type="number" name="{{ form.phone_number.name }}" value="{{ form.phone_number.value|default_if_none:'' }}" required>
+          <p> Address </p>
+          <input type="text" name="{{ form.address.name }}" value="{{ form.address.value|default_if_none:'' }}" required>
+        </div>
+      </div>
+      <input type="submit" class="btn" style="margin-top: 16px;" value="{{ action }} Film">
+
+    </form>
+  </div>
+</div>
+{% endblock %}
