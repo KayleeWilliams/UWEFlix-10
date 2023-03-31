@@ -17,6 +17,7 @@ urlpatterns = [
     path('showings_management', views.showings_dash, name='showings_management'),
     path('screens_management', views.screens_dash, name='screens_management'),
     path('tickets_management', views.tickets_dash, name='tickets_management'),
+    path('users_management', views.users_dash, name='users_management'),
     path('add', views.add, name='add'),
     path('modify', views.modify, name='modify'),
     path('delete', views.delete, name='delete'),

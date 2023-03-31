@@ -1,11 +1,12 @@
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-from ..models import Showing, Film, Screen, Ticket
+from ..models import Accounting, Film, Screen, Showing, Ticket
 from .cm.film import *
-from .cm.showings import *
 from .cm.screens import *
+from .cm.showings import *
 from .cm.tickets import *
-
+from .cm.users import *
 # Create your views here.
 
 
@@ -84,6 +85,21 @@ def tickets_dash(request):
     return render(request, 'cm/tickets/dash.html', {'tickets': tickets})
 
 
+def users_dash(request):
+    # Check if the user is logged in and cinema manager
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if not request.user.has_perm('contenttypes.cinema_manager'):
+        return redirect('/')
+
+    # Get all users
+    users = User.objects.all().prefetch_related('accounting')
+
+    return render(request, 'cm/users/dash.html', {'users': users})
+
+
+
 # Add based on request
 
 
@@ -101,12 +117,15 @@ def add(request):
 
     if 'showing' in request.GET:
         return add_showing(request)
-    
+
     if 'screen' in request.GET:
         return add_screen(request)
-    
+
     if 'ticket' in request.GET:
         return add_ticket(request)
+    
+    if 'user' in request.GET:
+        return add_user(request)
 
     else:
         return redirect('/cinema_management')
@@ -128,12 +147,15 @@ def modify(request):
 
     if 'showing' in request.GET:
         return modify_showing(request)
-    
+
     if 'screen' in request.GET:
         return modify_screen(request)
-    
+
     if 'ticket' in request.GET:
         return modify_ticket(request)
+    
+    if 'user' in request.GET:
+        return modify_user(request)
 
     else:
         return redirect('/cinema_management')
@@ -155,12 +177,16 @@ def delete(request):
 
     if 'showing' in request.GET:
         return delete_showing(request)
-    
+
     if 'screen' in request.GET:
-      return delete_screen(request)
-    
+        return delete_screen(request)
+
     if 'ticket' in request.GET:
         return delete_ticket(request)
+    
+    if 'user' in request.GET:
+        return delete_user(request)
+
 
     else:
         return redirect('/cinema_management')

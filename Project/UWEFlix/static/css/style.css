@@ -247,8 +247,8 @@ input {
 }
 
 select {
-  background-color: #333;
-  padding: 8px 16px;
+  background-color: #2c2e32;
+  padding: 4px;
   border-radius: 4px;
   color: white;
   border: none;

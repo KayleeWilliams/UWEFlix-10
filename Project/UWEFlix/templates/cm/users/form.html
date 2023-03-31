@@ -1,0 +1,58 @@
+
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Screen Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div class="fm">
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <form method="post" class="">
+      {% csrf_token %}
+      <h1 style="margin-bottom: 16px;"> {{ action }} User </h1>
+      
+      {% if form.errors %}
+        <div class="errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error|escape }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="grid-cols-2">
+        <div class="inputs">
+          <p> Username </p>
+          <input type="text" name="{{ form.username.name }}" value="{{ form.username.value|default_if_none:'' }}" required>
+          <p> First Name </p>
+          <input type="text" name="{{ form.first_name.name }}" value="{{ form.first_name.value|default_if_none:'' }}" required>
+          <p> Email Address </p>
+          <input type="email" name="{{ form.email.name }}" value="{{ form.email.value|default_if_none:'' }}" required>
+          <p> Discount % </p>
+          <input type="number" min="0" max="100" name="{{ form.discount.name }}" value="{{ form.discount.value|default_if_none:'0' }}" required>
+        </div>
+        <div class="inputs">
+          <p> Password </p>
+          <input type="password" name="{{ form.password.name }}" value="{{ form.password.value|default_if_none:'' }}" required>
+          <p> Last Name </p>
+          <input type="text" name="{{ form.last_name.name }}" value="{{ form.last_name.value|default_if_none:'' }}" required>
+          <p> Group </p>
+          <select name="{{ form.group_id.name }}" required>
+            {% for group in groups %}
+              <option value="{{ group.id }}" {% if group.id == form.group_id.value %} selected {% endif %}> {{ group.name }} </option>
+            {% endfor %}
+          </select>
+        </div>
+
+
+      </div>
+      <input type="submit" class="btn" style="margin-top: 16px;" value="{{ action }} Screen">
+
+    </form>
+  </div>
+</div>
+{% endblock %}
