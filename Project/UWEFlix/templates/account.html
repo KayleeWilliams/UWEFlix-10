@@ -12,9 +12,13 @@
         <tr>
           <td>
             <h4 style="margin-top: 64px"> Monthly Statement</h4>
-            <p>Test Club Rep Name</p>
-            <p>Test Club Address</p>
-            <p>Test Club Email</p>
+            {% for club in clubs %}
+              <p>{{ club.representative }}</p>
+              <p>{{ club.name }}</p>
+              <p>{{ club.address }}</p>
+              <p>{{ club.contacts }}</p>
+            {% endfor %}
+
           </td>
         </tr>
       </table>
@@ -24,21 +28,18 @@
       <hr width="85%">
       <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto;">
         <tr>
-          <th>
-            <h3>Date</h3>
-          </th>
-          <th>
-            <h3>Description</h3>
-          </th>
-          <th>
-            <h3>Ticket Qty</h3>
-          </th>
-          <th>
-            <h3>Amount</h3>
-          </th>
-          <th>
-            <h3>Total</h3>
-          </th>
+            <th><h3>Booking Id</h3></th>
+            <th><h3>Ticket Quantity</h3></th>
+            <th><h3>Ticket Price</h3></th>
+            <th><h3>Ticket Amount</h3></th>         
+        </tr>
+        <tr style="text-align:center">
+          {% for booking in bookings %}
+            <td><p>{{ booking.showing.film.title }}</p></td>
+            <td><p>{{ booking.total_cost }}</p></td>
+            <td><p>{{ booking.ticket_type_quantities.quantity }}</p></td>
+            <th><p>{{ booking.ticket_type_quantities.ticket.price }}</p></th>
+          {% endfor %}
         </tr>
 
       </table>

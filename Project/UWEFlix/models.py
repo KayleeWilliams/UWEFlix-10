@@ -48,7 +48,8 @@ class Club(models.Model):
         name = models.CharField(max_length=20)
         address = models.CharField(max_length=50)
         contacts = models.IntegerField() #Landline, mobile and e-Mail
-        representative = models.CharField(max_length=150) #First name, last name and date of birth.   
+        representative = models.CharField(max_length=150) #First name, last name and date of birth.  
+        user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
 
 #Club Representative Model
 class ClubRep(models.Model):
