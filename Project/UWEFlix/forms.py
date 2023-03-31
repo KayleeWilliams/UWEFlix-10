@@ -79,3 +79,8 @@ class ShowingForm(forms.Form):
     title = forms.CharField()
     date = forms.CharField()
     time = forms.CharField()
+
+class RequestForm(forms.Form):
+    email = forms.CharField()
+    request = forms.CharField()
+
