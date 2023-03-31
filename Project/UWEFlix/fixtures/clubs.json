@@ -5,8 +5,9 @@
     "fields": {
       "name": "Archery Club",
       "address": "Coldharbour Lane",
-      "contacts": 555, 
-      "representative": "Bill Gates"
+      "phone_number": 555,
+      "email": "archery-club@uwe.ac.uk",
+      "representative": 3
     }
   }
 ]

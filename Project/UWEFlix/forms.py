@@ -67,9 +67,9 @@ class FilmForm(forms.Form):
 class ClubForm(forms.Form):
     name = forms.CharField()
     address = forms.CharField()
-    contacts = forms.CharField()
-    representative = forms.CharField()
-
+    phone_number = forms.IntegerField()
+    email = forms.EmailField()
+    representative = forms.IntegerField()
 
 class ScreenForm(forms.Form):
     capacity = forms.IntegerField()

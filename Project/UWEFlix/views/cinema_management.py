@@ -1,12 +1,14 @@
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-from ..models import Accounting, Film, Screen, Showing, Ticket
+from ..models import Accounting, Film, Screen, Showing, Ticket, Club
 from .cm.film import *
 from .cm.screens import *
 from .cm.showings import *
 from .cm.tickets import *
 from .cm.users import *
+from .cm.clubs import *
+
 # Create your views here.
 
 
@@ -98,7 +100,18 @@ def users_dash(request):
 
     return render(request, 'cm/users/dash.html', {'users': users})
 
+def clubs_dash(request):
+    # Check if the user is logged in and cinema manager
+    if not request.user.is_authenticated:
+        return redirect('/login')
 
+    if not request.user.has_perm('contenttypes.cinema_manager'):
+        return redirect('/')
+
+    # Get all clubs
+    clubs = Club.objects.all().select_related('account')
+    
+    return render(request, 'cm/clubs/dash.html', {'clubs': clubs})
 
 # Add based on request
 
@@ -126,6 +139,9 @@ def add(request):
     
     if 'user' in request.GET:
         return add_user(request)
+    
+    if 'club' in request.GET:
+        return add_club(request)
 
     else:
         return redirect('/cinema_management')
@@ -156,6 +172,9 @@ def modify(request):
     
     if 'user' in request.GET:
         return modify_user(request)
+    
+    if 'club' in request.GET:
+        return modify_club(request)
 
     else:
         return redirect('/cinema_management')
@@ -186,7 +205,9 @@ def delete(request):
     
     if 'user' in request.GET:
         return delete_user(request)
-
+    
+    if 'club' in request.GET:
+        return delete_club(request)
 
     else:
         return redirect('/cinema_management')
