@@ -26,21 +26,25 @@
       <br/>
 
       <hr width="85%">
-      <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto;">
+      <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto; text-align: center;">
         <tr>
             <th><h3>Booking Id</h3></th>
-            <th><h3>Ticket Quantity</h3></th>
-            <th><h3>Ticket Price</h3></th>
-            <th><h3>Ticket Amount</h3></th>         
+            <th><h3>Film Title</h3></th>
+            <th><h3>Showing Date</h3></th>
+            <th><h3>Showing Time</h3></th> 
+            <th><h3>Total cost</h3></th>    
+            <th><h3>Ticket Quantity</h3></th>    
         </tr>
-        <tr style="text-align:center">
-          {% for booking in bookings %}
+        {% for booking in bookings %}
+        <tr>
+            <td><p>{{ booking.id }}</p></td>
             <td><p>{{ booking.showing.film.title }}</p></td>
+            <td><p>{{ booking.showing.date }}</p></td>
+            <th><p>{{ booking.showing.time }}</p></th>
             <td><p>{{ booking.total_cost }}</p></td>
-            <td><p>{{ booking.ticket_type_quantities.quantity }}</p></td>
-            <th><p>{{ booking.ticket_type_quantities.ticket.price }}</p></th>
-          {% endfor %}
+            <td><p>{{ bookinh.ticket_type_quantities.quantity }}</p></td>
         </tr>
+        {% endfor %}
 
       </table>
       <hr width="85%">

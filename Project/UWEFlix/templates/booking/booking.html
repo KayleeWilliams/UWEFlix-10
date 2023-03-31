@@ -84,34 +84,83 @@
   </div>
 </div>
 
-<!--
+{% if user.is_authenticated and perms.contenttypes.club_rep%}
 <script>
-document.querySelectorAll('[data-price]').forEach(function(el) {
-    el.addEventListener('change', function() {
-        var total_cost = 0;
-        var total_quantity = 0;
-        document.querySelectorAll('[data-price]').forEach(function(el) {
-            // Get the ticket price and quantity
-            var ticket_price = parseFloat(el.getAttribute('data-price'));
-            var ticket_quantity = parseInt(el.value);
-            
-            // Add the cost of this ticket to the total cost
-            total_cost += ticket_price * ticket_quantity;
+  document.querySelectorAll('[data-price]').forEach(function(el) {
+      el.addEventListener('change', function() {
+          var total_cost = 0;
+          var total_quantity = 0;
+          document.querySelectorAll('[data-price]').forEach(function(el) {
+              // Get the ticket price and quantity
+              var ticket_price = parseFloat(el.getAttribute('data-price'));
+              var ticket_quantity = parseInt(el.value);
+              
+              // Add the cost of this ticket to the total cost
+              total_cost += ticket_price * ticket_quantity;
 
-            // Add the quantity of this ticket to the total quantity
-            total_quantity += ticket_quantity;
+              //---------NEEDS TO BE MODIFIED-----------
+              // Apply the discount rate to the total cost
+
+              //var discount = total_cost * discount_rate;
+              total_cost -= discount;
+
+              //---------NEEDS TO BE MODIFIED-----------
+  
+              // Add the quantity of this ticket to the total quantity
+              total_quantity += ticket_quantity;
+          });
+          // Update the total cost element with the new total
+          document.querySelector('#total_cost').textContent = 'Total cost: £' + total_cost.toFixed(2);
+  
+          // Update the seats available element with the new total
+          var seats = document.querySelector('#total_seats').getAttribute('seats');
+          document.querySelector('#total_seats').textContent = seats - total_quantity + ' Seats Available';
+      });
+  });
+  
+  // Remove all ticket headers except the first one
+  var ticket_headers = document.querySelectorAll('#ticket_header');
+  for (var i = 1; i < ticket_headers.length; i++) {
+      ticket_headers[i].remove();
+  }
+  </script>
+  {% else %}
+  <script>
+    document.querySelectorAll('[data-price]').forEach(function(el) {
+        el.addEventListener('change', function() {
+            var total_cost = 0;
+            var total_quantity = 0;
+            document.querySelectorAll('[data-price]').forEach(function(el) {
+                // Get the ticket price and quantity
+                var ticket_price = parseFloat(el.getAttribute('data-price'));
+                var ticket_quantity = parseInt(el.value);
+                
+                // Add the cost of this ticket to the total cost
+                total_cost += ticket_price * ticket_quantity;
+    
+                // Add the quantity of this ticket to the total quantity
+                total_quantity += ticket_quantity;
+            });
+            // Update the total cost element with the new total
+            document.querySelector('#total_cost').textContent = 'Total cost: £' + total_cost.toFixed(2);
+    
+            // Update the seats available element with the new total
+            var seats = document.querySelector('#total_seats').getAttribute('seats');
+            document.querySelector('#total_seats').textContent = seats - total_quantity + ' Seats Available';
         });
-        // Update the total cost element with the new total
-        document.querySelector('#total_cost').textContent = 'Total cost: £' + total_cost.toFixed(2);
-
-        // Update the seats available element with the new total
-        var seats = document.querySelector('#total_seats').getAttribute('seats');
-        document.querySelector('#total_seats').textContent = seats - total_quantity + ' Seats Available';
     });
-});
+    
+    // Remove all ticket headers except the first one
+    var ticket_headers = document.querySelectorAll('#ticket_header');
+    for (var i = 1; i < ticket_headers.length; i++) {
+        ticket_headers[i].remove();
+    }
+    </script>
+{% endif %}
 
--->
 
+
+<!--
 {% if user.is_authenticated and perms.contenttypes.club_rep%}
     {% with discount_rate=account.discount_rate %}
         <script>
@@ -143,7 +192,12 @@ document.querySelectorAll('[data-price]').forEach(function(el) {
                 document.querySelector('#total_seats').textContent = seats - total_quantity + ' Seats Available';
             });
         });
-        </script>
+            // Remove all ticket headers except the first one
+            var ticket_headers = document.querySelectorAll('#ticket_header');
+            for (var i = 1; i < ticket_headers.length; i++) {
+              ticket_headers[i].remove();
+              }
+            </script>
     {% endwith %}
 {% else %}
     <script>
@@ -171,15 +225,14 @@ document.querySelectorAll('[data-price]').forEach(function(el) {
             document.querySelector('#total_seats').textContent = seats - total_quantity + ' Seats Available';
         });
     });
+    // Remove all ticket headers except the first one
+    var ticket_headers = document.querySelectorAll('#ticket_header');
+      for (var i = 1; i < ticket_headers.length; i++) {
+      ticket_headers[i].remove();
+      }
     </script>
 {% endif %}
+-->
 
-
-// Remove all ticket headers except the first one
-var ticket_headers = document.querySelectorAll('#ticket_header');
-for (var i = 1; i < ticket_headers.length; i++) {
-    ticket_headers[i].remove();
-}
-</script>
 
 {% endblock %}

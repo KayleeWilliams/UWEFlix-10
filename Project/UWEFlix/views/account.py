@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from ..models import Booking,Club
+from ..models import Booking,Club, Account
 
 # CLUB REP Account to view monthly statements
 

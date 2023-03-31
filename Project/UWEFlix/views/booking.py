@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from ..forms import BookingForm
-from ..models import Showing, Booking, Ticket, TicketTypeQuantity
+from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Account
 
 # Showings
 def index(request):
