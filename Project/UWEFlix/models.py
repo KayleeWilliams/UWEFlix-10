@@ -58,6 +58,11 @@ class ClubRep(models.Model):
         date_of_birth = models.DateField()
         club = models.ForeignKey(Club, on_delete=models.CASCADE)
 
+class Balance(models.Model):
+       user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
+       balance = models.DecimalField(max_digits=8, decimal_places=2)
+       debt = models.DecimalField(max_digits=8, decimal_places=2)
+
 #Account Model - For Account Manager
 class Account(models.Model):
     title = models.CharField(max_length=100)

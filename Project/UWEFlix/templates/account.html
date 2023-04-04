@@ -45,6 +45,7 @@
             <td><p>{{ bookinh.ticket_type_quantities.quantity }}</p></td>
         </tr>
         {% endfor %}
+        
 
       </table>
       <hr width="85%">
@@ -60,6 +61,12 @@
             </th>
           </tr>
         </table>
+
+        <div class="cr">
+          <a href="{% url 'payment' %}" {% if request.path == '/payment' %}{% endif %} class="btn">Pay Debt</a>
+          <a href="{% url 'payment' %}" {% if request.path == '/payment' %}{% endif %} class="btn">Balance Top up</a>
+        </div>
+        
     {% endif %}
   </div>
 {% endblock %}

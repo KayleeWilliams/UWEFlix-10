@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from ..models import Booking,Club, Account
+from ..models import Booking,Club
 
 # CLUB REP Account to view monthly statements
 
@@ -11,6 +11,13 @@ def account(request):
         bookings = Booking.objects.filter(user=request.user)
         clubs = Club.objects.filter(user=request.user)
         return render(request, 'account.html', {'bookings':bookings, 'clubs':clubs})
+    else:
+        # Redirect to login page
+        return redirect('/login')
+    
+def payment(request):
+    if request.user.is_authenticated:
+        return render(request, 'payment.html')
     else:
         # Redirect to login page
         return redirect('/login')
