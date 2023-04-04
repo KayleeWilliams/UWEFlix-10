@@ -1,0 +1,22 @@
+[
+    {
+      "model": "UWEFlix.balance",
+      "pk": 1,
+      "fields": {
+        "user": 3,
+        "balance": 10.00,
+        "debt": 0.00
+      }
+    },
+
+  {
+      "model": "UWEFlix.balance",
+      "pk": 2,
+      "fields": {
+        "user": 2,
+        "balance": 10.00,
+        "debt": 0.00
+      }
+    }
+]
+
