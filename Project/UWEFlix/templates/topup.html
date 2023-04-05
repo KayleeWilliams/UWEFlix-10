@@ -12,14 +12,6 @@
     <form method="POST">
       {% csrf_token %}
       {{ form }}
-      <input class="btn" type="Submit" name="submit" value="Confirm Payment"/>
-    </form>
-
-    <!--
-      <form method="POST">
-      {% csrf_token %}
-      <h3 style="margin-top: 16px;"> Select amount to top up:</h3>
-      {{ form.amount }}
 
       <div>
           <h3 style="margin-top: 16px;"> Card Details </h3>
@@ -55,12 +47,9 @@
 
           <div class="separator" > </div>
           <a href="/account" id="submit" style="float:left;" class="btn">Back</a>
-          <a href="/account" id="submit" style="float:right;" class="btn">Confirm Top up</a>
+          <input class="btn" style="float:right;" type="Submit" name="submit" value="Confirm Top Up"/>
       </form>
-    -->
-
-
-    
+     
   </div>
 </div>
 
