@@ -17,6 +17,7 @@ urlpatterns = [
     path('add_film', views.add_film, name='add_film'),
     path('modify_film', views.modify_film, name='modify_film'),
     path('delete_film', views.delete_film, name='delete_film'),
-    path('payment', views.payment, name='payment'),
+    path('repayment', views.repayment, name='repayment'),
+    path('topup', views.topup, name='topup'),
 
 ]

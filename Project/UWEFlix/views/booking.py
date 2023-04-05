@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from ..forms import BookingForm
-from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Account
+from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Balance
 
 # Showings
 def index(request):
@@ -59,6 +59,7 @@ def booking(request):
 
                     # Get ticket price
                     total_cost += (Ticket.objects.get(id=ticket_id).price * quantity)
+
 
             # If there aren't enough seats available
             if total_tickets > showing.seats:

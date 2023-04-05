@@ -4,7 +4,7 @@
       "pk": 1,
       "fields": {
         "user": 3,
-        "balance": 10.00,
+        "balance": 50.00,
         "debt": 0.00
       }
     },

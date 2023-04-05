@@ -63,8 +63,8 @@
         </table>
 
         <div class="cr">
-          <a href="{% url 'payment' %}" {% if request.path == '/payment' %}{% endif %} class="btn">Pay Debt</a>
-          <a href="{% url 'payment' %}" {% if request.path == '/payment' %}{% endif %} class="btn">Balance Top up</a>
+          <a href="{% url 'repayment' %}" {% if request.path == '/repayment' %}{% endif %} class="btn">Pay Debt</a>
+          <a href="{% url 'topup' %}" {% if request.path == '/topup' %}{% endif %} class="btn">Balance Top up</a>
         </div>
         
     {% endif %}

@@ -42,7 +42,11 @@
 
       <!-- If the user is club rep, display total balance-->
       {% if perms.contenttypes.club_rep or perms.contenttypes.debit_account %}
-      <p style="background-color: #333;   padding: 0px 4px; border-radius: 4px;" >Total Balance: £0.00</p>
+      <div style="background-color: #333;   padding: 0px 4px; border-radius: 4px;">
+        {% for b in balance %}
+        <p>Total Balance: £ {{ b.balance }} </p>
+        {% endfor %}
+      </div>
       {% endif %}  
     </div>
     {% endif %}

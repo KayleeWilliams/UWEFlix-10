@@ -1,0 +1,67 @@
+{% extends "template.html" %} 
+{% load static %} 
+
+{% block title %} 
+    Payment
+{% endblock %} 
+
+{% block content %}
+<div class="form">
+  <div class="content">
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ form }}
+      <input class="btn" type="Submit" name="submit" value="Confirm Payment"/>
+    </form>
+
+    <!--
+      <form method="POST">
+      {% csrf_token %}
+      <h3 style="margin-top: 16px;"> Select amount to top up:</h3>
+      {{ form.amount }}
+
+      <div>
+          <h3 style="margin-top: 16px;"> Card Details </h3>
+          <div class="inputs">
+            <div class="long">
+              <p> Name On Card </p>
+              <input type="text" name="{{ form.card_name.name }}" />
+            </div>
+            <div class="long">
+              <p> Card Number </p>
+              <input type="text" name="{{ form.card_number.name }}" />
+            </div>
+            <div class="inputs-row">
+              <div class="short">
+                <p> Expiry Date <span class="helper">(MM/YY)</span></p>
+                <input type="text" name="{{ form.card_expiry.name }}" />
+              </div>
+              <div class="short">
+                <p> CVV </p>
+                <input type="password" name="{{ form.card_cvv.name }}" />
+              </div>
+            </div>
+          </div>
+      </div>
+
+      {% if form.non_field_errors %}
+        <div class="errors">
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+          <div class="separator" > </div>
+          <a href="/account" id="submit" style="float:left;" class="btn">Back</a>
+          <a href="/account" id="submit" style="float:right;" class="btn">Confirm Top up</a>
+      </form>
+    -->
+
+
+    
+  </div>
+</div>
+
+{% endblock %}

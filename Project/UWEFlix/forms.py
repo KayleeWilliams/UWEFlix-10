@@ -14,7 +14,7 @@ class BookingForm(forms.Form):
     email = forms.EmailField(required=False)
 
     # Card info
-    card_name = forms.CharField(required=False)
+    card_name = forms.CharField(required=True)
     card_number = forms.CharField(required=False)
     card_expiry = forms.CharField(required=False)
     card_cvv = forms.CharField(required=False)
@@ -70,6 +70,8 @@ class ClubForm(forms.Form):
     contacts = forms.CharField()
     representative = forms.CharField()
 
+class TopUpForm(forms.Form):
+    amount = forms.IntegerField(required=True)
 
 class ScreenForm(forms.Form):
     capacity = forms.CharField()
