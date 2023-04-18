@@ -37,7 +37,12 @@ class BookingForm(forms.Form):
               # Add price as data attribute to use in JavaScript
               widget=forms.NumberInput(attrs={'data-price': ticket.price})
           )
-        
+class DiscountForm(forms.Form):
+    UserID = forms.DecimalField
+    EmailAddress = forms.CharField
+    RequestType = forms.CharField
+    RequestValue = forms.CharField
+
         
     
 # Account form for account manager

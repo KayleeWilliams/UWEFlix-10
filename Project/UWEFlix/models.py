@@ -65,3 +65,9 @@ class Account(models.Model):
     expiry_date = models.CharField(max_length=10)
     club = models.OneToOneField(Club, on_delete=models.CASCADE)
 
+#Discount Model - For Users
+class DiscountForm(models.Model):
+    UserID = models.DecimalField
+    EmailAddress = models.CharField
+    RequestType = models.CharField
+    RequestValue = models.CharField
