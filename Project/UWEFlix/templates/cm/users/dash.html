@@ -1,0 +1,45 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  User Management - UWEFlix
+{% endblock %}
+{% block content %}
+<div>
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+
+  <div class="content">
+    <div class="films">
+      <h1> User Management </h1>
+      <a href="{% url 'add' %}?user" class="btn float">Add User</a>
+      <div class="separator"> </div>
+      
+      {% for user in users %}
+        <div class="film" style="height: max-content;">
+          <div class="content" style="width: 70%">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>            <div style="height: 100%;">
+              <div class="info">
+                <h3>{{ user.username }}</h3>
+                <p>• {{ user.first_name }} {{ user.last_name }}</p>
+              </div>
+              <div class="info"> 
+              {% for group in user.groups.all %}
+                <p>{{ group.name }} </p>
+              {% endfor %}
+              <p>• {{ user.accounting.discount }}% Discount </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <a class="btn" href="/modify?user={{ user.id }}"> Modify </a>
+            <a class="btn" href="/delete?user={{ user.id }}"> Delete </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div> 
+</div>
+{% endblock %}

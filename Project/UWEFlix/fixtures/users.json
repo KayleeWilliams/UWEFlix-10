@@ -1,6 +1,7 @@
 [
   {
     "model": "auth.user",
+    "pk": 1,
     "fields": {
       "username": "CM",
       "email": "cm@uwe.ac.uk",
@@ -14,6 +15,7 @@
   },
   {
     "model": "auth.user",
+    "pk": 2,
     "fields": {
       "username": "k82-williams",
       "email": "Kaylee2.Williams@live.uwe.ac.uk",
@@ -27,6 +29,7 @@
   },
   {
     "model": "auth.user",
+    "pk": 3,
     "fields": {
       "username": "CR",
       "email": "CR@gmail.com",
@@ -40,6 +43,7 @@
   },
   {
     "model": "auth.user",
+    "pk": 4,
     "fields": {
       "username": "AM",
       "email": "AM@gmail.com",
@@ -49,6 +53,34 @@
       "groups": [
         4
       ]
+    }
+  },
+  {
+    "model": "UWEFlix.Accounting",
+    "fields": {
+      "user": 1,
+      "discount": 0.0
+    }
+  },
+  {
+    "model": "UWEFlix.Accounting",
+    "fields": {
+      "user": 2,
+      "discount": 15.0
+    }
+  },
+  {
+    "model": "UWEFlix.Accounting",
+    "fields": {
+      "user": 3,
+      "discount": 10.0
+    }
+  },
+  {
+    "model": "UWEFlix.Accounting",
+    "fields": {
+      "user": 4,
+      "discount": 0.0
     }
   }
 ]

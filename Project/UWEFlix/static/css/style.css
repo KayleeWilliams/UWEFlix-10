@@ -139,12 +139,18 @@ h1 {
   /* color: white; */
 }
 
-.btn-col {
+.btn-col, .btn-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: max-content;
   text-align: center;
+}
+
+.btn-row {
+  flex-direction: row;
+  height: max-content;
+  gap: 16px;
 }
 
 .grid-cols-2 {
@@ -239,8 +245,8 @@ input {
 }
 
 select {
-  background-color: #333;
-  padding: 8px 16px;
+  background-color: #2c2e32;
+  padding: 4px;
   border-radius: 4px;
   color: white;
   border: none;

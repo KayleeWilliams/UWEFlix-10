@@ -12,7 +12,7 @@
   <div class="content">
     <div class="films">
       <h1> Film Management </h1>
-      <a href="{% url 'add_film' %}" class="btn float">Add Film</a>
+      <a href="{% url 'add' %}?film" class="btn float">Add Film</a>
       <div class="separator"> </div>
 
       {% for film in films %}
@@ -31,8 +31,8 @@
 
 
           <div class="btn-col">
-            <a class="btn" href="/modify_film?film={{ film.id }}"> Modify </a>
-            <a class="btn" href="/delete_film?film={{ film.id }}"> Delete </a>
+            <a class="btn" href="/modify?film={{ film.id }}"> Modify </a>
+            <a class="btn" href="/delete?film={{ film.id }}"> Delete </a>
           </div>
         </div>
       {% endfor %}
