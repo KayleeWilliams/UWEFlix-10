@@ -12,9 +12,14 @@
         <tr>
           <td>
             <h4 style="margin-top: 64px"> Monthly Statement</h4>
-            <p>Test Club Rep Name</p>
-            <p>Test Club Address</p>
-            <p>Test Club Email</p>
+            {% if club %}
+              {% for club in clubs %}
+                <p>{{ club.representative }}</p>
+                <p>{{ club.name }}</p>
+                <p>{{ club.address }}</p>
+                <p>{{ club.contacts }}</p>
+              {% endfor %}
+            {% endif %}
           </td>
         </tr>
       </table>
@@ -22,24 +27,26 @@
       <br/>
 
       <hr width="85%">
-      <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto;">
+      <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto; text-align: center;">
         <tr>
-          <th>
-            <h3>Date</h3>
-          </th>
-          <th>
-            <h3>Description</h3>
-          </th>
-          <th>
-            <h3>Ticket Qty</h3>
-          </th>
-          <th>
-            <h3>Amount</h3>
-          </th>
-          <th>
-            <h3>Total</h3>
-          </th>
+            <th><h3>Booking Id</h3></th>
+            <th><h3>Film Title</h3></th>
+            <th><h3>Showing Date</h3></th>
+            <th><h3>Showing Time</h3></th> 
+            <th><h3>Total cost</h3></th>    
+            <th><h3>Ticket Quantity</h3></th>    
         </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.showing.film.title }}</td>
+            <td>{{ booking.showing.date }}</td>
+            <th>{{ booking.showing.time }}</th>
+            <td>{{ booking.total_cost }}</p></td>
+            <td>{{ booking.total_quantity }}</td>
+        </tr>
+        {% endfor %}
+        
 
       </table>
       <hr width="85%">
@@ -51,10 +58,15 @@
         <table width="100%" cellspacing="0">
           <tr>
             <th>
-              <h3>Total Debt Remaining: 0.0</h3>
+              <h3>Total Balance: £{{ account.balance }}</h3>
             </th>
           </tr>
         </table>
+
+        <div class="cr">
+          <a href="{% url 'payment' %}" class="btn">Settle Debt / Top Up</a>
+        </div>
+        
     {% endif %}
   </div>
 {% endblock %}

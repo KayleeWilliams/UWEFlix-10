@@ -95,3 +95,4 @@ class Accounting(models.Model):
         User, on_delete=models.CASCADE, primary_key=True)
     discount = models.DecimalField(
         default=0.00, max_digits=8, decimal_places=2)
+    balance = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)

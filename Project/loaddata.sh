@@ -10,7 +10,6 @@ python manage.py loaddata permissions.json
 python manage.py loaddata users.json
 python manage.py loaddata clubs.json
 
-
 # Migrate the FilmService 
 cd FilmService
 python manage.py migrate

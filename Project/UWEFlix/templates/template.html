@@ -19,7 +19,7 @@
       {% endif %}
 
       <!-- If the user is club rep-->
-      {% if perms.contenttypes.club_rep %}
+      {% if perms.contenttypes.club_rep or perms.contenttypes.debit_account %}
       <a href="{% url 'account' %}" {% if request.path == '/account' %}class="selected"{% endif %}>Account</a>
       {% endif %}  
 

@@ -71,6 +71,14 @@ class ClubForm(forms.Form):
     email = forms.EmailField()
     representative = forms.IntegerField()
 
+class PaymentForm(forms.Form):
+    amount = forms.IntegerField(required=False)
+    card_name = forms.CharField(required=False)
+    card_number = forms.CharField(required=False)
+    card_expiry = forms.CharField(required=False)
+    card_cvv = forms.CharField(required=False)
+
+
 class ScreenForm(forms.Form):
     capacity = forms.IntegerField()
 

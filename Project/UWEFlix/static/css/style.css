@@ -40,7 +40,6 @@ h1 {
 
 /* Navbar */
 .navbar {
-  position: fixed;
   width: 100%;
   z-index: 2;
   top: 0;
@@ -71,7 +70,6 @@ h1 {
   color: white;
   font-weight: 500;
 }
-
 /* Background Image */
 .bg-image {
   width: 100%;
@@ -545,4 +543,18 @@ select {
 .fm .content {
   width: 30%;
   padding: 24px 32px;
+}
+
+/* CR */
+.cr {
+  margin-left:auto; 
+  margin-right:auto; 
+  margin-top: 50px;
+  text-align: center;
+
+}
+
+/* Balance */
+.balance {
+  color:aqua;
 }
