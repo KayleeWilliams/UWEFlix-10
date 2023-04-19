@@ -5,18 +5,6 @@ from django.shortcuts import redirect, render
 
 from ..forms import LoginForm
 
-
-def temp(request):
-    if request.user.is_authenticated:
-        # Print user perms
-        print(request.user.get_all_permissions(), flush=True)
-        # balance = Balance.objects.filter(user=request.user)
-
-        return render(request, 'temp.html')
-    else:
-        # Redirect to login page
-        return redirect('/login')
-
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -30,7 +18,7 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                return redirect('/temp')
+                return redirect('/')
             else:
                 form.add_error(
                     None, "Username and password do not match an account on our system.")
