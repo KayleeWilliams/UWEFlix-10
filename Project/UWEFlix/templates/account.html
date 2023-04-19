@@ -12,13 +12,14 @@
         <tr>
           <td>
             <h4 style="margin-top: 64px"> Monthly Statement</h4>
-            {% for club in clubs %}
-              <p>{{ club.representative }}</p>
-              <p>{{ club.name }}</p>
-              <p>{{ club.address }}</p>
-              <p>{{ club.contacts }}</p>
-            {% endfor %}
-
+            {% if club %}
+              {% for club in clubs %}
+                <p>{{ club.representative }}</p>
+                <p>{{ club.name }}</p>
+                <p>{{ club.address }}</p>
+                <p>{{ club.contacts }}</p>
+              {% endfor %}
+            {% endif %}
           </td>
         </tr>
       </table>
@@ -37,12 +38,12 @@
         </tr>
         {% for booking in bookings %}
         <tr>
-            <td><p>{{ booking.id }}</p></td>
-            <td><p>{{ booking.showing.film.title }}</p></td>
-            <td><p>{{ booking.showing.date }}</p></td>
-            <th><p>{{ booking.showing.time }}</p></th>
-            <td><p>{{ booking.total_cost }}</p></td>
-            <td><p>{{ bookinh.ticket_type_quantities.quantity }}</p></td>
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.showing.film.title }}</td>
+            <td>{{ booking.showing.date }}</td>
+            <th>{{ booking.showing.time }}</th>
+            <td>{{ booking.total_cost }}</p></td>
+            <td>{{ booking.total_quantity }}</td>
         </tr>
         {% endfor %}
         
@@ -57,14 +58,13 @@
         <table width="100%" cellspacing="0">
           <tr>
             <th>
-              <h3>Total Debt Remaining: 0.0</h3>
+              <h3>Total Balance: £{{ account.balance }}</h3>
             </th>
           </tr>
         </table>
 
         <div class="cr">
-          <a href="{% url 'repayment' %}" {% if request.path == '/repayment' %}{% endif %} class="btn">Pay Debt</a>
-          <a href="{% url 'topup' %}" {% if request.path == '/topup' %}{% endif %} class="btn">Balance Top up</a>
+          <a href="{% url 'payment' %}" class="btn">Settle Debt / Top Up</a>
         </div>
         
     {% endif %}

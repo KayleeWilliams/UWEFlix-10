@@ -2,18 +2,29 @@
 {% load static %} 
 
 {% block title %} 
-    Payment
+  Payment - UWEFlix
 {% endblock %} 
 
 {% block content %}
 <div class="form">
   <div class="content">
+    <form method="post">
 
-    <form method="POST">
+      <!-- Form -->
       {% csrf_token %}
-      {{ form }}
-
       <div>
+        <!-- If account gets debited  -->
+        {% if perms.contenttypes.debit_account %} 
+          <h2 style="margin-top: 16px;"> Current Balance: £{{ account.balance }} </h2>
+
+          <div class="inputs">
+            <div class="long">
+              <p>Payment Total (£)</p>
+              <input type="number" min="0" name="{{ form.amount.name }}" value="{{ form.amount.value|default_if_none:'' }}" />
+            </div>
+          </div>
+
+
           <h3 style="margin-top: 16px;"> Card Details </h3>
           <div class="inputs">
             <div class="long">
@@ -35,6 +46,7 @@
               </div>
             </div>
           </div>
+        {% endif %}
       </div>
 
       {% if form.non_field_errors %}
@@ -45,11 +57,10 @@
         </div>
       {% endif %}
 
-          <div class="separator" > </div>
-          <a href="/account" id="submit" style="float:left;" class="btn">Back</a>
-          <input class="btn" style="float:right;" type="Submit" name="submit" value="Confirm Top Up"/>
-      </form>
-     
+      <div class="separator" > </div>
+      <a href="/account" id="submit" style="float:left;" class="btn">Back</a>
+      <input type="submit" id="submit" style="float:right;" class="btn" value="Confirm Payment"></input>
+    </form>
   </div>
 </div>
 
