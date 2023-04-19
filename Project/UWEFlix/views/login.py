@@ -4,16 +4,15 @@ from django.contrib.auth import logout as auth_logout
 from django.shortcuts import redirect, render
 
 from ..forms import LoginForm
-from ..models import Balance
 
 
 def temp(request):
     if request.user.is_authenticated:
         # Print user perms
         print(request.user.get_all_permissions(), flush=True)
-        balance = Balance.objects.filter(user=request.user)
+        # balance = Balance.objects.filter(user=request.user)
 
-        return render(request, 'temp.html', {'balance':balance})
+        return render(request, 'temp.html')
     else:
         # Redirect to login page
         return redirect('/login')

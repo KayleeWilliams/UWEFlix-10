@@ -65,9 +65,11 @@ class Club(models.Model):
     address = models.CharField(max_length=200, null=True)
     phone_number = models.IntegerField(null=True)
     email = models.EmailField(null=True)
-    representative = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    representative = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True)
 
 # Club Representative Model
+
 
 class ClubRep(models.Model):
     fist_name = models.CharField(max_length=100)
@@ -75,18 +77,13 @@ class ClubRep(models.Model):
     date_of_birth = models.DateField()
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
 
-# Balance Model
+# Account Model - For Account Manager
 
-class Balance(models.Model):
-       user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) 
-       balance = models.DecimalField(max_digits=8, decimal_places=2)
-       debt = models.DecimalField(max_digits=8, decimal_places=2)
-
-#Account Model - For Account Manager
 
 class Account(models.Model):
     title = models.CharField(max_length=100)
-    discount_rate = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    discount_rate = models.DecimalField(
+        max_digits=8, decimal_places=2, default=0.00)
     card_number = models.CharField(max_length=16)
     expiry_date = models.CharField(max_length=10)
     club = models.OneToOneField(Club, on_delete=models.CASCADE)
@@ -94,5 +91,8 @@ class Account(models.Model):
 
 # Extension of the user model to add discounts
 class Accounting(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    discount = models.DecimalField(default=0.00, max_digits=8, decimal_places=2)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+    discount = models.DecimalField(
+        default=0.00, max_digits=8, decimal_places=2)
+    balance = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)

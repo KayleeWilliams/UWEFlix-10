@@ -79,6 +79,10 @@
       <div class="checkout"> 
         <input type="submit" class="btn" value="Book Tickets">
         <div id="total_cost">Total: £0.00</div>
+        {% if perms.contenttypes.debit_account %} 
+          <p id="discount_el" discount="{{ account.discount }}"> -{{ account.discount }}%</p>
+        {% endif %}
+
       </div>
     </form>
   </div>
@@ -100,6 +104,16 @@ document.querySelectorAll('[data-price]').forEach(function(el) {
             // Add the quantity of this ticket to the total quantity
             total_quantity += ticket_quantity;
         });
+
+        // Select the discount element and get the discount attribute
+        var discount_el = document.querySelector('#discount_el');
+
+        // Apply discount only if the discount_el is not null
+        if (discount_el) {
+          discount = parseFloat(discount_el.getAttribute('discount'));
+          total_cost = total_cost - (total_cost * (discount / 100)); 
+        }
+       
         // Update the total cost element with the new total
         document.querySelector('#total_cost').textContent = 'Total cost: £' + total_cost.toFixed(2);
 

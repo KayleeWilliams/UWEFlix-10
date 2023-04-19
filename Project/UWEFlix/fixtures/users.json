@@ -66,14 +66,16 @@
     "model": "UWEFlix.Accounting",
     "fields": {
       "user": 2,
-      "discount": 15.0
+      "discount": 15.0,
+      "balance": 10.00
     }
   },
   {
     "model": "UWEFlix.Accounting",
     "fields": {
       "user": 3,
-      "discount": 10.0
+      "discount": 10.0,
+      "balance": 50.00
     }
   },
   {

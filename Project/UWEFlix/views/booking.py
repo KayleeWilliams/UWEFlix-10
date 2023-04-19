@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from ..forms import BookingForm
-from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Balance
+from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Accounting, User
 
 # Showings
 def index(request):
@@ -22,10 +22,6 @@ def index(request):
 
 
 def booking(request):
-    # Check if query string is valid
-    # if not request.user.is_authenticated:
-    #   return redirect('/login')
-
     if 'showing' not in request.GET:
         return redirect('/')
 
@@ -35,6 +31,12 @@ def booking(request):
         showing = Showing.objects.get(id=showing_id)
     except:
         return HttpResponse('Showing does not exist')
+
+    # Get the user
+    user, account = None, None
+    if request.user.is_authenticated:
+        user = User.objects.get(id=request.user.id)
+        account = Accounting.objects.get(user=user)
 
     # If the user has submitted the form
     if request.method == 'POST':
@@ -64,12 +66,12 @@ def booking(request):
             # If there aren't enough seats available
             if total_tickets > showing.seats:
                 form.add_error(None, 'Not enough seats available.')
-                return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
+                return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})
 
             # If no seats selected
             if total_tickets == 0:
                 form.add_error(None, 'Please select at least 1 ticket.')
-                return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
+                return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})
 
             # If the user can't debit account perm or the user is not authenticated
             if not request.user.has_perm('contenttypes.debit_account') or not request.user.is_authenticated:
@@ -85,7 +87,8 @@ def booking(request):
                     if method == '':
                         form.add_error(
                             None, 'Please enter all contact and payment details.')
-                        return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
+                        return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})
+                    
 
                 booking = Booking.objects.create(
                     showing=showing,
@@ -94,18 +97,20 @@ def booking(request):
                 )
 
             else:
+                # Debit account
+                account = Accounting.objects.get(user=request.user)
+                
+                # Get the discount
+                total_cost = total_cost - (total_cost * (account.discount/100))
+                account.balance -= total_cost
+                account.save()
+
+                # Create the booking
                 booking = Booking.objects.create(
                     showing=showing,
                     user=request.user,
                     total_cost=total_cost,
                 )
-
-            # Verify Payment Details by External system
-            # If payment details are invalid
-            # form.add_error(None, 'Payment Unsuccessful.')
-            # return render(request, 'booking.html', {'form': form, 'showing': showing})
-
-            # Create the booking
 
             # Create ticket type quantities for each ticket type the user booked
             for field_name, quantity in form.cleaned_data.items():
@@ -131,4 +136,4 @@ def booking(request):
 
     # If the user has not submitted the form
     form = BookingForm(available_tickets=Ticket.objects.all())
-    return render(request, 'booking/booking.html', {'form': form, 'showing': showing})
+    return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})

@@ -39,15 +39,6 @@
       {% else %}
         <a href="{% url 'login' %}">Sign In</a>
       {% endif %}
-
-      <!-- If the user is club rep, display total balance-->
-      {% if perms.contenttypes.club_rep or perms.contenttypes.debit_account %}
-      <div style="background-color: #333;   padding: 0px 4px; border-radius: 4px;">
-        {% for b in balance %}
-        <p>Total Balance: £ {{ b.balance }} </p>
-        {% endfor %}
-      </div>
-      {% endif %}  
     </div>
     {% endif %}
   </div>
