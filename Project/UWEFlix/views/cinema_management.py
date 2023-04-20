@@ -35,10 +35,14 @@ def cm_dash(request):
         if ur.request_type == 'booking':
             booking = Booking.objects.get(id=ur.request_value)
             ur.booking = booking
+        
 
         # Capitalise the request type
         ur.request_type = ur.request_type.title()
-    
+
+        if ur.request_type == 'Club':
+            ur.request_type = 'Become Club Rep'
+
     return render(request, 'cm/dash.html', {'requests': urs})
 
 

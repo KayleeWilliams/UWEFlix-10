@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from ..forms import PaymentForm
-from ..models import Booking, Club, Accounting
+from ..models import Booking, Club, Accounting, Request
 
 # CLUB REP Account to view monthly statements
 
@@ -15,8 +15,13 @@ def account(request):
             for ttq in booking.ticket_type_quantities.all():
                 total_quantity += ttq.quantity
             booking.total_quantity = total_quantity
+
+        # Get requests
+        rep_request = False
+        if Request.objects.filter(request_value=True, request_type="club").exists():
+            rep_request = True
             
-        return render(request, 'account.html', {'bookings': bookings, 'clubs': clubs, 'account': account})
+        return render(request, 'account.html', {'bookings': bookings, 'clubs': clubs, 'account': account, 'rep_request': rep_request})
     else:
         # Redirect to login page
         return redirect('/login')

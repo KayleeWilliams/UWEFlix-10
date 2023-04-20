@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 
 from ..models import Booking, Request
 
+
 def request(request):
     # Handle booking cancel requests
     if 'booking' in request.GET:
@@ -17,6 +18,11 @@ def request(request):
             if booking.email == email:
                 Request.objects.create(email=email, request_type='booking', request_value=booking_id).save()
                 return redirect('/')
+
+    # Handle club rep requests
+    if 'club_rep' in request.GET and request.user.is_authenticated:
+        Request.objects.create(user=request.user, request_type='club', request_value=True).save()
+        return redirect('/account')
 
     return redirect('/')
 
@@ -82,7 +88,12 @@ def accept(request):
         booking.delete()
         request.delete()
     
-    
+    # If club rep request
+    elif request.request_type == 'club':
+        # Give the user the club rep permission
+        request.user.groups.set([2])
+        request.delete()
+
     return redirect('/cinema_management')
 
     

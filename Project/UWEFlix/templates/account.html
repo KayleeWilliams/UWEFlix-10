@@ -8,23 +8,30 @@
   <div>
     {% if user.is_authenticated %}
 
-      <table width="85%" style="margin-left:auto; margin-right:auto;">
-        <tr>
+      <table width="85%" style="margin-left:auto; margin-right:auto">
           <td>
             <h4 style="margin-top: 64px"> Monthly Statement</h4>
-            {% if club %}
-              {% for club in clubs %}
-                <p>{{ club.representative }}</p>
-                <p>{{ club.name }}</p>
-                <p>{{ club.address }}</p>
-                <p>{{ club.contacts }}</p>
-              {% endfor %}
+            {% if perms.contenttypes.club_rep %} 
+              {% if club %}
+                {% for club in clubs %}
+                  <p>{{ club.representative }}</p>
+                  <p>{{ club.name }}</p>
+                  <p>{{ club.address }}</p>
+                  <p>{{ club.contacts }}</p>
+                {% endfor %}
+                {% endif %}
+              {% else %}
+              <div style="margin-bottom: 8px;">
+                {% if rep_request %}
+                  <a class="btn"> Club Rep Requested </a>
+                {% else %}
+                  <a href="/request?club_rep=True" class="btn"> Become Club Rep </a>
+                {% endif %}
+              </div>
             {% endif %}
           </td>
         </tr>
       </table>
-      <br/>
-      <br/>
 
       <hr width="85%">
       <table width="85%" cellspacing="0" style="margin-left:auto; margin-right:auto; text-align: center;">
@@ -51,14 +58,12 @@
       </table>
       <hr width="85%">
       <hr width="85%">
-    
-      <br/>
-      <br/>
+
 
         <table width="100%" cellspacing="0">
           <tr>
             <th>
-              <h3>Total Balance: £{{ account.balance }}</h3>
+              <h3 style="margin-top: 16px;">Total Balance: £{{ account.balance }}</h3>
             </th>
           </tr>
         </table>
