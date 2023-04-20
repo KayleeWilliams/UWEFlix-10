@@ -1,0 +1,70 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Cancel Booking - UWEFlix
+{% endblock %}
+{% block content %}
+<div>
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+
+  <div class="content">
+    <div class="films">
+      <h1> Cancel a Booking </h1>
+      <div class="separator"> </div>
+      
+      <!-- If user not authenticated or email get the email-->
+      {% if not user.is_authenticated and not email %}
+        <form method="post" class="inputs">
+          {% csrf_token %}
+          <input class="login-form-input" type="text" name="email" placeholder="Email" value="" required>
+          <input type="submit" class="btn" value="Submit">
+        </form>
+      {% endif %}
+      
+      <!-- Display the films -->
+      {% if user.is_authenticated or email != None %}
+        {% if bookings|length == 0 %}
+          <p> No bookings found. </p>
+        {% else %}
+        {% for booking in bookings %}
+          <div class="film">
+            <div class="content">
+              <img src="{{ booking.showing.film.image_url }}" alt="{{ booking.film.title }}"/>
+              <div style="height: 100%;">
+                <div class="info">
+                  <h3>{{ booking.showing.film.title }}</h3>
+                  <p>• {{ booking.showing.film.duration }} Mins </p>
+                  <p>• {{ booking.showing.film.age_rating }} </p>
+                </div>
+                <p> {{ booking.showing.date }} @ {{ booking.showing.time }} </p>
+                <p> Screen {{ booking.showing.screen.id }} </p>
+
+                <p> {{ booking.total_tickets }} Tickets - £{{ booking.total_cost }} Total </p>
+
+              </div>
+            </div>
+
+            <!-- If it has been requested or not -->
+            <div class="btn-col">
+              {% if not booking.requested %}
+              <a class="btn"
+                {% if email %} 
+                href="/request?booking={{ booking.id }}&email={{ email }}" 
+                {% else %} 
+                href="/request?booking={{ booking.id }}"
+                {% endif%} 
+               > Request Cancel </a>
+              {% else %}
+                <p class="btn"> Requested </p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div> 
+</div>
+{% endblock %}

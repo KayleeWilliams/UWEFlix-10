@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-from ..models import Accounting, Film, Screen, Showing, Ticket, Club
+from ..models import Accounting, Film, Screen, Showing, Ticket, Club, Request, Booking
 from .cm.film import *
 from .cm.screens import *
 from .cm.showings import *
@@ -20,8 +20,33 @@ def cm_dash(request):
 
     if not request.user.has_perm('contenttypes.cinema_manager'):
         return redirect('/')
+    
+    # Get all requests and prepare them for display
+    urs = Request.objects.all()
 
-    return render(request, 'cm/dash.html')
+    for ur in urs:
+        if ur.user_id is not None:
+            user = User.objects.get(id=ur.user_id)
+            ur.contact = user.username
+        else:
+            ur.contact = ur.email
+
+        # If booking request get the booking and total cost
+        if ur.request_type == 'booking':
+            booking = Booking.objects.get(id=ur.request_value)
+            ur.booking = booking
+        
+        # If discount request get the discount value
+        if ur.request_type == 'discount':
+            account = Accounting.objects.get(user_id=ur.user_id)
+            ur.discount = f"{float(account.discount):.2f}% -> {float(ur.request_value):.2f}%"
+        # Capitalise the request type
+        ur.request_type = ur.request_type.title()
+
+        if ur.request_type == 'Club':
+            ur.request_type = 'Become Club Rep'
+
+    return render(request, 'cm/dash.html', {'requests': urs})
 
 
 def film_dash(request):

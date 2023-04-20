@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from ..forms import PaymentForm
-from ..models import Booking, Club, Accounting
+from ..forms import PaymentForm, DiscountForm
+from ..models import Booking, Club, Accounting, Request
 
 # CLUB REP Account to view monthly statements
 
@@ -15,8 +15,25 @@ def account(request):
             for ttq in booking.ticket_type_quantities.all():
                 total_quantity += ttq.quantity
             booking.total_quantity = total_quantity
-            
-        return render(request, 'account.html', {'bookings': bookings, 'clubs': clubs, 'account': account})
+
+        # Get requests
+        requests = {
+            'discount': Request.objects.filter(user=request.user, request_type="discount").exists(),
+            'club': Request.objects.filter(user=request.user, request_type="club").exists()
+        }
+
+        # If Discount form is submitted
+        if request.method == 'POST':
+            form = DiscountForm(request.POST)
+            if form.is_valid():
+                request_value = form.cleaned_data['request_value']
+                Request.objects.create(user=request.user, request_type='discount', request_value=request_value).save()
+                return redirect('/account')
+            else:
+                return redirect('/account')
+
+        form = DiscountForm(initial={'request_value': account.discount})
+        return render(request, 'account.html', {'bookings': bookings, 'clubs': clubs, 'account': account, 'requests': requests, 'form': form})
     else:
         # Redirect to login page
         return redirect('/login')

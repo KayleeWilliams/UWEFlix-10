@@ -159,6 +159,12 @@ h1 {
   gap: 16px;
 }
 
+.grid-cols-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
 .rows-2 {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -557,4 +563,29 @@ select {
 /* Balance */
 .balance {
   color:aqua;
+}
+
+/* Request Tile */
+.request {
+  background-color: #222327;
+  z-index: 2;
+  padding: 12px 8px;
+  border-radius: 4px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.sect-head {
+  display: flex;
+  flex-direction: row;
+  background-color: #222327;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 16px 0;
 }

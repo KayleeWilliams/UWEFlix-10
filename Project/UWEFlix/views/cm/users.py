@@ -1,4 +1,4 @@
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import Group, User
 from django.shortcuts import render
 
@@ -97,16 +97,18 @@ def modify_user(request):
                     return render(request, 'cm/users/form.html', {'form': form, 'groups': groups, 'action': 'Modify'})
 
             # Check username is unique
-            if User.objects.filter(username=username).exists():
+            if User.objects.filter(username=username).exists() and user.username != username:
                 form.add_error(None, 'Username already exists')
                 return render(request, 'cm/users/form.html', {'form': form, 'groups': groups, 'action': 'Modify'})
 
-            # Hash password
-            password = make_password(password)
+            # Check if the password has changed
+            if password != user.password:
+                # Hash password
+                user.password = make_password(password)
 
-            # Update User
+
+            # Update User   
             user.username = username
-            user.password = password
             user.first_name = first_name
             user.last_name = last_name
             user.email = email
