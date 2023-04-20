@@ -22,13 +22,30 @@
                 {% endif %}
               {% else %}
               <div style="margin-bottom: 8px;">
-                {% if rep_request %}
+                {% if requests.club %}
                   <a class="btn"> Club Rep Requested </a>
                 {% else %}
                   <a href="/request?club_rep=True" class="btn"> Become Club Rep </a>
                 {% endif %}
               </div>
             {% endif %}
+          </td>
+
+          <!-- Request further discounts -->
+          <td style="text-align: end;"> 
+            <h4 style="margin-top: 64px"> Request Discount </h4>
+            <form method="post"> 
+              {% csrf_token %}
+              <div class="btn-col" style="float: right;">
+                <p> Discount Rate % </p>
+                <input name="{{ form.request_value.name }}" type="number" min="0" max="100" value="{{ form.request_value.value|default_if_none:'0.00' }}"" required>
+                {% if requests.discount %}
+                  <p class="btn"> Requested </p>
+                  {% else %}
+                  <input type="submit" value="Request" class="btn">
+                {% endif %}
+              </div>
+            </form>
           </td>
         </tr>
       </table>

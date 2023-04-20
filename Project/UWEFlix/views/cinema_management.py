@@ -36,7 +36,10 @@ def cm_dash(request):
             booking = Booking.objects.get(id=ur.request_value)
             ur.booking = booking
         
-
+        # If discount request get the discount value
+        if ur.request_type == 'discount':
+            account = Accounting.objects.get(user_id=ur.user_id)
+            ur.discount = f"{float(account.discount):.2f}% -> {float(ur.request_value):.2f}%"
         # Capitalise the request type
         ur.request_type = ur.request_type.title()
 

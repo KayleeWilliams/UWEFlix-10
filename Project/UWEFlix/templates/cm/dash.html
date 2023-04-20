@@ -37,6 +37,10 @@
             <p> £{{ request.booking.total_cost }} </p>
           {% endif %}
 
+          {% if request.discount %}
+            <p> {{ request.discount }} </p>
+          {% endif %}
+
           <div class="btn-row">
             <a href="/accept?request={{ request.id }}" class="btn">Accept</a>
             <a href="/reject?request={{ request.id }}" class="btn">Reject</a>

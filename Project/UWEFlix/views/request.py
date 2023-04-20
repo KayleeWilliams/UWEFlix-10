@@ -94,6 +94,13 @@ def accept(request):
         request.user.groups.set([2])
         request.delete()
 
+    
+    elif request.request_type == 'discount':
+        # Update the user's discount
+        request.user.accounting.discount = request.request_value
+        request.user.accounting.save()
+        request.delete()
+
     return redirect('/cinema_management')
 
     
