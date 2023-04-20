@@ -88,14 +88,21 @@ class Account(models.Model):
     expiry_date = models.CharField(max_length=10)
     club = models.OneToOneField(Club, on_delete=models.CASCADE)
 
-#Discount Model - For Users
-class Discount(models.Model):
-    UserID = models.DecimalField()
-    EmailAddress = models.CharField()
-    RequestType = models.CharField()
-    RequestValue = models.CharField()
-# Extension of the user model to add discounts
+# Discount Model - For Users
+
+
+class Request(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    email = models.CharField(null=True, max_length=200)
+    request_type = models.CharField(max_length=150)
+    request_value = models.CharField(max_length=150)
+
+# Extension of the user model to add discounts + balence
+
+
 class Accounting(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    discount = models.DecimalField(default=0.00, max_digits=8, decimal_places=2)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+    discount = models.DecimalField(
+        default=0.00, max_digits=8, decimal_places=2)
     balance = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)

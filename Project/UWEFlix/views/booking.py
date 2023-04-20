@@ -3,8 +3,8 @@ import requests
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from ..forms import BookingForm
-from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Accounting, User
+from ..forms import BookingForm, EmailForm
+from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Accounting, User, Request
 
 # Showings
 def index(request):
@@ -137,3 +137,43 @@ def booking(request):
     # If the user has not submitted the form
     form = BookingForm(available_tickets=Ticket.objects.all())
     return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})
+
+
+def cancel_booking(request): 
+    if request.method == 'POST':
+        # Get the email from the form
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            
+            bookings = Booking.objects.filter(email=email)
+
+            for booking in bookings:
+                if Request.objects.filter(request_value=booking.id, request_type="booking").exists():
+                    booking.requested = True
+                          
+                total_tickets = 0
+                for ttq in booking.ticket_type_quantities.all():
+                    total_tickets += ttq.quantity
+                booking.total_tickets = total_tickets
+
+            return render(request, 'booking/cancel.html', {'bookings': bookings, 'email': email})
+
+    # If the user is not authenticated
+    if not request.user.is_authenticated:
+        form = EmailForm()
+        return render(request, 'booking/cancel.html', {'form': form})
+    else: 
+        # Get the user's bookings 
+        bookings = Booking.objects.filter(user=request.user)
+
+        for booking in bookings:
+            if Request.objects.filter(request_value=booking.id, request_type="booking").exists():
+                booking.requested = True
+                
+            total_tickets = 0
+            for ttq in booking.ticket_type_quantities.all():
+                total_tickets += ttq.quantity
+            booking.total_tickets = total_tickets
+
+        return render(request, 'booking/cancel.html', {'bookings': bookings})

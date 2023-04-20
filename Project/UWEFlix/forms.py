@@ -38,11 +38,11 @@ class BookingForm(forms.Form):
               widget=forms.NumberInput(attrs={'data-price': ticket.price})
           )
 
-class DiscountForm(forms.Form):
-    UserID = forms.DecimalField
-    EmailAddress = forms.CharField
-    RequestType = forms.CharField
-    RequestValue = forms.CharField
+class RequestForm(forms.Form):
+    user_id = forms.IntegerField()
+    email = forms.EmailField()
+    request_type = forms.CharField(required=True, max_length=150)
+    request_value = forms.CharField(required=True, max_length=150)
 
 # Account form for account manager
 class AccountForm(forms.Form):
@@ -105,3 +105,7 @@ class UserForm(forms.Form):
     email = forms.EmailField()
     group_id = forms.IntegerField(initial=1)
     discount = forms.DecimalField(initial=0)
+
+
+class EmailForm(forms.Form):
+    email = forms.EmailField()

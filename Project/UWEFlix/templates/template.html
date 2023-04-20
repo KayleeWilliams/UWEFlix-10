@@ -13,15 +13,13 @@
       <!-- If selected reflect in navbar -->
       <a href="{% url 'index' %}" {% if request.path == '/' %}class="selected"{% endif %}>Showings</a>
      
-      <!-- Temp is only accessible to perm test -->
-      {% if perms.contenttypes.test %}
-        <a href="{% url 'temp' %}" {% if request.path == '/temp' %}class="selected"{% endif %}>Temp Page</a>
-      {% endif %}
-
       <!-- If the user is club rep-->
       {% if perms.contenttypes.club_rep or perms.contenttypes.debit_account %}
-      <a href="{% url 'account' %}" {% if request.path == '/account' %}class="selected"{% endif %}>Account</a>
+        <a href="{% url 'account' %}" {% if request.path == '/account' %}class="selected"{% endif %}>Account</a>
       {% endif %}  
+
+      <!-- Everyone can cancel a booking -->
+      <a href="{% url 'cancel_booking' %}" {% if request.path == '/cancel_booking' %}class="selected"{% endif %}>Cancel Booking</a>
 
       <!-- If user is account manager -->
       {% if perms.contenttypes.account_manager %}

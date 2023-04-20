@@ -17,7 +17,32 @@
       <a href="{% url 'screens_management' %}" class="btn">Screen Management</a>
       <a href="{% url 'tickets_management' %}" class="btn">Tickets Management</a>
       <a href="{% url 'users_management' %}" class="btn">User Management</a>
+    </div>
+  </div>
 
+  <div style="margin: 5% auto; width:70%;">
+    <div class="sect-head" style="margin-bottom: 16px;">
+      <h3> Requests </h3>
+    </div>
+
+    <!-- Display each request -->
+    <div class="grid-cols-3">
+      {% for request in requests %}
+        <div class="request"> 
+          <h3> {{ request.request_type }} </h3>
+          <p> {{ request.contact }} </p>
+          {% if request.booking %}
+            <p> {{ request.booking.showing.film.title }} </p>
+            <p> {{ request.booking.showing.date }} @ {{ request.booking.showing.time }} </p>
+            <p> £{{ request.booking.total_cost }} </p>
+          {% endif %}
+
+          <div class="btn-row">
+            <a href="/accept?request={{ request.id }}" class="btn">Accept</a>
+            <a href="/reject?request={{ request.id }}" class="btn">Reject</a>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </div>
