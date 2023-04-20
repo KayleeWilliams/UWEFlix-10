@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from ..forms import AccountForm, ModifyAccountForm
-from ..models import Account, Club
+from ..models import Account, Club, Booking
 
 # ACCOUNT MANAGER - Select account to View/Edit/Delete
 def account_management(request):
@@ -176,3 +176,19 @@ def modify_account(request):
         return redirect('/account_management')
 
     return render(request, 'am/modify_account.html', {'account': account_details, 'form': account_form, 'clubs': clubs})
+
+# ACCOUNT MANAGER - View List End of Month Debit Statements
+def View_Statements(request):
+
+        # Check if the user is logged in
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
+    
+    #Fetches all payments
+    payments = Booking.objects.order_by('user')
+
+    return render(request, 'am/view_statements.html', {'Payments': payments})

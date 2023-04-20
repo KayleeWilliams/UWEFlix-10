@@ -101,3 +101,4 @@ class UserForm(forms.Form):
     email = forms.EmailField()
     group_id = forms.IntegerField(initial=1)
     discount = forms.DecimalField(initial=0)
+
