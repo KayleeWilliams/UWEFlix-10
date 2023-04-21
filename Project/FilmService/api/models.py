@@ -27,12 +27,12 @@ class Film(models.Model):
 
 # Film Showings Model
 class Showing(models.Model):
-    film = models.ForeignKey(
-        Film, on_delete=models.CASCADE, related_name="showings")
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name="showings")
     date = models.DateField()
     time = models.TimeField()
     seats = models.IntegerField()
     screen = models.ForeignKey(Screen, on_delete=models.CASCADE)
+    hidden = models.BooleanField(default=False)
 
     class Meta:
         app_label = 'UWEFlix'

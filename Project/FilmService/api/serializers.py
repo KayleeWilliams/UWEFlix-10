@@ -8,7 +8,7 @@ from .models import Film, Showing
 class ShowingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Showing
-        fields = ['id', 'date', 'time', 'seats']
+        fields = ['id', 'date', 'time', 'seats', 'hidden']
 
 # Serialise film
 

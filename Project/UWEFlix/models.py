@@ -30,6 +30,8 @@ class Showing(models.Model):
     time = models.TimeField()
     seats = models.IntegerField()
     screen = models.ForeignKey(Screen, on_delete=models.CASCADE)
+    hidden = models.BooleanField(default=False)
+
 
 # Available tickets
 
