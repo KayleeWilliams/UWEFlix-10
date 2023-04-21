@@ -77,12 +77,12 @@ def modify_club(request):
             club.representative = club_rep
             club.save()
 
-            return render(request, 'cm/success.html', {'message': 'Screen modified successfully', 'redirect': 'screens_management', 'redirect_text': 'Screen Management'})
+            return render(request, 'cm/success.html', {'message': 'Club modified successfully', 'redirect': 'clubs_management', 'redirect_text': 'Club Management'})
 
     # Get all users that are club reps and not in a club
     users = User.objects.all()
 
-    form = ClubForm()
+    form = ClubForm(initial={'name': club.name, 'address': club.address, 'phone_number': club.phone_number, 'email': club.email, 'representative': club.representative.id})
     return render(request, 'cm/clubs/form.html', {'form': form, 'action': 'Edit', 'users': users})
 
 def delete_club(request):

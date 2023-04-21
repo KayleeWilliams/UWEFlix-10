@@ -31,11 +31,10 @@ class BookingForm(forms.Form):
               label=ticket.name,
               min_value=0,
               initial=0,
-              max_value=10,
               required=False,
 
               # Add price as data attribute to use in JavaScript
-              widget=forms.NumberInput(attrs={'data-price': ticket.price})
+              widget=forms.NumberInput(attrs={'price': ticket.price})
           )
 
 class DiscountForm(forms.Form):
