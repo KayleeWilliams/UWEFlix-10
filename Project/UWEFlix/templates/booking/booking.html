@@ -61,7 +61,16 @@
                 <h2 id="ticket_header" style="margin-top: 16px;"> Tickets </h2>
                 <div class="inputs-row" {% if perms.contenttypes.club_rep and field.label != "Student" %}style="display: none;"{% endif %} >
                   <p> {{ field.label }} Ticket </p>
-                  {{ field }}
+                  <input type="number" name="{{ field.name }}" max="{{ showing.seats }}" 
+                  
+                  {% if perms.contenttypes.club_rep and field.label == "Student" %}
+                    min="10" value="10" increment="1"
+                  {% else %}
+                    min="0" value="0" increment="1"
+                  {% endif %}
+
+                    data-price="{{ field.field.widget.attrs.price }}"
+                  required/>
                 </div>
               {% endif %}
           {% endfor %}

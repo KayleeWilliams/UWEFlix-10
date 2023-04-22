@@ -1,4 +1,6 @@
 import requests
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -7,13 +9,14 @@ from ..forms import BookingForm, EmailForm
 from ..models import Showing, Booking, Ticket, TicketTypeQuantity, Accounting, User, Request
 
 # Showings
+
+
 def index(request):
     # Get all films from the service
     try:
-      response = requests.get('http://filmservice:8001/films')
-      films = response.json()
-
-      return render(request, 'booking/showings.html', {'films': films})
+        response = requests.get('http://filmservice:8001/films')
+        films = response.json()
+        return render(request, 'booking/showings.html', {'films': films})
     # If the service is down
     except:
         return render(request, 'booking/showings.html', {'films': []})
@@ -31,6 +34,10 @@ def booking(request):
         showing = Showing.objects.get(id=showing_id)
     except:
         return HttpResponse('Showing does not exist')
+
+    # Check if the showing date & time has passed
+    if showing.date < datetime.now().date() or ((datetime.combine(datetime.min, showing.time) - timedelta(minutes=1)).time() < datetime.now(ZoneInfo('Europe/London')).time()):
+        return redirect("/")
 
     # Get the user
     user, account = None, None
@@ -62,7 +69,6 @@ def booking(request):
                     # Get ticket price
                     total_cost += (Ticket.objects.get(id=ticket_id).price * quantity)
 
-
             # If there aren't enough seats available
             if total_tickets > showing.seats:
                 form.add_error(None, 'Not enough seats available.')
@@ -88,7 +94,6 @@ def booking(request):
                         form.add_error(
                             None, 'Please enter all contact and payment details.')
                         return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})
-                    
 
                 booking = Booking.objects.create(
                     showing=showing,
@@ -99,7 +104,7 @@ def booking(request):
             else:
                 # Debit account
                 account = Accounting.objects.get(user=request.user)
-                
+
                 # Get the discount
                 total_cost = total_cost - (total_cost * (account.discount/100))
                 account.balance -= total_cost
@@ -139,19 +144,19 @@ def booking(request):
     return render(request, 'booking/booking.html', {'form': form, 'showing': showing, 'account': account})
 
 
-def cancel_booking(request): 
+def cancel_booking(request):
     if request.method == 'POST':
         # Get the email from the form
         form = EmailForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            
+
             bookings = Booking.objects.filter(email=email)
 
             for booking in bookings:
                 if Request.objects.filter(request_value=booking.id, request_type="booking").exists():
                     booking.requested = True
-                          
+
                 total_tickets = 0
                 for ttq in booking.ticket_type_quantities.all():
                     total_tickets += ttq.quantity
@@ -163,14 +168,14 @@ def cancel_booking(request):
     if not request.user.is_authenticated:
         form = EmailForm()
         return render(request, 'booking/cancel.html', {'form': form})
-    else: 
-        # Get the user's bookings 
+    else:
+        # Get the user's bookings
         bookings = Booking.objects.filter(user=request.user)
 
         for booking in bookings:
             if Request.objects.filter(request_value=booking.id, request_type="booking").exists():
                 booking.requested = True
-                
+
             total_tickets = 0
             for ttq in booking.ticket_type_quantities.all():
                 total_tickets += ttq.quantity

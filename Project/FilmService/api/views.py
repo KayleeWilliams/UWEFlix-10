@@ -1,4 +1,7 @@
 import requests
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
 from django.shortcuts import render
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
@@ -14,6 +17,18 @@ from .serializers import FilmSerializer
 @api_view(['GET'])
 def fetch_films(request):
     films = Film.objects.all()
+
+    # For each film's showings check if the showing date & time has passed
+    for film in films:
+        for showing in film.showings.all():
+            if (showing.date < datetime.now().date() or (showing.date == datetime.now().date() and (datetime.combine(datetime.min, showing.time) - timedelta(minutes=1)).time() < datetime.now(ZoneInfo('Europe/London')).time())):
+                showing.hidden = True
+            else:
+                showing.hidden = False
+            showing.save()
+
+            
+
     serializer = FilmSerializer(films, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
