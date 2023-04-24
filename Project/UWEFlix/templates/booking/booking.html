@@ -85,13 +85,17 @@
         </div>
       {% endif %}
 
-      <div class="checkout"> 
-        <input type="submit" class="btn" value="Book Tickets">
-        <div id="total_cost">Total: £0.00</div>
-        {% if perms.contenttypes.debit_account %} 
-          <p id="discount_el" discount="{{ account.discount }}"> -{{ account.discount }}%</p>
-        {% endif %}
-
+      <div class="btn-col" style="width: 100%;">
+        <div class="checkout"> 
+          <input type="submit" class="btn" value="Book Tickets">
+          <div id="total_cost">Total: £0.00</div>
+          {% if perms.contenttypes.debit_account %} 
+            <p id="discount_el" discount="{{ account.discount }}"> -{{ account.discount }}%</p>
+            {% endif %}
+        </div>
+        <div class="guest">
+          <a href="{% url 'index' %}" class="" style="width: auto;">Cancel Booking</a>
+        </div>
       </div>
     </form>
   </div>
