@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+  Success - UWEFlix
+{% endblock %}
+{% block content %}
+<div class="am">
+  <image class="bg-image" src="{% static 'images/films.png' %}"/>
+  <div class="bg-overlay"> </div>
+  <div class="content">
+    <div>
+      <h1> Error! </h1>
+      <p style="margin-bottom: 32px;"> {{ message }} </p>
+
+      <!-- Make a post button to the same path -->
+      <form method="post"> 
+        {% csrf_token %}
+        <button type="submit" class="btn">Delete All Showings & Bookings</button>
+      </form>
+
+      <div class="separator" style="margin-bottom: 16px;">  </div>
+
+      <a href="/{{ redirect }}" class="btn">Return to {{ redirect_text }}</a>
+    </div> 
+</div>
+{% endblock %}
