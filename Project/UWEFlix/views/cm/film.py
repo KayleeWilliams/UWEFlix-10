@@ -5,7 +5,7 @@ import requests
 from django.shortcuts import redirect, render
 
 from ...forms import FilmForm
-from ...models import Film, Showing, Booking
+from ...models import Film, Showing, Booking, Request
 
 # Create your views here.
 
@@ -134,6 +134,13 @@ def delete_film(request):
                         booking.user.accounting.save()
                     # Else refund to card (not implemented)
 
+                    # Get requests that are pending for this booking & delete them
+                    requests = Request.objects.filter(request_value=booking.id)
+                    for req in requests:
+                        if req.request_type == "booking":
+                            req.delete()
+
+                    # Delete booking
                     booking.delete()
                 showing.delete()
 
