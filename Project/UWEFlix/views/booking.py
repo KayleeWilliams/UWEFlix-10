@@ -36,7 +36,7 @@ def booking(request):
         return HttpResponse('Showing does not exist')
 
     # Check if the showing date & time has passed
-    if showing.date < datetime.now().date() or ((datetime.combine(datetime.min, showing.time) - timedelta(minutes=1)).time() < datetime.now(ZoneInfo('Europe/London')).time()):
+    if (showing.date < datetime.now().date() or (showing.date == datetime.now().date() and (datetime.combine(datetime.min, showing.time) - timedelta(minutes=1)).time() < datetime.now(ZoneInfo('Europe/London')).time())):
         return redirect("/")
 
     # Get the user
