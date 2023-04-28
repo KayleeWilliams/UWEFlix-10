@@ -21,7 +21,7 @@ def fetch_films(request):
     # For each film's showings check if the showing date & time has passed
     for film in films:
         for showing in film.showings.all():
-            if (showing.date < datetime.now().date() or (showing.date == datetime.now().date() and (datetime.combine(datetime.min, showing.time) - timedelta(minutes=1)).time() < datetime.now(ZoneInfo('Europe/London')).time())):
+            if (showing.date < datetime.now().date() or (showing.date == datetime.now().date() and showing.time < datetime.now(ZoneInfo('Europe/London')).time())):
                 showing.hidden = True
             else:
                 showing.hidden = False
