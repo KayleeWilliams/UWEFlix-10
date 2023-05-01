@@ -177,8 +177,8 @@ def modify_account(request):
 
     return render(request, 'am/modify_account.html', {'account': account_details, 'form': account_form, 'clubs': clubs})
 
-# ACCOUNT MANAGER - View End of Months Statements
-def view_clubstatements(request):
+# ACCOUNT MANAGER - View all transactions and select a month to create statement
+def view_statements(request):
 
     # Check if the user is logged in
     if not request.user.is_authenticated:
@@ -188,16 +188,34 @@ def view_clubstatements(request):
     if not request.user.has_perm('contenttypes.account_manager'):
         return redirect('/')
 
-    clubs = Club.objects.order_by('name')
-    selected_club = request.GET.get('club')
-
-    if selected_club:
-        selected_club = int(selected_club)
-        club = Club.objects.get(id=selected_club)
-        club_representative = club.representative
-        payments = Booking.objects.filter(user=club_representative)
+    # Get account ID
+    account = request.GET['account']
+    # Get account record
+    account_details = Account.objects.get(id=account)
+    
+    # Get all transactions for account
+    if account:
+        club_representative = account_details.club.representative
+        payments = Booking.objects.filter(user=club_representative).order_by('showing__date')
     else:
         club_rep_ids = Club.objects.values_list('representative', flat=True)
-        payments = Booking.objects.filter(user__in=club_rep_ids)
+        payments = Booking.objects.filter(user__in=club_rep_ids).order_by('showing__date')
 
-    return render(request, 'am/view_clubstatements.html', {'payments': payments, 'clubs': clubs, 'selected_club': selected_club})
+    # If viewing by month then go to month view with the required data
+    if request.method == 'POST':
+        if request.POST.get('account'):
+            account = request.POST['account']
+        else:
+            print('No Account Retrieved')
+            return redirect('/account_management')
+        
+        if request.POST.get('month'):
+            month = request.POST['month']
+        else:
+            print('No Month Selected')
+            return redirect('/account_management')
+        
+        return redirect('/monthly_statement?account=' + str(account) + '&month=' + str(month))
+        
+
+    return render(request, 'am/account_statements.html', {'payments': payments, 'account_details': account_details, 'selected_club': account_details.club})
