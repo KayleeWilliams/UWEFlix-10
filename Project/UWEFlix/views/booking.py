@@ -151,12 +151,14 @@ def cancel_booking(request):
         if form.is_valid():
             email = form.cleaned_data['email']
 
+            # Get all bookings with the email from the form
             bookings = Booking.objects.filter(email=email)
 
             for booking in bookings:
                 if Request.objects.filter(request_value=booking.id, request_type="booking").exists():
                     booking.requested = True
 
+                # Get the total quantity of tickets for a booking
                 total_tickets = 0
                 for ttq in booking.ticket_type_quantities.all():
                     total_tickets += ttq.quantity
@@ -176,6 +178,7 @@ def cancel_booking(request):
             if Request.objects.filter(request_value=booking.id, request_type="booking").exists():
                 booking.requested = True
 
+            # Get the total quantity of tickets for a booking
             total_tickets = 0
             for ttq in booking.ticket_type_quantities.all():
                 total_tickets += ttq.quantity
