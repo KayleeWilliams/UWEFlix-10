@@ -13,3 +13,11 @@ Now you can run the following commands in the terminal:
 - `python manage.py migrate`
 - `python manage.py makemigrations`
 
+## Accounts
+Default account details found in `Project/UWEFlix/fixtures/users.json.
+| Username | Password | Type |
+| -------- | -------- | ---- |
+| CM    | password    | Cinema Manager |
+| AM    | password    | Account Manager |
+| CR    | password    | Club Representative |
+| k82-williams | password | Student |
