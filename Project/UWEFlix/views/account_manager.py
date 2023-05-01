@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from ..forms import AccountForm, ModifyAccountForm
-from ..models import Account, Club
+from ..models import Account, Booking, Club
 
 # ACCOUNT MANAGER - Select account to View/Edit/Delete
 def account_management(request):
@@ -36,6 +36,8 @@ def account_management(request):
             # Delete selected account
             Account.objects.filter(id=account).delete()
             return redirect('/account_management')
+        elif action == 'statements':
+            return redirect('/view_statements?account=' + str(account))
 
         return redirect('/account_management')
 
@@ -176,3 +178,67 @@ def modify_account(request):
         return redirect('/account_management')
 
     return render(request, 'am/modify_account.html', {'account': account_details, 'form': account_form, 'clubs': clubs})
+
+# ACCOUNT MANAGER - View all transactions and select a month to create statement
+def view_statements(request):
+
+    # Check if the user is logged in
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
+
+    # Get account ID
+    account = request.GET['account']
+    # Get account record
+    account_details = Account.objects.get(id=account)
+    
+    # Get all transactions for account
+    if account:
+        club_representative = account_details.club.representative
+        payments = Booking.objects.filter(user=club_representative).order_by('showing__date')
+    else:
+        club_rep_ids = Club.objects.values_list('representative', flat=True)
+        payments = Booking.objects.filter(user__in=club_rep_ids).order_by('showing__date')
+
+    # If viewing by month then go to month view with the required data
+    if request.method == 'POST':
+        if request.POST.get('account'):
+            account = request.POST['account']
+        else:
+            print('No Account Retrieved')
+            return redirect('/account_management')
+        
+        if request.POST.get('month'):
+            month = request.POST['month']
+        else:
+            print('No Month Selected')
+            return redirect('/account_management')
+        
+        return redirect('/monthly_statement?account=' + str(account) + '&month=' + str(month))
+        
+
+    return render(request, 'am/account_statements.html', {'payments': payments, 'account_details': account_details, 'selected_club': account_details.club})
+
+# Create statement for month
+def monthly_statement(request):
+    # Check if the user is logged in
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
+    
+    # Get account and month to view transactions for
+    account = request.GET['account']
+    month = request.GET['month']
+    
+    # Get all transactions for the specified month and account
+    account_details = Account.objects.get(id=account)
+    club_representative = account_details.club.representative
+    payments = Booking.objects.filter(user=club_representative).filter(showing__date__month=int(month)).order_by('showing__date')
+    
+    return render(request, 'am/account_monthly_statement.html', {'payments': payments, 'account_details': account_details, 'selected_club': account_details.club})

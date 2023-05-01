@@ -11,7 +11,7 @@
       <form method="POST" class="content">
         {% csrf_token %}
         <h1>Add Account</h1>
-
+          <!-- Check and display errors -->
           {% if form.errors %}
             <div class="errors">
                 {% for field, errors in form.errors.items %}
@@ -21,7 +21,7 @@
                 {% endfor %}
             </div>
           {% endif %}
-
+        <!-- Form inputs -->
         <div class="inputs"> 
           <div>
             <p> Account Title</p>

@@ -13,13 +13,11 @@
             <h4 style="margin-top: 64px"> Monthly Statement</h4>
             {% if perms.contenttypes.club_rep %} 
               {% if club %}
-                {% for club in clubs %}
                   <p>{{ club.representative }}</p>
                   <p>{{ club.name }}</p>
                   <p>{{ club.address }}</p>
-                  <p>{{ club.contacts }}</p>
-                {% endfor %}
-                {% endif %}
+                  <p>{{ club.phone_number }}</p>
+              {% endif %}
               {% else %}
               <div style="margin-bottom: 8px;">
                 {% if requests.club %}
