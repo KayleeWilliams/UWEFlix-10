@@ -1,0 +1,54 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+    View Club Statements
+{% endblock %}
+
+{% block content %}
+  <div class="am booking">
+      <form method="get" class="content">
+        <h1>View End of Month Club Statements</h1>
+        <div class="inputs">
+          <div class="field">
+            <p>Select Club:</p>
+            <select name="club" id="club">
+              <option value="">--- All Clubs ---</option>
+              {% for club in clubs %}
+                <option value="{{ club.id }}" {% if club.id == selected_club %}selected{% endif %}>{{ club.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <input type="submit" value="Filter" class="btn" id="submit" />
+      </form>
+
+
+      <div class="payments">
+        <h2>Payments:</h2>
+        <table class="nice-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Username</th>
+              <th>Date of Payment</th>
+              <th>Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for payment in payments %}
+              <tr>
+                <td>{{ payment.id }}</td>
+                <td>{{ payment.user.username }}</td>
+                <td>{{ payment.date }}</td>
+                <td>{{ payment.total_cost }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+  </div>
+
+
+{% endblock %}
