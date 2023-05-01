@@ -36,6 +36,8 @@ def account_management(request):
             # Delete selected account
             Account.objects.filter(id=account).delete()
             return redirect('/account_management')
+        elif action == 'statements':
+            return redirect('/view_statements?account=' + str(account))
 
         return redirect('/account_management')
 

@@ -56,7 +56,6 @@ class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     email = models.EmailField(null=True)  # For unregistered customers
     total_cost = models.DecimalField(max_digits=8, decimal_places=2)
-    date = models.DateField(default=date.today)
 
     # User can select multiple ticket types and quantities
     ticket_type_quantities = models.ManyToManyField(TicketTypeQuantity)
