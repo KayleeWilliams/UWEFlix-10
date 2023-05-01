@@ -12,6 +12,7 @@ urlpatterns = [
     path('view_account', views.view_account, name='view_account'),
     path('modify_account', views.modify_account, name='modify_account'),
     path('view_statements', views.view_statements, name='view_statements'),
+    path('monthly_statement', views.monthly_statement, name='monthly_statement'),
     path('cinema_management', views.cm_dash, name='cinema_management'),
     path('film_management', views.film_dash, name='film_management'),
     path('payment', views.payment, name='payment'),

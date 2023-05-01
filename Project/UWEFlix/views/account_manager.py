@@ -219,3 +219,24 @@ def view_statements(request):
         
 
     return render(request, 'am/account_statements.html', {'payments': payments, 'account_details': account_details, 'selected_club': account_details.club})
+
+# Create statement for month
+def monthly_statement(request):
+    # Check if the user is logged in
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    # Check if the user has the correct permissions
+    if not request.user.has_perm('contenttypes.account_manager'):
+        return redirect('/')
+    
+    # Get account and month to view transactions for
+    account = request.GET['account']
+    month = request.GET['month']
+    
+    # Get all transactions for the specified month and account
+    account_details = Account.objects.get(id=account)
+    club_representative = account_details.club.representative
+    payments = Booking.objects.filter(user=club_representative).filter(showing__date__month=int(month)).order_by('showing__date')
+    
+    return render(request, 'am/account_monthly_statement.html', {'payments': payments, 'account_details': account_details, 'selected_club': account_details.club})
