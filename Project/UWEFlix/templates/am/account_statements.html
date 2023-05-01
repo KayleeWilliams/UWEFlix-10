@@ -1,0 +1,73 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+    View Account Statements
+{% endblock %}
+
+{% block content %}
+  <div class="am booking">
+    {% if payments %}
+      <form method="post" class="content">
+        {% csrf_token %}
+        <h1>View End of Month Statements for {{ account_details.title }}</h1>
+        <div class="inputs">
+          <!-- Select month to view statement for -->
+          <div class="field">
+            <input type="hidden" value="{{ account_details.id }}" id="account" name="account">
+            <p>Select Month to View Transactions For:</p>
+            <select name="month" id="month">
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+        </div>
+        <input type="submit" value="Create Statement" class="btn" id="submit" />
+        <a href="/account_management" class="btn" id="submit">Back to Account Management</a>
+
+        <div class="separator" > </div>
+
+        <!-- View all transactions for account -->
+        <div class="payments">
+          <h2>All transactions:</h2>
+          <table cellspacing="10" >
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Username</th>
+                <th>Date of Transaction</th>
+                <th>Total Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for payment in payments %}
+                <tr>
+                  <td>{{ payment.id }}</td>
+                  <td>{{ payment.user.username }}</td>
+                  <td>{{ payment.showing.date }}</td>
+                  <td>{{ payment.total_cost }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+    {% else %}
+      <p class="content">No transactions for this account.</p>
+    {% endif %}
+
+  </div>
+
+
+{% endblock %}

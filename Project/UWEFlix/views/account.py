@@ -7,7 +7,7 @@ from ..models import Booking, Club, Accounting, Request
 def account(request):
     if request.user.is_authenticated:
         bookings = Booking.objects.filter(user=request.user).prefetch_related('ticket_type_quantities')
-        clubs = Club.objects.filter(representative=request.user)
+        club = Club.objects.get(representative=request.user)
         account = Accounting.objects.get(user=request.user)
 
         for booking in bookings:
@@ -33,7 +33,7 @@ def account(request):
                 return redirect('/account')
 
         form = DiscountForm(initial={'request_value': account.discount})
-        return render(request, 'account.html', {'bookings': bookings, 'clubs': clubs, 'account': account, 'requests': requests, 'form': form})
+        return render(request, 'account.html', {'bookings': bookings, 'club': club, 'account': account, 'requests': requests, 'form': form})
     else:
         # Redirect to login page
         return redirect('/login')

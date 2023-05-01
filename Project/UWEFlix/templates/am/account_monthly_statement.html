@@ -1,0 +1,50 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block title %}
+    View Account Monthly Statements
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="">
+    <div class="content">
+      {% if payments %}
+      <!-- Button for users to print/save to PDF -->
+      <button class="btn" onclick="window.print()">Create a statement</button>
+      <!-- View all transactions for the specified month -->
+      <div class="payments">
+        <h2>Transactions for {{ account_details.title }}:</h2>
+        <table cellspacing="10">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Username</th>
+              <th>Date of Transaction</th>
+              <th>Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for payment in payments %}
+              <tr>
+                <td>{{ payment.id }}</td>
+                <td>{{ payment.user.username }}</td>
+                <td>{{ payment.showing.date }}</td>
+                <td>{{ payment.total_cost }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="separator" > </div>
+        <br>
+        <a href="/account_management" class="btn" id="submit">Back to Account Management</a>
+      </div>
+      {% else %}
+        <p>No statements for this month.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
