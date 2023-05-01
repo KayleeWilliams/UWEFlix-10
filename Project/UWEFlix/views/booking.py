@@ -36,7 +36,7 @@ def booking(request):
         return HttpResponse('Showing does not exist')
 
     # Check if the showing date & time has passed
-    if (showing.date < datetime.now().date() or showing.time < datetime.now(ZoneInfo('Europe/London')).time()):
+    if (showing.date < datetime.now().date() or (showing.date == datetime.now().date() and showing.time < datetime.now(ZoneInfo('Europe/London')).time())):
         return redirect("/")
 
     # Get the user
@@ -51,7 +51,7 @@ def booking(request):
             request.POST, available_tickets=Ticket.objects.all())
         
         # Check if the form is submitted after the start time.
-        if (showing.date < datetime.now().date() or showing.time < datetime.now(ZoneInfo('Europe/London')).time()):
+        if (showing.date < datetime.now().date() or (showing.date == datetime.now().date() and showing.time < datetime.now(ZoneInfo('Europe/London')).time())):
             return redirect("/")
         
         # If valid form
